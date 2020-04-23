@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Список отчетов</title>
+</head>
+
+<body>
+    {% block content %}
+
+    <p>Отчётов в базе данных: {{ num_reports }}</p>
+    <br>
+
+    {% for report in reports %}
+    <div>
+        <small>{{ report.inspection_date }}</small><br>
+        <b><a href="{% url 'report_create' pk=report.pk %}">{{ report.report_number }} {{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</a></b>
+        <hr>
+    </div>
+    {% endfor %}
+
+    <br>
+    <a href="{% url 'index' %}">Создать новый отчет</a>
+
+    {% endblock %}
+</body>
+
+</html>

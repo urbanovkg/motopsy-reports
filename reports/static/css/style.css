@@ -1,0 +1,266 @@
+* {
+    font-size: 12pt;
+    font-family: Arial;
+}
+
+html {
+    margin: 0;
+}
+
+body {
+    margin: 5.5em 0 0 0;
+}
+
+.headline:before {
+    display: block;
+    content: "";
+    height: 5.5em;
+    margin-top: -5.5em;
+}
+
+.navigation_l {
+    display: inline-flex;
+    justify-content: space-between;
+    position: fixed;
+    background: white;
+    margin: 0;
+    border: 0.1em solid white;
+}
+
+#navigation_a {
+    width: calc(100% - 0.2em);
+}
+
+#navigation_b {
+    margin-top: 2.7em;
+    width: calc(100% - 0.2em);
+}
+
+#intermediate_calc {
+    position: fixed;
+    bottom: 2em;
+    right: 3em;
+    background: green;
+    padding: 0.2em;
+    opacity: .9;
+}
+
+.square {
+    width: 2.5em;
+    height: 2.5em;
+    margin: 0.1em;
+    background: LightSkyBlue;
+    background-size: cover;
+}
+
+.square:hover {
+    background: red;
+    background-size: cover;
+}
+
+.block {
+    display: block;
+    width: calc(100% - 0.6em);
+    height: 2.6em;
+    margin: 0.2em;
+    padding: 0.1em;
+    background-color: navajowhite;
+    vertical-align: bottom;
+}
+
+.checkbox_style {
+    width: 2.6em;
+    height: 2.6em;
+    margin: 0 0.1em 0 0;
+    float: left;
+    border: 0;
+}
+
+.text_style, .quant, .cost, .norm, .position, .text_line, .paint, #vehicle_type, #vehicle_body_type, #cost_per_hour, .dates, .action_type_half, .text_style_half {
+    float: left;
+    border: none;
+    padding: 0.0625em;
+}
+
+.text_style {
+    width: calc(100% - 2.9em);
+    border: 0;
+    height: 1.125em;
+    margin-bottom: 0.1em;
+}
+
+.text_style_hide {
+    display: none;
+}
+
+#inv {
+    display: none;
+}
+
+.action_type_half {
+    float: left;
+    width: calc(45% - 1.5em);
+    height: 1.25em;
+    margin: 0 0.1em 0.1em 0;
+    background: white;
+    border: none;
+}
+
+.text_style_half {
+    float: left;
+    width: calc(55% - 1.5em);
+    border: 0;
+    height: 1.125em;
+    margin-bottom: 0.1em;
+}
+
+.position {
+    width: 5em;
+    border: 0;
+    height: 1.125em;
+    margin-right: 0.1em;
+}
+
+.action_type {
+    float: left;
+    height: 1.25em;
+    width: 7em;
+    margin-right: 0.1em;
+    background: white;
+    border: none;
+}
+
+.norm {
+    width: 3em;
+    border: 0;
+    height: 1.125em;
+    margin-right: 0.1em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.paint {
+    width: 5em;
+    height: 1.125em;
+    border: 0;
+    margin-right: 0.1em;
+    text-align: center;
+    color: gray;
+}
+
+.quant {
+    width: 3em;
+    height: 1.125em;
+    border: 0;
+    margin-right: 0.1em;
+    text-align: center;
+}
+
+.cost {
+    float: right;
+    border: 0;
+    height: 1.125em;
+    margin: none;
+    font-weight: bold;
+    line-height: 1.125em
+}
+
+.text_line, .dates {
+    width: calc(100% - 0.2em);
+    margin-top: 0.1em;
+}
+
+.half_selectbox {
+    float: left;
+    height: 1.25em;
+    width: calc(50% - 0.15em);
+    margin-right: 0.1em;
+    background: white;
+    border: none;
+}
+
+.full_selectbox {
+    height: 1.25em;
+    width: calc(100% - 0.1em);
+    background: white;
+    border: none;
+}
+
+#vehicle_type, #vehicle_body_type, #cost_per_hour {
+    width: calc(50% - 0.15em);
+}
+
+h4 {
+    margin: 0.2em;
+}
+
+#vehicle_info_icon {
+    background-image: url(img/vinfo.png);
+}
+
+#report_info_icon {
+    background-image: url(img/rinfo.png);
+}
+
+#icon_01 {
+    background-image: url(img/01.png);
+}
+
+#icon_02 {
+    background-image: url(img/02.png);
+}
+
+#icon_03 {
+    background-image: url(img/03.png);
+}
+
+#icon_04 {
+    background-image: url(img/04.png);
+}
+
+#icon_05 {
+    background-image: url(img/05.png);
+}
+
+#icon_06 {
+    background-image: url(img/06.png);
+}
+
+#icon_07 {
+    background-image: url(img/07.png);
+}
+
+#icon_08 {
+    background-image: url(img/08.png);
+}
+
+#icon_09 {
+    background-image: url(img/09.png);
+}
+
+#icon_10 {
+    background-image: url(img/10.png);
+}
+
+#icon_11 {
+    background-image: url(img/11.png);
+}
+
+#icon_12 {
+    background-image: url(img/12.png);
+}
+
+#icon_13 {
+    background-image: url(img/13.png);
+}
+
+#calc_icon {
+    background-image: url(img/calc.png);
+}
+
+/*
+@media screen and (max-width:1281px) {body {font-size: 140%;}}
+@media screen and (max-width:800px) {body {font-size: 120%;}}
+@media screen and (min-width:341px) and (max-width:500px) {body {font-size: 120%;}}
+@media screen and (max-width:340px) {body {font-size: 100%;}}
+*/
