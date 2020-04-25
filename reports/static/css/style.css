@@ -115,7 +115,7 @@ body {
 }
 
 .position {
-    width: 5em;
+    width: 4em;
     border: 0;
     height: 1.125em;
     margin-right: 0.1em;
@@ -124,14 +124,14 @@ body {
 .action_type {
     float: left;
     height: 1.25em;
-    width: 7em;
+    width: 6em;
     margin-right: 0.1em;
     background: white;
     border: none;
 }
 
 .norm {
-    width: 3em;
+    width: 2em;
     border: 0;
     height: 1.125em;
     margin-right: 0.1em;
