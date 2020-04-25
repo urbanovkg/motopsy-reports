@@ -115,7 +115,7 @@ body {
 }
 
 .position {
-    width: 4em;
+    width: 4.25em;
     border: 0;
     height: 1.125em;
     margin-right: 0.1em;
@@ -124,14 +124,14 @@ body {
 .action_type {
     float: left;
     height: 1.25em;
-    width: 6em;
+    width: 6.75em;
     margin-right: 0.1em;
     background: white;
     border: none;
 }
 
 .norm {
-    width: 2em;
+    width: 2.75em;
     border: 0;
     height: 1.125em;
     margin-right: 0.1em;
@@ -140,16 +140,16 @@ body {
 }
 
 .paint {
-    width: 5em;
+    width: 2em;
     height: 1.125em;
     border: 0;
     margin-right: 0.1em;
     text-align: center;
-    color: gray;
+    color: green;
 }
 
 .quant {
-    width: 3em;
+    width: 2em;
     height: 1.125em;
     border: 0;
     margin-right: 0.1em;

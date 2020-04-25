@@ -18,7 +18,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                 result = workHours * quantWorks;
             }
         }
-        thisElement.nextAll('.cost').text(result.toFixed(2)); //Записываем рядом и округляем
+        thisElement.nextAll('.cost').text(result.toFixed(0)); //Записываем рядом и округляем
         let nearestCheckbox = thisElement.prevAll('.checkbox_style'); //Флажок в этом блоке
         if (nearestCheckbox.prop('checked')) {
             calcTempQuant(nearestCheckbox);
