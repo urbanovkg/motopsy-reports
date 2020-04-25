@@ -46,6 +46,7 @@ class Report(models.Model):
     ]
     cost_type = models.CharField("Вид определяемой стоимости", max_length=128, choices=COST_CHOICES, default=ONLY_RECOVERY)
     contract_price = models.IntegerField("Сумма оплаты (договора)", default=0)
+    contract_price_in_words = models.CharField("Сумма оплаты (прописью)", max_length=128, default="Ноль")
     vehicle_model = models.CharField("Марка, модель ТС", max_length=128, default="Н/у")
     vehicle_year = models.CharField("Год выпуска", max_length=4, default="Н/у")
     vehicle_regnum = models.CharField("Гос. (рег.) номер ТС", max_length=32, default="Н/у")
@@ -68,9 +69,9 @@ class Report(models.Model):
     hidden_text = models.TextField("Текст скрытых повреждений", default="Н/у")
     parts_text = models.TextField("Текст запчастей", default="Н/у")
 
-    services_table = models.TextField("Таблица услуг", default = "")
-    materials_table = models.TextField("Таблица материалов", default = "")
-    parts_table = models.TextField("Таблица запчастец", default = "")
+    services_table = models.TextField("Таблица услуг", default = "", blank=True)
+    materials_table = models.TextField("Таблица материалов", default = "", blank=True)
+    parts_table = models.TextField("Таблица запчастец", default = "", blank=True)
 
     def publish(self):
         self.save()

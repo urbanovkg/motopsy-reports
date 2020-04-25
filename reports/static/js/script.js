@@ -2,10 +2,11 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
     $('.block:odd').css('background-color', 'LightSkyBlue'); //Все нечетные блоки окрашиваем
 
-    function setCost(thisElement) { //ФУНКЦИЯ ИЗМЕНЕНИЯ СТОИМОСТИ ОТДЕЛЬНОГО БЛОКА
-        let costValue = parseFloat($('#cost_per_hour').val()); //Записываем значение стоимости нормо-часа
-        let workHours = parseFloat(thisElement.val()); //Записываем значение норма-часа
-        let quantWorks = thisElement.siblings('.quant').val(); //Записываем значение количество работ
+    let costValue = parseFloat($('#cost_per_hour').val()); //Записываем значение стоимости нормо-часа
+
+    function setCost(thisElement) { //Функция изменения стоимости отдельного блока
+        let workHours = parseFloat(thisElement.val()); //Записываем значение норма-часа текущего блока
+        let quantWorks = thisElement.prevAll('.quant').val(); //Записываем значение количества работ
         let result;
         if (!quantWorks) { //Если нет значения количества работ
             result = costValue * workHours;
@@ -18,21 +19,25 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             }
         }
         thisElement.nextAll('.cost').text(result.toFixed(2)); //Записываем рядом и округляем
-        if (thisElement.prevAll('.checkbox_style').prop('checked')) {
-            miniCalc();
+        let nearestCheckbox = thisElement.prevAll('.checkbox_style'); //Флажок в этом блоке
+        if (nearestCheckbox.prop('checked')) {
+            calcTempQuant(nearestCheckbox);
         } //Если меняется стоимость отмеченного блока пересчитываем предварительный результат
     }
 
-    function setCosts() { //ФУНКЦИЯ ИЗМЕНЕНИЯ СТОИМОСТИ ВСЕХ БЛОКОВ
+    function setCosts() { //Функция изменения всех блоков
+        console.time('Изменение стоимости всех отмеченных блоков');
         $('.norm').each(function() { //Перебираем нормо-часы каждого блока
             setCost($(this)); //Изменеем стоимость текущего блока
         });
+        console.timeEnd('Изменение стоимости всех отмеченных блоков');
     }
 
     setCosts(); //Запускаем функцию изменения стоимости всех блоков
 
     $('#class').on('change', function() { //Событие при выборе класса ТС из выпадающего списка
         $('#cost_per_hour').val(this.value); //Записываем значение выбранного класса в поле стоимости нормо-часа
+        costValue = this.value;
         setCosts();
     });
 
@@ -40,18 +45,21 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         return isFinite(n) && n === String(parseFloat(n));
     }
 
+
     $('#cost_per_hour').on('change', function() { //Событие при изменении поля стоимости нормо-часа (тип класса)
         if (isNumeric($(this).val())) { //Если число
+            costValue = $(this).val();
             setCosts();
         } else {
             $(this).val(0);
+            costValue = 0;
             setCosts();
         }
     });
 
     $('.action_type').on('change', function() { //Событие при выборе типа ремонтного воздействия из выпадающего списка
         let at = $(this).children('select option:selected').val(); //Записываем значение выбранного ремонтного воздействия в переменную
-        let tn = $(this).siblings('.norm'); //Записываем адрес текущего нормо-часа
+        let tn = $(this).next('.norm'); //Записываем адрес текущего нормо-часа
         tn.val(at); //Записываем значение в поле часов
         setCost(tn); //Функция изменения стоимости
     });
@@ -66,7 +74,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     });
 
     $('.quant').on('change', function() { //Событие при изменении полей количества работ
-        let tn = $(this).siblings('.norm'); //Записываем адрес текущего нормо-часа
+        let tn = $(this).nextAll('.norm'); //Записываем адрес текущего нормо-часа
         if (isNumeric($(this).val())) { //Если число
             setCost(tn);
         } else {
@@ -75,55 +83,55 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         }
     });
 
+    let intPaint = 0;
+    let intCalc = 0;
+
     $('.paint').on('change', function() { //Событие при изменении полей количества краски
         if (!isNumeric($(this).val())) { //Если не число
             $(this).val(0);
         }
-        if ($(this).prevAll('.checkbox_style').prop('checked')) {
-            miniCalc();
-        } //Если меняется количество краски отмеченного блока пересчитываем предварительный результат
+        calcTempPaint();
     });
 
-    let intCalc = 0;
-    let intPaint = 0;
-    let tempPaint = 0;
-    let tempQuant = 0;
+    function calcTempPaint() {
+        console.time('Расчет количества краски');
+        intPaint = 0;
+        $('.paint').each(function() { //Перебираем блоки окраски
+            if ($(this).prevAll('.checkbox_style').prop('checked')) {
+                intPaint += parseFloat($(this).val());
+            } //Если меняется количество краски отмеченного блока пересчитываем предварительный результат
+        });
+        $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
+        console.timeEnd('Расчет количества краски');
+    }
+
+    $('#painting_work').children().children('.checkbox_style').on('change', function() {
+        calcTempPaint();
+    });
+
+
+
+    function calcTempQuant(element) { //Функция предварительного подсчета
+        let costElement = $(element).nextAll('.cost'); //Элемент "стоимость блока"
+        let costElVal = parseFloat(costElement.text()); //Стоимость блока
+        if (costElement.data('tempCost') === undefined) {
+            costElement.data('tempCost', 0);
+        } //Если нет предыдущего то 0
+        intCalc += costElVal - costElement.data('tempCost');
+        costElement.data('tempCost', costElVal); //при установке флажка записываем в элемент ДОМ значение стоимости блока
+        $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
+    }
 
     $("input:checkbox").on("change", function() { //Событие при выделении пунктов
         if (this.checked) {
-            tempPaint = parseFloat($(this).siblings('.paint').val());
-            tempQuant = parseFloat($(this).siblings('.quant').val());
-            if (tempPaint) {
-                if (tempQuant) {
-                    intPaint += tempPaint * tempQuant;
-                } else {
-                    intPaint += tempPaint;
-                }
-            }
-            intCalc += parseFloat($(this).siblings('.cost').text()); //Стоимость пункта
-            $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
+            calcTempQuant($(this));
         } else {
-            miniCalc();
+            let costElement2 = $(this).nextAll('.cost');
+            intCalc -= parseFloat(costElement2.data('tempCost')); //при снятии флажка отнимаем из общей суммы старое значение "стоимости блока"
+            costElement2.removeData('tempCost'); //Удаляем из элемена ДОМ значение при снятии флажка
+            $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
         }
     });
-
-    function miniCalc() { //Функция расчета предварительного результата
-        intCalc = 0;
-        intPaint = 0;
-        $('input:checkbox:checked').each(function() { //ПЕРЕБИРАЕМ КАЖДЫЙ ОТМЕЧЕННЫЙ ФЛАЖОК
-            tempPaint = parseFloat($(this).siblings('.paint').val());
-            tempQuant = parseFloat($(this).siblings('.quant').val());
-            if (tempPaint) {
-                if (tempQuant) {
-                    intPaint += tempPaint * tempQuant;
-                } else {
-                    intPaint += tempPaint;
-                }
-            }
-            intCalc += parseFloat($(this).siblings('.cost').text()); //Стоимость пункта
-        });
-        $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
-    }
 
     $('#vehicle_types').on('change', function() { //Событие при выборе типа ТС
         $('#vehicle_type').val($('option:selected', this).text()); //Записываем выбранный текст в соседнее поле
@@ -171,14 +179,14 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             fullArr[i] = { //Записываем всё в массив объектов
                 id: $(this).val(), //Записываем значение каждого отмеченного флажка
                 text: $(this).next('input').val(), //Текст около флажка
-                position: $(this).siblings('.position').val(), //Текст "позиция детали"
+                position: $(this).nextAll('.position').val(), //Текст "позиция детали"
                 action: $(this).parent().find('.action_type :selected').text(), //Текст "тип ремонтного воздействия"
-                quant: $(this).siblings('.quant').val(), //Количество нормо-часов
-                paint: $(this).siblings('.paint').val(), //Количество краски
-                norm: $(this).siblings('.norm').val(), //Значение нормо-часа
-                cost: $(this).siblings('.cost').text() //Стоимость пункта
+                quant: $(this).nextAll('.quant').val(), //Количество нормо-часов
+                paint: $(this).nextAll('.paint').val(), //Количество краски
+                norm: $(this).nextAll('.norm').val(), //Значение нормо-часа
+                cost: $(this).nextAll('.cost').text() //Стоимость пункта
             }
-             //Если есть данные, то преобразуем в число, иначе 0
+            //Если есть данные, то преобразуем в число, иначе 0
             if (fullArr[i].quant) {
                 fullArr[i].quant = parseFloat(fullArr[i].quant);
             } else {
@@ -277,7 +285,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                     partsText += fullArr[i].text + '; ';
                 }
             }
-            if (!fullArr[i].quant) {  //Если количество = 0 то пусть = 1
+            if (!fullArr[i].quant) { //Если количество = 0 то пусть = 1
                 fullArr[i].quant = 1;
             }
         }); //Конец перебора флажков
@@ -355,15 +363,15 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                         //gluedArr[i].norm = gluedArr[i].norm.toFixed(1).replace('.', ',');
 
                         if (gluedArr[i].action) {
-                            servicesArr[servicesCounter-1] = {
+                            servicesArr[servicesCounter - 1] = {
                                 text: gluedArr[i].text + ' – ' + gluedArr[i].action,
                                 quant: gluedArr[i].quant.toFixed(1),
                                 norm: gluedArr[i].norm.toFixed(1)
                             }
                             servicesTable += '<tr><td>' + servicesCounter + '</td><td>' + gluedArr[i].text + ' – ' + gluedArr[i].action + '</td><td>' + gluedArr[i].quant.toString().replace('.', ',') + '</td><td>' + gluedArr[i].norm.toFixed(1).replace('.', ',') + '</td><td>' + gluedArr[i].cost.toFixed(2).replace('.', ',') + '</td></tr>';
                         } else {
-                            servicesArr[servicesCounter-1] = {
-                                text: gluedArr[i].text ,
+                            servicesArr[servicesCounter - 1] = {
+                                text: gluedArr[i].text,
                                 quant: gluedArr[i].quant.toFixed(1),
                                 norm: gluedArr[i].norm.toFixed(1)
                             }
@@ -376,13 +384,13 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             if (gluedArr[i].action == 'замена') { //ТАБЛИЦА ЗАПЧАСТЕЙ
                 partsCounter++;
                 if (gluedArr[i].position) {
-                    partsArr[partsCounter-1] = {
+                    partsArr[partsCounter - 1] = {
                         text: gluedArr[i].text + ' ' + gluedArr[i].position,
                         quant: gluedArr[i].quant
                     }
                     partsTable += '<tr><td>' + partsCounter + '</td><td>' + gluedArr[i].text + ' ' + gluedArr[i].position + '</td><td>' + gluedArr[i].quant + '</td><td>0,00</td><td>0,00</td></tr>';
                 } else {
-                    partsArr[partsCounter-1] = {
+                    partsArr[partsCounter - 1] = {
                         text: gluedArr[i].text,
                         quant: gluedArr[i].quant
                     }
@@ -419,7 +427,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             hourcost: $('#cost_per_hour').val(),
             owner: $('#vehicle_owner').val(),
             adress: $('#vehicle_adress').val()
-        };
+        }
 
         let reportData = {
             contractnum: $('#contract_number').val(),
@@ -432,30 +440,31 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             appointment: $('#evaluation_appointment').val(),
             costtype: $('#cost_type').val(),
             contractcost: $('#contract_cost').val(),
-        };
-
-        let inspectionText = {
-            disassembly:disassemblyText,
-            repair:repairText,
-            painting:paintingText,
-            additional:additionalText,
-            hidden:hiddenText,
-            parts:partsText
+            costinwords: $('#contract_cost_in_words').val()
         }
 
-/*
-        let allData = [vehicleData, reportData,
-            disassemblyText, repairText, paintingText,additionalText, hiddenText,partsText,
-            servicesTable, materialsTable, partsTable,
-            totalMaterialsCost, totalServicesCost];
-*/
+        let inspectionText = {
+            disassembly: disassemblyText,
+            repair: repairText,
+            painting: paintingText,
+            additional: additionalText,
+            hidden: hiddenText,
+            parts: partsText
+        }
 
-$('#vehicle_data_text').val(JSON.stringify(vehicleData));
-$('#report_data_text').val(JSON.stringify(reportData));
-$('#inspection_text').val(JSON.stringify(inspectionText));
-$('#services_table').val(JSON.stringify(servicesArr));
-$('#materials_table').val(JSON.stringify(materialsArr));
-$('#parts_table').val(JSON.stringify(partsArr));
+        /*
+                let allData = [vehicleData, reportData,
+                    disassemblyText, repairText, paintingText,additionalText, hiddenText,partsText,
+                    servicesTable, materialsTable, partsTable,
+                    totalMaterialsCost, totalServicesCost];
+        */
+
+        $('#vehicle_data_text').val(JSON.stringify(vehicleData));
+        $('#report_data_text').val(JSON.stringify(reportData));
+        $('#inspection_text').val(JSON.stringify(inspectionText));
+        $('#services_table').val(JSON.stringify(servicesArr));
+        $('#materials_table').val(JSON.stringify(materialsArr));
+        $('#parts_table').val(JSON.stringify(partsArr));
 
         console.timeEnd('FirstWay');
     }); //Конец расчета
