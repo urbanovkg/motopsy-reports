@@ -293,7 +293,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         if (!firstTimePainting) { //Ставим точку в конце окрашиваемых деталей
             paintingText = paintingText.slice(0, -2) + '. ';
         }
-        partsText = partsText.slice(0, -2) + '.'; //Ставим точку в конце списка запчастей
+        if (partsText) {partsText.slice(0, -2) + '.';} //Ставим точку в конце списка запчастей
 
         let fullText = disassemblyText + '<br>' + repairText + '<br>' + paintingText + '<br>' + additionalText + '<br>' + hiddenText + '<br>' + partsText + '<br>'; //Весь текст акта осмотра
 
