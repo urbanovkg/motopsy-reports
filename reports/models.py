@@ -8,41 +8,41 @@ class Report(models.Model):
     inspection_date = models.DateField("Дата осмотра (договора)", default=date.today)
     calculation_date = models.DateField("Дата расчета", default=date.today)
     client_name = models.CharField("Ф.И.О. заказчика", max_length=128, help_text="Введи Ф.И.О. полностью", default="Н/у")
-    PRIVATE = "Частная собственность"
-    MUNICIPAL = "Муниципальная собственность"
-    STATE = "Государственная собственность"
-    UNKNOWN = "Н/у"
+    PRIVATE = "1"
+    MUNICIPAL = "2"
+    STATE = "3"
+    UNKNOWN = "4"
     OWNERSHIP_CHOICES = [
-        (PRIVATE, 'Частная'),
-        (MUNICIPAL, 'Муниципальная'),
-        (STATE, 'Государственная'),
+        (PRIVATE, 'Частная собственность'),
+        (MUNICIPAL, 'Муниципальная собственность'),
+        (STATE, 'Государственная собственность'),
         (UNKNOWN, 'Н/у'),
     ]
-    ownership_identification = models.CharField("Право собственности", max_length=128, choices=OWNERSHIP_CHOICES, default=PRIVATE)
+    ownership_identification = models.CharField("Право собственности", max_length=1, choices=OWNERSHIP_CHOICES, default=PRIVATE)
     inspection_place = models.CharField("Место осмотра:", max_length=128, help_text="Введи хотя бы населенный пункт", default="Н/у")
-    ACCIDENT = "Определение стоимости ущерба, причиненного вследствие дорожно-транспортного происшествия"
-    IGNITION = "Определение стоимости ущерба, причиненного вследствие возгорания транспортного средства"
-    OTHER = "Определение стоимости причиненного ущерба"
+    ACCIDENT = "1"
+    IGNITION = "2"
+    OTHER = "3"
     EVALUATION_CHOICES = [
-        (ACCIDENT, 'ДТП'),
-        (IGNITION, 'Возгорание'),
-        (OTHER, 'Прочий ущерб'),
+        (ACCIDENT, 'Определение стоимости ущерба, причиненного вследствие дорожно-транспортного происшествия'),
+        (IGNITION, 'Определение стоимости ущерба, причиненного вследствие возгорания транспортного средства'),
+        (OTHER, 'Определение стоимости причиненного ущерба'),
     ]
-    evaluation_purpose = models.CharField("Цель оценки", max_length=128, choices=EVALUATION_CHOICES, default=ACCIDENT)
-    REPARATION = "Для возмещения убытков (ст. 14 ГК КР)"
-    INSURANCE = "Для страховой выплаты"
-    MANAGEMENT = "Для принятия управленческих решений"
+    evaluation_purpose = models.CharField("Цель оценки", max_length=1, choices=EVALUATION_CHOICES, default=ACCIDENT)
+    REPARATION = "1"
+    INSURANCE = "2"
+    MANAGEMENT = "3"
     RESULTS_CHOICES = [
         (REPARATION, 'Для возмещения убытков (ст. 14 ГК КР)'),
         (INSURANCE, 'Для страховой выплаты'),
         (MANAGEMENT, 'Для принятия управленческих решений'),
     ]
-    results_purpose = models.CharField("Назначение результатов оценки", max_length=128, choices=RESULTS_CHOICES, default=REPARATION)
-    ONLY_RECOVERY = "Рыночная стоимость восстановления транспортного средства"
-    RECOVERY_WIDTH_APPEARANCE = "Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства"
+    results_purpose = models.CharField("Назначение результатов оценки", max_length=1, choices=RESULTS_CHOICES, default=REPARATION)
+    ONLY_RECOVERY = "1"
+    RECOVERY_WIDTH_APPEARANCE = "2"
     COST_CHOICES = [
-        (ONLY_RECOVERY, 'Рыночная стоимость восстановления'),
-        (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и ТС'),
+        (ONLY_RECOVERY, 'Рыночная стоимость восстановления транспортного средства'),
+        (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства'),
     ]
     cost_type = models.CharField("Вид определяемой стоимости", max_length=128, choices=COST_CHOICES, default=ONLY_RECOVERY)
     contract_price = models.IntegerField("Сумма оплаты (договора)", default=0)
@@ -53,7 +53,7 @@ class Report(models.Model):
     vehicle_vin = models.CharField("Номер кузова (VIN)", max_length=32, default="Н/у")
     vehicle_frame = models.CharField("Номер рамы (шасси)", max_length=32, default="Н/у")
     vehicle_passport = models.CharField("Номер техпаспорта", max_length=32, default="Н/у")
-    vehicle_volume = models.CharField("Объем ДВС", max_length=16, default="")
+    vehicle_volume = models.CharField("Объем ДВС", max_length=16, default="", blank=True)
     vehicle_mileage = models.CharField("Пробег", max_length=16, default="Н/у")
     vehicle_color = models.CharField("Цвет", max_length=32, default="Н/у")
     vehicle_type = models.CharField("Тип ТС", max_length=32, default="Н/у")
@@ -62,16 +62,19 @@ class Report(models.Model):
     vehicle_adress = models.CharField("Адрес регистрации ТС", max_length=256, default="Н/у")
     hourcost = models.IntegerField("Стоимость нормо-часа", default=600)
 
-    disassembly_text = models.TextField("Текст разборок", default="")
-    repair_text = models.TextField("Текст ремонтов", default="")
-    painting_text = models.TextField("Текст окраски", default="")
-    additional_text = models.TextField("Текст доп. работ", default="")
-    hidden_text = models.TextField("Текст скрытых повреждений", default="")
-    parts_text = models.TextField("Текст запчастей", default="")
+    disassembly_text = models.TextField("Текст разборок", default="", blank=True)
+    repair_text = models.TextField("Текст ремонтов", default="", blank=True)
+    painting_text = models.TextField("Текст окраски", default="", blank=True)
+    additional_text = models.TextField("Текст доп. работ", default="", blank=True)
+    hidden_text = models.TextField("Текст скрытых повреждений", default="", blank=True)
+    parts_text = models.TextField("Текст запчастей", default="", blank=True)
 
     services_table = models.TextField("Таблица услуг (JSON)", default = "", blank=True)
     materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
     parts_table = models.TextField("Таблица запчастец (JSON)", default = "", blank=True)
+
+    services_result = models.IntegerField("Всего услуг, сом", default=0)
+    materials_result = models.IntegerField("Всего материалов, сом", default=0)
 
     def publish(self):
         self.save()

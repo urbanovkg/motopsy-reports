@@ -345,8 +345,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                     case 'М': //Материалы
                         materialsArr[materialsCounter] = {
                             text: gluedArr[i].text,
-                            quant: gluedArr[i].quant.toFixed(1),
-                            norm: gluedArr[i].norm.toFixed(2)
+                            quant: gluedArr[i].quant,
+                            norm: gluedArr[i].norm,
+                            cost: gluedArr[i].cost
                         }
 
                         materialsCounter++;
@@ -365,15 +366,17 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                         if (gluedArr[i].action) {
                             servicesArr[servicesCounter - 1] = {
                                 text: gluedArr[i].text + ' – ' + gluedArr[i].action,
-                                quant: gluedArr[i].quant.toFixed(1),
-                                norm: gluedArr[i].norm.toFixed(1)
+                                quant: gluedArr[i].quant,
+                                norm: gluedArr[i].norm,
+                                cost: gluedArr[i].cost
                             }
                             servicesTable += '<tr><td>' + servicesCounter + '</td><td>' + gluedArr[i].text + ' – ' + gluedArr[i].action + '</td><td>' + gluedArr[i].quant.toString().replace('.', ',') + '</td><td>' + gluedArr[i].norm.toFixed(1).replace('.', ',') + '</td><td>' + gluedArr[i].cost.toFixed(2).replace('.', ',') + '</td></tr>';
                         } else {
                             servicesArr[servicesCounter - 1] = {
                                 text: gluedArr[i].text,
-                                quant: gluedArr[i].quant.toFixed(1),
-                                norm: gluedArr[i].norm.toFixed(1)
+                                quant: gluedArr[i].quant,
+                                norm: gluedArr[i].norm,
+                                cost: gluedArr[i].cost
                             }
                             servicesTable += '<tr><td>' + servicesCounter + '</td><td>' + gluedArr[i].text + '</td><td>' + gluedArr[i].quant.toString().replace('.', ',') + '</td><td>' + gluedArr[i].norm.toFixed(1).replace('.', ',') + '</td><td>' + gluedArr[i].cost.toFixed(2).replace('.', ',') + '</td></tr>';
                         }
@@ -400,17 +403,31 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         }
 
         let totalCost = totalServicesCost + totalMaterialsCost;
-
+/*
         $('#finished_text').html(fullText);
         $('#finished_calc').html('<table border="1" cellspacing="0">' + servicesTable + '</table>');
-        $('#total_calc').text('Услуг: ' + totalServicesCost);
         $('#finished_mat').html('<table id="mat_table" border="1" cellspacing="0">' + materialsTable + '</table>');
-        $('#total_mat').text('Материалов: ' + totalMaterialsCost);
-        $('#total_sum').text('Итого: ' + totalCost + ' сом');
         $('#finished_parts').html('<table border="1" cellspacing="0">' + partsTable + '</table>');
+*/
+        $('#total_calc').text('Услуг: ' + totalServicesCost + ' сом');
+        $('#total_mat').text('Материалов: ' + totalMaterialsCost + ' сом');
+        $('#total_sum').text('Всего: ' + totalCost + ' сом');
 
-
-
+        let reportData = {
+            contractnum: $('#contract_number').val(),
+            idate: $('#inspection_date').val(),
+            cdate: $('#calc_date').val(),
+            customer: $('#customer_name').val(),
+            property: $('#property_owner').val(),
+            position: $('#vehicle_location').val(),
+            purpose: $('#evaluation_purpose').val(),
+            appointment: $('#evaluation_appointment').val(),
+            costtype: $('#cost_type').val(),
+            contractcost: $('#contract_cost').val(),
+            costinwords: $('#contract_cost_in_words').val(),
+            servicesres: totalServicesCost,
+            materialsres: totalMaterialsCost
+        }
 
         let vehicleData = {
             model: $('#vehicle_model').val(),
@@ -429,20 +446,6 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             adress: $('#vehicle_adress').val()
         }
 
-        let reportData = {
-            contractnum: $('#contract_number').val(),
-            idate: $('#inspection_date').val(),
-            cdate: $('#calc_date').val(),
-            customer: $('#customer_name').val(),
-            property: $('#property_owner').val(),
-            position: $('#vehicle_location').val(),
-            purpose: $('#evaluation_purpose').val(),
-            appointment: $('#evaluation_appointment').val(),
-            costtype: $('#cost_type').val(),
-            contractcost: $('#contract_cost').val(),
-            costinwords: $('#contract_cost_in_words').val()
-        }
-
         let inspectionText = {
             disassembly: disassemblyText,
             repair: repairText,
@@ -452,13 +455,6 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             parts: partsText
         }
 
-        /*
-                let allData = [vehicleData, reportData,
-                    disassemblyText, repairText, paintingText,additionalText, hiddenText,partsText,
-                    servicesTable, materialsTable, partsTable,
-                    totalMaterialsCost, totalServicesCost];
-        */
-
         $('#vehicle_data_text').val(JSON.stringify(vehicleData));
         $('#report_data_text').val(JSON.stringify(reportData));
         $('#inspection_text').val(JSON.stringify(inspectionText));
@@ -466,9 +462,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         $('#materials_table').val(JSON.stringify(materialsArr));
         $('#parts_table').val(JSON.stringify(partsArr));
 
+        $('#hidden_button, #hidden_field, #hidden_br').show();
+
         console.timeEnd('FirstWay');
     }); //Конец расчета
-
-
-
 }); //Конец события полной загрузки HTML и CSS

@@ -3,13 +3,12 @@
 <html>
 
 <head>
-	<title>Автоотчет в. 0.3</title>
+	<title>Автоотчет в. 0.5</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 
 <body>
-	{% csrf_token %}
 	<div id="navigation_a" class="navigation_l">
 		<a href="#report_info">
 			<div id="report_info_icon" class="square">
@@ -69,15 +68,13 @@
 			<div id="icon_12" class="square">
 			</div>
 		</a>
-		<a href="#photo">
+		<a href="##p13">
 			<div id="icon_13" class="square">
 			</div>
 		</a>
 		<a href="#end">
-
 			<div id="calc_icon" class="square">
 			</div>
-
 		</a>
 	</div>
 	<a name="report_info">
@@ -103,10 +100,10 @@
 		<div class="block">
 			Идентификация имущественных прав:<br>
 			<select id="property_owner" class="full_selectbox">
-				<option selected value="Частная собственность">Частная собственность</option>
-				<option value="Муниципальная собственность">Муниципальная собственность</option>
-				<option value="Государственная собственность">Государственная собственность</option>
-				<option value="Н/у">Н/у</option>
+				<option selected value="1">Частная собственность</option>
+				<option value="2">Муниципальная собственность</option>
+				<option value="3">Государственная собственность</option>
+				<option value="4">Н/у</option>
 			</select>
 		</div>
 		<div class="block">
@@ -116,25 +113,24 @@
 		<div class="block">
 			Цель оценки:<br>
 			<select id="evaluation_purpose" class="full_selectbox">
-				<option selected value="Определение стоимости ущерба, причиненного вследствие дорожно-транспортного происшествия">Ущерб при ДТП</option>
-				<option value="Определение стоимости ущерба, причиненного вследствие возгорания транспортного средства">Возгорание ТС</option>
-				<option value="Определение стоимости ущерба, причиненного вследствие ненадлежащего ремонта транспортного средства">Ненадлежащий ремонт</option>
-				<option value="Определение стоимости причиненного ущерба">Прочий ущерб</option>
+				<option selected value="1">Ущерб при ДТП</option>
+				<option value="2">Возгорание ТС</option>
+				<option value="3">Прочий ущерб</option>
 			</select>
 		</div>
 		<div class="block">
 			Назначение результатов оценки:<br>
 			<select id="evaluation_appointment" class="full_selectbox">
-				<option selected value="Для возмещения убытков (ст. 14 ГК КР)">Для возмещения убытков (ст. 14 ГК КР)</option>
-				<option value="Для страховой выплаты">Для страховой выплаты</option>
-				<option value="Для принятия управленческих решений">Для принятия управленческих решений</option>
+				<option selected value="1">Для возмещения убытков (ст. 14 ГК КР)</option>
+				<option value="2">Для страховой выплаты</option>
+				<option value="3">Для принятия управленческих решений</option>
 			</select>
 		</div>
 		<div class="block">
 			Вид определяемой стоимости:<br>
 			<select id="cost_type" class="full_selectbox">
-				<option selected value="Рыночная стоимость восстановления транспортного средства">Рыночная стоимость восстановления ТС</option>
-				<option value="Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства">Рыночная стоимость восстановления и УТС</option>
+				<option selected value="1">Рыночная стоимость восстановления ТС</option>
+				<option value="2">Рыночная стоимость восстановления и УТС</option>
 			</select>
 		</div>
 		<div class="block">
@@ -146,6 +142,7 @@
 			<input id="contract_cost_in_words" class="text_line" type="text" value="Ноль">
 		</div>
 	</div>
+	<br>
 	<a name="vehicle_info">
 		<h4 class="headline">Данные ТС:</h4>
 	</a>
@@ -533,6 +530,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p02">
 		<h4 class="headline">2. Повреждения кузова:</h4>
 	</a>
@@ -1075,6 +1073,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p03">
 		<h4 class="headline">3. Повреждения передней части:</h4>
 	</a>
@@ -1679,6 +1678,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p04">
 		<h4 class="headline">4. Повреждения моторного отсека:</h4>
 	</a>
@@ -2056,6 +2056,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p05">
 		<h4 class="headline">5. Повреждения центральной части:</h4>
 	</a>
@@ -2386,7 +2387,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2">
+			<input class="norm" type="text" size="10" value="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2399,7 +2400,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2">
+			<input class="norm" type="text" size="10" value="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2412,7 +2413,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2">
+			<input class="norm" type="text" size="10" value="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2425,7 +2426,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2">
+			<input class="norm" type="text" size="10" value="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2529,6 +2530,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p06">
 		<h4 class="headline">6. Повреждения задней части и багажника:</h4>
 	</a>
@@ -2963,6 +2965,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p07">
 		<h4 class="headline">7. Повреждения салона:</h4>
 	</a>
@@ -3366,6 +3369,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p08">
 		<h4 class="headline">8. Повреждения передней ходовой части и рулевого управления:</h4>
 	</a>
@@ -3898,6 +3902,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p09">
 		<h4 class="headline">9. Повреждения задней ходовой части:</h4>
 	</a>
@@ -4329,6 +4334,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p10">
 		<h4 class="headline">10. Малярные работы:</h4>
 	</a>
@@ -4336,7 +4342,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О001">
 			<input class="text_style" type="text" size="40" value="Подбор колера эмали по образцу">
-			<input class="norm" type="text" size="10" value="0.9">
+			<input class="norm" type="text" size="10" value="0.8">
 			<input class="paint" type="text" size="10" value="0">
 			<div class="cost"></div>
 		</div>
@@ -4603,6 +4609,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p11">
 		<h4 class="headline">11. Дополнительные работы:</h4>
 	</a>
@@ -4719,6 +4726,7 @@
 			<div class="cost"></div>
 		</div>
 	</div>
+	<br>
 	<a name="p12">
 		<h4 class="headline">12. Материалы:</h4>
 	</a>
@@ -4885,8 +4893,9 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<a name="photo">
-		<h4 class="headline">12. Скрытые повреждения:</h4>
+	<br>
+	<a name="#p13">
+		<h4 class="headline">12. Возможно скрытые повреждения:</h4>
 	</a>
 	<div id="hidden_damage">
 		<div class="block">
@@ -4896,28 +4905,28 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<h4 class="headline">Заключение:</h4>
+	<br id="hidden_br">
+	<h4 class="headline" id="hidden_field">Заключение:</h4>
 	<div id="intermediate_calc">0 с | 0.0 л</div>
 	<div id="finished_text"></div>
 	<div id="finished_calc"></div>
-	<div id="total_calc"></div>
 	<div id="finished_mat"></div>
-	<div id="total_mat"></div>
-	<div id="total_sum"></div>
 	<div id="finished_parts"></div>
+	<div class="result" id="total_calc"></div>
+	<div class="result" id="total_mat"></div>
+	<div class="result" id="total_sum"></div>
 	<a name="end"></a>
 
 
-	<form method="post" action="{% url 'list' %}">
+	<form method="post" action="{% url 'list' %}" target="_blank">
 		{% csrf_token %}
-		<input id="report_data_text" type="text" name="report_data_text" value="">
-		<input id="vehicle_data_text" type="text" name="vehicle_data_text" value="">
-		<input id="inspection_text" type="text" name="inspection_text" value="">
-		<input id="services_table" type="text" name="services_table" value="">
-		<input id="materials_table" type="text" name="materials_table" value="">
-		<input id="parts_table" type="text" name="parts_table" value="">
-
-		<input type="submit" value="Отправить">
+		<input class="hidden_field" id="report_data_text" type="text" name="report_data_text" value="">
+		<input class="hidden_field" id="vehicle_data_text" type="text" name="vehicle_data_text" value="">
+		<input class="hidden_field" id="inspection_text" type="text" name="inspection_text" value="">
+		<input class="hidden_field" id="services_table" type="text" name="services_table" value="">
+		<input class="hidden_field" id="materials_table" type="text" name="materials_table" value="">
+		<input class="hidden_field" id="parts_table" type="text" name="parts_table" value="">
+		<input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
 	</form>
 
 

@@ -93,6 +93,15 @@ body {
     display: none;
 }
 
+.hidden_field, #hidden_field, #hidden_br {
+    display: none;
+    margin: 0.2em;
+}
+
+.result {
+    margin: 0.2em;
+}
+
 #inv {
     display: none;
 }

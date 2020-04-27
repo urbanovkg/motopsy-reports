@@ -10,7 +10,8 @@
 
     <p>Отчётов в базе данных: {{ num_reports }}</p>
     <br>
-
+    <a href="{% url 'index' %}">Создать новый отчет</a>
+    <br>
     {% for report in reports %}
     <div>
         <small>{{ report.inspection_date }}</small><br>
@@ -18,10 +19,8 @@
         <hr>
     </div>
     {% endfor %}
-
     <br>
-    <a href="{% url 'index' %}">Создать новый отчет</a>
-
+    <a href="{% url 'admin' %}">В админ-панель</a>
     {% endblock %}
 </body>
 
