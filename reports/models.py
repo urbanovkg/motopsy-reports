@@ -8,10 +8,10 @@ class Report(models.Model):
     inspection_date = models.DateField("Дата осмотра (договора)", default=date.today)
     calculation_date = models.DateField("Дата расчета", default=date.today)
     client_name = models.CharField("Ф.И.О. заказчика", max_length=128, help_text="Введи Ф.И.О. полностью", default="Н/у")
-    PRIVATE = "1"
-    MUNICIPAL = "2"
-    STATE = "3"
-    UNKNOWN = "4"
+    PRIVATE = "0"
+    MUNICIPAL = "1"
+    STATE = "2"
+    UNKNOWN = "3"
     OWNERSHIP_CHOICES = [
         (PRIVATE, 'Частная собственность'),
         (MUNICIPAL, 'Муниципальная собственность'),
@@ -20,31 +20,31 @@ class Report(models.Model):
     ]
     ownership_identification = models.CharField("Право собственности", max_length=1, choices=OWNERSHIP_CHOICES, default=PRIVATE)
     inspection_place = models.CharField("Место осмотра:", max_length=128, help_text="Введи хотя бы населенный пункт", default="Н/у")
-    ACCIDENT = "1"
-    IGNITION = "2"
-    OTHER = "3"
+    ACCIDENT = "0"
+    IGNITION = "1"
+    OTHER = "2"
     EVALUATION_CHOICES = [
         (ACCIDENT, 'Определение стоимости ущерба, причиненного вследствие дорожно-транспортного происшествия'),
         (IGNITION, 'Определение стоимости ущерба, причиненного вследствие возгорания транспортного средства'),
         (OTHER, 'Определение стоимости причиненного ущерба'),
     ]
     evaluation_purpose = models.CharField("Цель оценки", max_length=1, choices=EVALUATION_CHOICES, default=ACCIDENT)
-    REPARATION = "1"
-    INSURANCE = "2"
-    MANAGEMENT = "3"
+    REPARATION = "0"
+    INSURANCE = "1"
+    MANAGEMENT = "2"
     RESULTS_CHOICES = [
         (REPARATION, 'Для возмещения убытков (ст. 14 ГК КР)'),
         (INSURANCE, 'Для страховой выплаты'),
         (MANAGEMENT, 'Для принятия управленческих решений'),
     ]
     results_purpose = models.CharField("Назначение результатов оценки", max_length=1, choices=RESULTS_CHOICES, default=REPARATION)
-    ONLY_RECOVERY = "1"
-    RECOVERY_WIDTH_APPEARANCE = "2"
+    ONLY_RECOVERY = "0"
+    RECOVERY_WIDTH_APPEARANCE = "1"
     COST_CHOICES = [
         (ONLY_RECOVERY, 'Рыночная стоимость восстановления транспортного средства'),
         (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства'),
     ]
-    cost_type = models.CharField("Вид определяемой стоимости", max_length=128, choices=COST_CHOICES, default=ONLY_RECOVERY)
+    cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
     contract_price = models.IntegerField("Сумма оплаты (договора)", default=0)
     contract_price_in_words = models.CharField("Сумма оплаты (прописью)", max_length=128, default="Ноль")
     vehicle_model = models.CharField("Марка, модель ТС", max_length=128, default="Н/у")
