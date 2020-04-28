@@ -73,8 +73,8 @@ class Report(models.Model):
     materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
     parts_table = models.TextField("Таблица запчастец (JSON)", default = "", blank=True)
 
-    services_result = models.IntegerField("Всего услуг, сом", default=0)
-    materials_result = models.IntegerField("Всего материалов, сом", default=0)
+    services_result = models.CharField("Всего услуг, сом", max_length=32, default=0)
+    materials_result = models.CharField("Всего материалов, сом", max_length=32, default=0)
 
     def publish(self):
         self.save()

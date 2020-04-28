@@ -11,11 +11,13 @@
     <p>Отчётов в базе данных: {{ num_reports }}</p>
     <br>
     <a href="{% url 'index' %}">Создать новый отчет</a>
-    <br>
+    <br><br>
     {% for report in reports %}
     <div>
         <small>{{ report.inspection_date }}</small><br>
-        <b><a href="{% url 'report_create' pk=report.pk %}">{{ report.report_number }} {{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</a></b>
+        <b><a href="{% url 'report_create' pk=report.pk %}">{{ report.report_number }} {{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</a></b>&emsp;
+        <a href="{% url 'contract_create' pk=report.pk %}">Договор</a>&emsp;
+        <a href="{% url 'cash_document' pk=report.pk %}">Квитанция</a>
         <hr>
     </div>
     {% endfor %}

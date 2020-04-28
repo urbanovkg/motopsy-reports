@@ -45,7 +45,6 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         return isFinite(n) && n === String(parseFloat(n));
     }
 
-
     $('#cost_per_hour').on('change', function() { //Событие при изменении поля стоимости нормо-часа (тип класса)
         if (isNumeric($(this).val())) { //Если число
             costValue = $(this).val();
@@ -109,8 +108,6 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         calcTempPaint();
     });
 
-
-
     function calcTempQuant(element) { //Функция предварительного подсчета
         let costElement = $(element).nextAll('.cost'); //Элемент "стоимость блока"
         let costElVal = parseFloat(costElement.text()); //Стоимость блока
@@ -162,6 +159,14 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     });
 
 
+
+    let re = /(?=\B(?:\d{3})+(?!\d))/g;
+    let formatted = '';
+    function formatting(number) { //Функция превращения числа в строку формата "1 280 154,00"
+        formatted = number.toString().replace( re, ' ' ).replace('.', ',');
+        return formatted;
+    }
+
     $('#calc_icon').on('click', function() { //Событие при щелчке на элементе с id=calc_icon
         console.time('FirstWay'); //Измеряем скорость. Можно посмотреть в консоли
 
@@ -175,7 +180,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         let idFirstSymbol; //Первый символ отмеченного ID
         let firstTimePainting = true; //Первое срабатывание цикла при обнаружении слова "Окраска"
 
-        $('input:checkbox:checked').each(function(i, elem) { //ПЕРЕБИРАЕМ КАЖДЫЙ ОТМЕЧЕННЫЙ ФЛАЖОК
+        $('input:checkbox:checked').each(function(i, elem) { //Перебираем каждый отмеченный флажок
             fullArr[i] = { //Записываем всё в массив объектов
                 id: $(this).val(), //Записываем значение каждого отмеченного флажка
                 text: $(this).next('input').val(), //Текст около флажка
@@ -338,6 +343,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         let partsArr = []; //Массив для хранения данных таблицы запчастей
         let partsCounter = 0;
         let partsTable = ''; //Переменная для хранения таблицы запчастей
+
+
         for (let i = 0; i < gluedArrLength; i++) {
             if (gluedArr[i].cost > 0) { //ТАБЛИЦЫ УСЛУГ И МАТЕРИАЛОВ
                 idFirstSymbol = gluedArr[i].id.charAt(0);
@@ -345,9 +352,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                     case 'М': //Материалы
                         materialsArr[materialsCounter] = {
                             text: gluedArr[i].text,
-                            quant: gluedArr[i].quant,
-                            norm: gluedArr[i].norm,
-                            cost: gluedArr[i].cost
+                            quant: formatting(gluedArr[i].quant),
+                            norm: formatting(gluedArr[i].norm),
+                            cost: formatting(gluedArr[i].cost)
                         }
 
                         materialsCounter++;
@@ -359,24 +366,20 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                         servicesCounter++;
                         totalServicesCost += gluedArr[i].cost;
 
-                        //gluedArr[i].cost = gluedArr[i].cost.toFixed(2).replace('.', ',');
-                        //gluedArr[i].quant = gluedArr[i].quant.toFixed(0).replace('.', ',');
-                        //gluedArr[i].norm = gluedArr[i].norm.toFixed(1).replace('.', ',');
-
                         if (gluedArr[i].action) {
                             servicesArr[servicesCounter - 1] = {
                                 text: gluedArr[i].text + ' – ' + gluedArr[i].action,
-                                quant: gluedArr[i].quant,
-                                norm: gluedArr[i].norm,
-                                cost: gluedArr[i].cost
+                                quant: formatting(gluedArr[i].quant),
+                                norm: formatting(gluedArr[i].norm),
+                                cost: formatting(gluedArr[i].cost)
                             }
                             servicesTable += '<tr><td>' + servicesCounter + '</td><td>' + gluedArr[i].text + ' – ' + gluedArr[i].action + '</td><td>' + gluedArr[i].quant.toString().replace('.', ',') + '</td><td>' + gluedArr[i].norm.toFixed(1).replace('.', ',') + '</td><td>' + gluedArr[i].cost.toFixed(2).replace('.', ',') + '</td></tr>';
                         } else {
                             servicesArr[servicesCounter - 1] = {
                                 text: gluedArr[i].text,
-                                quant: gluedArr[i].quant,
-                                norm: gluedArr[i].norm,
-                                cost: gluedArr[i].cost
+                                quant: formatting(gluedArr[i].quant),
+                                norm: formatting(gluedArr[i].norm),
+                                cost: formatting(gluedArr[i].cost)
                             }
                             servicesTable += '<tr><td>' + servicesCounter + '</td><td>' + gluedArr[i].text + '</td><td>' + gluedArr[i].quant.toString().replace('.', ',') + '</td><td>' + gluedArr[i].norm.toFixed(1).replace('.', ',') + '</td><td>' + gluedArr[i].cost.toFixed(2).replace('.', ',') + '</td></tr>';
                         }
@@ -389,13 +392,13 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                 if (gluedArr[i].position) {
                     partsArr[partsCounter - 1] = {
                         text: gluedArr[i].text + ' ' + gluedArr[i].position,
-                        quant: gluedArr[i].quant
+                        quant: formatting(gluedArr[i].quant)
                     }
                     partsTable += '<tr><td>' + partsCounter + '</td><td>' + gluedArr[i].text + ' ' + gluedArr[i].position + '</td><td>' + gluedArr[i].quant + '</td><td>0,00</td><td>0,00</td></tr>';
                 } else {
                     partsArr[partsCounter - 1] = {
                         text: gluedArr[i].text,
-                        quant: gluedArr[i].quant
+                        quant: formatting(gluedArr[i].quant)
                     }
                     partsTable += '<tr><td>' + partsCounter + '</td><td>' + gluedArr[i].text + '</td><td>' + gluedArr[i].quant + '</td><td>0,00</td><td>0,00</td></tr>';
                 }
@@ -409,6 +412,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         $('#finished_mat').html('<table id="mat_table" border="1" cellspacing="0">' + materialsTable + '</table>');
         $('#finished_parts').html('<table border="1" cellspacing="0">' + partsTable + '</table>');
 */
+
         $('#total_calc').text('Услуг: ' + totalServicesCost + ' сом');
         $('#total_mat').text('Материалов: ' + totalMaterialsCost + ' сом');
         $('#total_sum').text('Всего: ' + totalCost + ' сом');
@@ -425,8 +429,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             costtype: $('#cost_type').val(),
             contractcost: $('#contract_cost').val(),
             costinwords: $('#contract_cost_in_words').val(),
-            servicesres: totalServicesCost,
-            materialsres: totalMaterialsCost
+            servicesres: formatting(totalServicesCost),
+            materialsres: formatting(totalMaterialsCost)
         }
 
         let vehicleData = {
