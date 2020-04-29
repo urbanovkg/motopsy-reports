@@ -44,12 +44,11 @@ def is_json(myjson):
 def report_create(request, pk):
     all_report = get_object_or_404(Report, pk=pk)
 
-    doc = DocxTemplate(settings.MEDIA_ROOT + "/report.docx")
-
     services_table_list = is_json(all_report.services_table)
     materials_table_list = is_json(all_report.materials_table)
     parts_table_list = is_json(all_report.parts_table)
 
+    doc = DocxTemplate(settings.MEDIA_ROOT + "/report.docx")
     context = {'contract_number' : all_report.report_number, 'inspection_date': dateformat.format(all_report.inspection_date, settings.DATE_FORMAT) + ' г.', 'calc_date': dateformat.format(all_report.calculation_date, settings.DATE_FORMAT) + ' г.' , 'customer_name': all_report.client_name, 'property_owner': Report.OWNERSHIP_CHOICES[int(all_report.ownership_identification)][1], 'vehicle_location': all_report.inspection_place , 'evaluation_purpose': Report.EVALUATION_CHOICES[int(all_report.evaluation_purpose)][1], 'evaluation_appointment': Report.RESULTS_CHOICES[int(all_report.results_purpose)][1], 'cost_type': Report.COST_CHOICES[int(all_report.cost_type)][1],'cost_type_id': all_report.cost_type, 'contract_cost': all_report.contract_price,  'vehicle_model': all_report.vehicle_model, 'vehicle_year': all_report.vehicle_year, 'vehicle_number': all_report.vehicle_regnum, 'vehicle_vin': all_report.vehicle_vin, 'vehicle_frame': all_report.vehicle_frame, 'vehicle_passport': all_report.vehicle_passport, 'vehicle_engine_volume': all_report.vehicle_volume, 'vehicle_mileage': all_report.vehicle_mileage, 'vehicle_color': all_report.vehicle_color, 'vehicle_type': all_report.vehicle_type, 'vehicle_body_type': all_report.vehicle_body, 'cost_per_hour': all_report.hourcost, 'vehicle_owner': all_report.vehicle_owner, 'vehicle_adress': all_report.vehicle_adress, 'disassembly': all_report.disassembly_text, 'repair': all_report.repair_text, 'painting': all_report.painting_text, 'additional': all_report.additional_text, 'hidden': all_report.hidden_text, 'parts': all_report.parts_text, 'services_table': services_table_list, 'materials_table': materials_table_list, 'parts_table': parts_table_list, 's_result': all_report.services_result, 'm_result': all_report.materials_result,}
     doc.render(context)
     byte_io = BytesIO()
@@ -69,9 +68,64 @@ def contract_create(request, pk):
 
 def cash_document(request, pk):
     all_report = get_object_or_404(Report, pk=pk)
+    services_table_list = is_json(all_report.services_table)
+    materials_table_list = is_json(all_report.materials_table)
+    parts_table_list = is_json(all_report.parts_table)
     wb = load_workbook(settings.MEDIA_ROOT + "/excel.xlsx")
     activeSheet = wb.active
-    activeSheet["B2"] = "Проверка Проверкович"
+    activeSheet["B2"] = all_report.client_name
+    activeSheet["B3"] = all_report.report_number
+    activeSheet["B5"] = all_report.vehicle_model
+    activeSheet["B6"] = all_report.vehicle_regnum
+    activeSheet["B7"] = all_report.vehicle_vin
+    activeSheet["B8"] = all_report.vehicle_frame
+    activeSheet["B9"] = all_report.vehicle_passport
+    activeSheet["B10"] = all_report.vehicle_year
+    activeSheet["B11"] = all_report.vehicle_volume
+    activeSheet["B12"] = all_report.vehicle_mileage
+    activeSheet["B13"] = all_report.vehicle_color
+    activeSheet["B14"] = all_report.vehicle_type + ' ' + all_report.vehicle_body
+    activeSheet["B16"] = Report.OWNERSHIP_CHOICES[int(all_report.ownership_identification)][1]
+    activeSheet["B17"] = all_report.vehicle_owner
+    activeSheet["B18"] = all_report.vehicle_adress
+    activeSheet["B19"] = all_report.inspection_place
+    activeSheet["B20"] = all_report.inspection_date
+    activeSheet["B21"] = all_report.calculation_date
+    activeSheet["B22"] = Report.EVALUATION_CHOICES[int(all_report.evaluation_purpose)][1]
+    activeSheet["B23"] = Report.RESULTS_CHOICES[int(all_report.results_purpose)][1]
+    activeSheet["B24"] = Report.COST_CHOICES[int(all_report.cost_type)][1]
+    activeSheet["B34"] = all_report.contract_price
+    activeSheet["B35"] = all_report.contract_price_in_words + ', 00 тыйын'
+    activeSheet["B36"] = all_report.hourcost
+    damageSheet = wb.worksheets[5]
+
+    servicesLen = len(services_table_list)
+    for elem in range(servicesLen):
+        damageSheet.cell(column=1, row=elem+2, value=elem+1)
+        damageSheet.cell(column=2, row=elem+2, value=services_table_list[elem]['text'])
+        damageSheet.cell(column=3, row=elem+2, value=services_table_list[elem]['quant'])
+        damageSheet.cell(column=4, row=elem+2, value=services_table_list[elem]['norm'])
+        damageSheet.cell(column=5, row=elem+2, value='=C{}'.format(elem+2)+'*D{}*G2'.format(elem+2))
+    materialsLen = len(materials_table_list)
+    materialsStartRow = servicesLen+4
+    damageSheet.cell(column=2, row=materialsStartRow-1, value='Материалы')
+    for elem in range(materialsLen):
+        damageSheet.cell(column=1, row=elem+materialsStartRow, value=elem+1)
+        damageSheet.cell(column=2, row=elem+materialsStartRow, value=materials_table_list[elem]['text'])
+        damageSheet.cell(column=3, row=elem+materialsStartRow, value=materials_table_list[elem]['quant'])
+        damageSheet.cell(column=4, row=elem+materialsStartRow, value=materials_table_list[elem]['norm'])
+        damageSheet.cell(column=5, row=elem+materialsStartRow, value='=C{}'.format(elem+materialsStartRow)+'*D{}'.format(elem+materialsStartRow))
+    partsLen = len(parts_table_list)
+    partsStartRow = materialsLen+materialsStartRow+2
+    damageSheet.cell(column=2, row=partsStartRow-1, value='Запасные части')
+    for elem in range(partsLen):
+        damageSheet.cell(column=1, row=elem+partsStartRow, value=elem+1)
+        damageSheet.cell(column=2, row=elem+partsStartRow, value=parts_table_list[elem]['text'])
+        damageSheet.cell(column=3, row=elem+partsStartRow, value=parts_table_list[elem]['quant'])
+        damageSheet.cell(column=4, row=elem+partsStartRow, value=0)
+        damageSheet.cell(column=5, row=elem+partsStartRow, value='=C{}'.format(elem+partsStartRow)+'*D{}'.format(elem+partsStartRow))
+    damageSheet["H2"] = all_report.services_result
+    damageSheet["I2"] = all_report.materials_result
     byte_io = BytesIO()
     wb.save(byte_io)
     byte_io.seek(0)
