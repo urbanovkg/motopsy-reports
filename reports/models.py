@@ -45,7 +45,7 @@ class Report(models.Model):
         (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства'),
     ]
     cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
-    contract_price = models.IntegerField("Сумма оплаты (договора)", default=0)
+    contract_price = models.CharField("Сумма оплаты (договора)", max_length=32, default="0")
     contract_price_in_words = models.CharField("Сумма оплаты (прописью)", max_length=128, default="Ноль")
     vehicle_model = models.CharField("Марка, модель ТС", max_length=128, default="Н/у")
     vehicle_year = models.CharField("Год выпуска", max_length=4, default="Н/у")
@@ -53,8 +53,8 @@ class Report(models.Model):
     vehicle_vin = models.CharField("Номер кузова (VIN)", max_length=32, default="Н/у")
     vehicle_frame = models.CharField("Номер рамы (шасси)", max_length=32, default="Н/у")
     vehicle_passport = models.CharField("Номер техпаспорта", max_length=32, default="Н/у")
-    vehicle_volume = models.CharField("Объем ДВС", max_length=16, default="", blank=True)
-    vehicle_mileage = models.CharField("Пробег", max_length=16, default="Н/у")
+    vehicle_volume = models.CharField("Объем ДВС", max_length=32, default="", blank=True)
+    vehicle_mileage = models.CharField("Пробег", max_length=32, default="Н/у")
     vehicle_color = models.CharField("Цвет", max_length=32, default="Н/у")
     vehicle_type = models.CharField("Тип ТС", max_length=32, default="Н/у")
     vehicle_body = models.CharField("Тип кузова ТС", max_length=32, default="Н/у")

@@ -250,9 +250,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                             firstTimePainting = false;
                         } else { // Остальные разы убираем слово "Окраска"
                             if (fullArr[i].position) {
-                                paintingText += fullArr[i].text.slice(7) + ' ' + fullArr[i].position + '; ';
+                                paintingText += fullArr[i].text.slice(7) + ' ' + fullArr[i].position + ';';
                             } else {
-                                paintingText += fullArr[i].text.slice(7) + '; ';
+                                paintingText += fullArr[i].text.slice(7) + ';';
                             }
                         }
                     } else { //Если прочее в разделе "окраска"
@@ -297,7 +297,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         }); //Конец перебора флажков
 
         if (!firstTimePainting) { //Ставим точку в конце окрашиваемых деталей
-            paintingText = paintingText.slice(0, -2) + '. ';
+            paintingText = paintingText.slice(0, -1) + '. ';
         }
         if (partsText) {partsText=partsText.slice(0, -2) + '.';} //Ставим точку в конце списка запчастей
 
