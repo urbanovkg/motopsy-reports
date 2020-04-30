@@ -145,26 +145,29 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     if (mes < 10) {
         mes = '0' + mes;
     } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
+    if (chi < 10) {
+        chi = '0' + chi;
+    } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
 
-    $('#inspection_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата оценки
-    $('#calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата расчета
+    $('#inspection_date, #calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата оценки
+    //$('#calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата расчета
     $('#contract_number').val('000-' + mes + '/' + god); //Номер договора
 
     $('.action_type_half').on('change', function() { //Событие при изменении разборок
         $(this).siblings('.text_style_hide').val($('option:selected', this).val() + $(this).siblings('.text_style_half').val()); //Записываем выбранный текст в скрытое поле
     });
 
-/*
-    $('#icon_13').on('click', function() { //Выделяем все флажки ВРЕМЕННО
-        $('input:checkbox').attr('checked', 'checked');
-    });
-*/
-
+    /*
+        $('#icon_13').on('click', function() { //Выделяем все флажки ВРЕМЕННО
+            $('input:checkbox').attr('checked', 'checked');
+        });
+    */
 
     let re = /(?=\B(?:\d{3})+(?!\d))/g;
     let formatted = '';
+
     function formatting(number) { //Функция превращения числа в строку формата "1 280 154,00"
-        formatted = number.toString().replace( re, ' ' ).replace('.', ',');
+        formatted = number.toString().replace(re, ' ').replace('.', ',');
         return formatted;
     }
 
@@ -299,7 +302,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         if (!firstTimePainting) { //Ставим точку в конце окрашиваемых деталей
             paintingText = paintingText.slice(0, -1) + '. ';
         }
-        if (partsText) {partsText=partsText.slice(0, -2) + '.';} //Ставим точку в конце списка запчастей
+        if (partsText) {
+            partsText = partsText.slice(0, -2) + '.';
+        } //Ставим точку в конце списка запчастей
 
         let fullText = disassemblyText + '<br>' + repairText + '<br>' + paintingText + '<br>' + additionalText + '<br>' + hiddenText + '<br>' + partsText + '<br>'; //Весь текст акта осмотра
 
@@ -407,12 +412,12 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         }
 
         let totalCost = totalServicesCost + totalMaterialsCost;
-/*
-        $('#finished_text').html(fullText);
-        $('#finished_calc').html('<table border="1" cellspacing="0">' + servicesTable + '</table>');
-        $('#finished_mat').html('<table id="mat_table" border="1" cellspacing="0">' + materialsTable + '</table>');
-        $('#finished_parts').html('<table border="1" cellspacing="0">' + partsTable + '</table>');
-*/
+        /*
+                $('#finished_text').html(fullText);
+                $('#finished_calc').html('<table border="1" cellspacing="0">' + servicesTable + '</table>');
+                $('#finished_mat').html('<table id="mat_table" border="1" cellspacing="0">' + materialsTable + '</table>');
+                $('#finished_parts').html('<table border="1" cellspacing="0">' + partsTable + '</table>');
+        */
 
         $('#total_calc').text('Услуг: ' + totalServicesCost + ' сом');
         $('#total_mat').text('Материалов: ' + totalMaterialsCost + ' сом');
