@@ -154,10 +154,11 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         $(this).siblings('.text_style_hide').val($('option:selected', this).val() + $(this).siblings('.text_style_half').val()); //Записываем выбранный текст в скрытое поле
     });
 
+/*
     $('#icon_13').on('click', function() { //Выделяем все флажки ВРЕМЕННО
         $('input:checkbox').attr('checked', 'checked');
     });
-
+*/
 
 
     let re = /(?=\B(?:\d{3})+(?!\d))/g;

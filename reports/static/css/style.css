@@ -108,7 +108,7 @@ body {
 
 .action_type_half {
     float: left;
-    width: calc(45% - 1.5em);
+    width: 5.9em;
     height: 1.25em;
     margin: 0 0.1em 0.1em 0;
     background: white;
@@ -117,7 +117,7 @@ body {
 
 .text_style_half {
     float: left;
-    width: calc(55% - 1.5em);
+    width: calc(100% - 8.9em);
     border: 0;
     height: 1.125em;
     margin-bottom: 0.1em;
@@ -177,6 +177,10 @@ body {
 .text_line, .dates {
     width: calc(100% - 0.2em);
     margin-top: 0.1em;
+}
+
+.dates {
+    height: 1.125em;
 }
 
 .half_selectbox {
