@@ -44,9 +44,9 @@ body {
 #intermediate_calc {
     position: fixed;
     bottom: 3em;
-    right: 3em;
+    right: 3.5em;
     background: green;
-    padding: 0.2em;
+    padding: 0.1em;
     opacity: .8;
 }
 
