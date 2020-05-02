@@ -78,10 +78,13 @@
 			</div>
 		</a>
 	</div>
-	<a name="report_info">
-		<h4 class="headline">Данные отчета:</h4>
-	</a>
-	<div id="report_data">
+
+	<div id="report_data" class="section">
+		<a name="report_info">
+			<div class="empty_div" id="first_empty_div"></div>
+			<h4 class="headline">Данные отчета:</h4>
+		</a>
+
 		<div class="block">
 			Договор №:<br>
 			<input class="text_line" id="contract_number" type="text" value="Н/у">
@@ -143,11 +146,13 @@
 			<input id="contract_cost_in_words" class="text_line" type="text" value="Ноль">
 		</div>
 	</div>
-	<br>
-	<a name="vehicle_info">
-		<h4 class="headline">Данные ТС:</h4>
-	</a>
-	<div id="vehicle_data">
+
+	<div id="vehicle_data" class="section">
+		<a name="vehicle_info">
+			<div class="empty_div"></div>
+			<h4 class="headline">Данные ТС:</h4>
+		</a>
+
 		<div class="block">
 			Марка/модель:<br>
 			<input id="vehicle_model" class="text_line" type="text" value="Н/у">
@@ -230,11 +235,13 @@
 			<input id="vehicle_adress" class="text_line" type="text" value="Н/у">
 		</div>
 	</div>
-	<br>
-	<a name="p01">
-		<h4 class="headline">1. Разборки/сборки:</h4>
-	</a>
-	<div id="uninstall_install">
+
+	<div id="uninstall_install" class="section">
+		<a name="p01">
+			<div class="empty_div"></div>
+			<h4 class="headline">1. Разборки/сборки:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option1" value="Р001">
 			<input class="text_style" type="text" size="40" value="Разборка/сборка для ремонта и полной окраски /замены каркаса кузова">
@@ -531,11 +538,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p02">
-		<h4 class="headline">2. Повреждения кузова:</h4>
-	</a>
-	<div id="body_damage">
+
+	<div id="body_damage" class="section">
+		<a name="p02">
+			<div class="empty_div"></div>
+			<h4 class="headline">2. Повреждения кузова:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К025">
 			<input class="text_style" type="text" size="40" value="Устранение перекоса кузова">
@@ -1074,11 +1083,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p03">
-		<h4 class="headline">3. Повреждения передней части:</h4>
-	</a>
-	<div id="front_damage">
+
+	<div id="front_damage" class="section">
+		<a name="p03">
+			<div class="empty_div"></div>
+			<h4 class="headline">3. Повреждения передней части:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З101">
 			<input class="text_style" type="text" size="40" value="Облицовка радиатора">
@@ -1464,32 +1475,6 @@
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З114">
-			<input class="text_style" type="text" size="40" value="Боковое наружное зеркало заднего вида">
-			<input class="position" type="text" size="10" value="левое">
-			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.5">ремонт №2</option>
-				<option value="3">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" size="10" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З114">
-			<input class="text_style" type="text" size="40" value="Боковое наружное зеркало заднего вида">
-			<input class="position" type="text" size="10" value="правое">
-			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.5">ремонт №2</option>
-				<option value="3">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" size="10" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З115">
 			<input class="text_style" type="text" size="40" value="Накладка арки переднего крыла">
 			<input class="position" type="text" size="10" value="левая">
@@ -1593,43 +1578,7 @@
 			<input class="norm" type="text" size="10" value="0">
 			<div class="cost"></div>
 		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З118">
-			<input class="text_style" type="text" size="40" value="Ветровое стекло">
-			<select class="action_type">
-				<option value="2">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="2">ремонт №3</option>
-				<option selected value="2">замена</option>
-				<option value="2">снять/установить</option>
-			</select>
-			<input class="norm" type="text" size="10" value="2">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З119">
-			<input class="text_style" type="text" size="40" value="Панель стеклоочистителя ветрового стекла">
-			<select class="action_type">
-				<option value="0.5">ремонт №1</option>
-				<option value="1">ремонт №2</option>
-				<option value="3">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" size="10" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З120">
-			<input class="text_style" type="text" size="40" value="Щетки стеклоочистителя ветрового стекла">
-			<select class="action_type">
-				<option value="0.2">ремонт №1</option>
-				<option value="0.4">ремонт №2</option>
-				<option value="0.6">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" size="10" value="0">
-			<div class="cost"></div>
-		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З121">
 			<input class="text_style" type="text" size="40" value="Петли капота">
@@ -1679,11 +1628,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p04">
-		<h4 class="headline">4. Повреждения моторного отсека:</h4>
-	</a>
-	<div id="engine_damage">
+
+	<div id="engine_damage" class="section">
+		<a name="p04">
+			<div class="empty_div"></div>
+			<h4 class="headline">4. Повреждения моторного отсека:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З401">
 			<input class="text_style" type="text" size="40" value="Радиатор основной">
@@ -2057,11 +2008,75 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p05">
-		<h4 class="headline">5. Повреждения центральной части:</h4>
-	</a>
-	<div id="center_damage">
+
+	<div id="center_damage" class="section">
+		<a name="p05">
+			<div class="empty_div"></div>
+			<h4 class="headline">5. Повреждения центральной части:</h4>
+		</a>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З118">
+			<input class="text_style" type="text" size="40" value="Ветровое стекло">
+			<select class="action_type">
+				<option value="2">ремонт №1</option>
+				<option value="2">ремонт №2</option>
+				<option value="2">ремонт №3</option>
+				<option selected value="2">замена</option>
+				<option value="2">снять/установить</option>
+			</select>
+			<input class="norm" type="text" size="10" value="2">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З119">
+			<input class="text_style" type="text" size="40" value="Панель стеклоочистителя ветрового стекла">
+			<select class="action_type">
+				<option value="0.5">ремонт №1</option>
+				<option value="1">ремонт №2</option>
+				<option value="3">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" size="10" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З120">
+			<input class="text_style" type="text" size="40" value="Щетки стеклоочистителя ветрового стекла">
+			<select class="action_type">
+				<option value="0.2">ремонт №1</option>
+				<option value="0.4">ремонт №2</option>
+				<option value="0.6">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" size="10" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З114">
+			<input class="text_style" type="text" size="40" value="Боковое наружное зеркало заднего вида">
+			<input class="position" type="text" size="10" value="левое">
+			<select class="action_type">
+				<option value="0.6">ремонт №1</option>
+				<option value="1.5">ремонт №2</option>
+				<option value="3">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" size="10" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З114">
+			<input class="text_style" type="text" size="40" value="Боковое наружное зеркало заднего вида">
+			<input class="position" type="text" size="10" value="правое">
+			<select class="action_type">
+				<option value="0.6">ремонт №1</option>
+				<option value="1.5">ремонт №2</option>
+				<option value="3">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" size="10" value="0">
+			<div class="cost"></div>
+		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З201">
 			<input class="text_style" type="text" size="40" value="Стекло опускное передней двери">
@@ -2531,11 +2546,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p06">
-		<h4 class="headline">6. Повреждения задней части и багажника:</h4>
-	</a>
-	<div id="back_damage">
+
+	<div id="back_damage" class="section">
+		<a name="p06">
+			<div class="empty_div"></div>
+			<h4 class="headline">6. Повреждения задней части и багажника:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З301">
 			<input class="text_style" type="text" size="40" value="Накладка арки заднего крыла">
@@ -2966,11 +2983,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p07">
-		<h4 class="headline">7. Повреждения салона:</h4>
-	</a>
-	<div id="saloon_damage">
+
+	<div id="saloon_damage" class="section">
+		<a name="p07">
+			<div class="empty_div"></div>
+			<h4 class="headline">7. Повреждения салона:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З501">
 			<input class="text_style" type="text" size="40" value="Панель приборов">
@@ -3370,11 +3389,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p08">
-		<h4 class="headline">8. Повреждения передней ходовой части и рулевого управления:</h4>
-	</a>
-	<div id="frontwheel">
+
+	<div id="frontwheel" class="section">
+		<a name="p08">
+			<div class="empty_div"></div>
+			<h4 class="headline">8. Повреждения передней ходовой части и рулевого управления:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="П101">
 			<input class="text_style" type="text" size="40" value="Верхняя опора передняя">
@@ -3903,11 +3924,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p09">
-		<h4 class="headline">9. Повреждения задней ходовой части:</h4>
-	</a>
-	<div id="rearwheel">
+
+	<div id="rearwheel" class="section">
+		<a name="p09">
+			<div class="empty_div"></div>
+			<h4 class="headline">9. Повреждения задней ходовой части:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="П201">
 			<input class="text_style" type="text" size="40" value="Пружина задняя">
@@ -4335,11 +4358,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p10">
-		<h4 class="headline">10. Малярные работы:</h4>
-	</a>
-	<div id="painting_work">
+
+	<div id="painting_work" class="section">
+		<a name="p10">
+			<div class="empty_div"></div>
+			<h4 class="headline">10. Малярные работы:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О001">
 			<input class="text_style" type="text" size="40" value="Подбор колера эмали по образцу">
@@ -4395,8 +4420,8 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О008">
 			<input class="text_style" type="text" size="40" value="Окраска рамы">
-			<input class="norm" type="text" size="10" value="13.2">
-			<input class="paint" type="text" size="10" value="1.5">
+			<input class="norm" type="text" size="10" value="25.1">
+			<input class="paint" type="text" size="10" value="1">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -4610,11 +4635,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p11">
-		<h4 class="headline">11. Дополнительные работы:</h4>
-	</a>
-	<div id="additional_work">
+
+	<div id="additional_work" class="section">
+		<a name="p11">
+				<div class="empty_div"></div>
+			<h4 class="headline">11. Дополнительные работы:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="Д001">
 			<input class="text_style" type="text" size="40" value="Полировка кузова">
@@ -4727,11 +4754,13 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p12">
-		<h4 class="headline">12. Материалы:</h4>
-	</a>
-	<div id="materials">
+
+	<div id="materials" class="section">
+		<a name="p12">
+				<div class="empty_div"></div>
+			<h4 class="headline">12. Материалы:</h4>
+		</a>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М101">
 			<input class="text_style" type="text" size="40" value="Шпатлевка, кг">
@@ -4894,11 +4923,12 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br>
-	<a name="p13">
-		<h4 class="headline">12. Возможно скрытые повреждения:</h4>
-	</a>
-	<div id="hidden_damage">
+
+	<div id="hidden_damage" class="section">
+		<a name="p13">
+			<div class="empty_div"></div>
+			<h4 class="headline">13. Возможно скрытые повреждения:</h4>
+		</a>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="С001">
 			<input class="text_style" type="text" size="40" value="Проверить работу двигателя и коробки передач не представляется возможным, поскольку они смещены с посадочного места, разбит радиатор и неисправно электрооборудование">
@@ -4906,30 +4936,33 @@
 			<div class="cost"></div>
 		</div>
 	</div>
-	<br id="hidden_br">
-	<h4 class="headline" id="hidden_field">Заключение:</h4>
+
+	<div id="all_results" class="section">
+		<a name="end">
+			<div class="empty_div"></div>
+			<h4 class="headline" id="hidden_field">Заключение:</h4>
+		</a>
+		<div id="finished_text"></div>
+		<div id="finished_calc"></div>
+		<div id="finished_mat"></div>
+		<div id="finished_parts"></div>
+		<div class="result" id="total_calc"></div>
+		<div class="result" id="total_mat"></div>
+		<div class="result" id="total_sum"></div>
+
+		<form method="post" action="{% url 'list' %}" target="_blank">
+			{% csrf_token %}
+			<input class="hidden_field" id="report_data_text" type="text" name="report_data_text" value="">
+			<input class="hidden_field" id="vehicle_data_text" type="text" name="vehicle_data_text" value="">
+			<input class="hidden_field" id="inspection_text" type="text" name="inspection_text" value="">
+			<input class="hidden_field" id="services_table" type="text" name="services_table" value="">
+			<input class="hidden_field" id="materials_table" type="text" name="materials_table" value="">
+			<input class="hidden_field" id="parts_table" type="text" name="parts_table" value="">
+			<input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
+		</form>
+	</div>
+
 	<div id="intermediate_calc">0 с | 0.0 л</div>
-	<div id="finished_text"></div>
-	<div id="finished_calc"></div>
-	<div id="finished_mat"></div>
-	<div id="finished_parts"></div>
-	<div class="result" id="total_calc"></div>
-	<div class="result" id="total_mat"></div>
-	<div class="result" id="total_sum"></div>
-	<a name="end"></a>
-
-
-	<form method="post" action="{% url 'list' %}" target="_blank">
-		{% csrf_token %}
-		<input class="hidden_field" id="report_data_text" type="text" name="report_data_text" value="">
-		<input class="hidden_field" id="vehicle_data_text" type="text" name="vehicle_data_text" value="">
-		<input class="hidden_field" id="inspection_text" type="text" name="inspection_text" value="">
-		<input class="hidden_field" id="services_table" type="text" name="services_table" value="">
-		<input class="hidden_field" id="materials_table" type="text" name="materials_table" value="">
-		<input class="hidden_field" id="parts_table" type="text" name="parts_table" value="">
-		<input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
-	</form>
-
 
 	<script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
 	<script src="{% static 'js/script.js' %}"></script>

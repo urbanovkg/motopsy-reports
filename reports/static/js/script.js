@@ -80,6 +80,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             $(this).val(0);
             setCost(tn);
         }
+        if ($(this).nextAll('.paint')) {calcTempPaint();}
     });
 
     let intPaint = 0;
@@ -92,12 +93,15 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         calcTempPaint();
     });
 
-    function calcTempPaint() {
+    function calcTempPaint() { //Функция расчета количества краски
         console.time('Расчет количества краски');
+        let intQuant;
         intPaint = 0;
         $('.paint').each(function() { //Перебираем блоки окраски
+            intQuant = $(this).prevAll('.quant').val();
+            if (!intQuant) {intQuant = 1;}
             if ($(this).prevAll('.checkbox_style').prop('checked')) {
-                intPaint += parseFloat($(this).val());
+                intPaint += parseFloat($(this).val()) * parseFloat(intQuant);
             } //Если меняется количество краски отмеченного блока пересчитываем предварительный результат
         });
         $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
@@ -147,7 +151,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
     if (chi < 10) {
         chi = '0' + chi;
-    } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
+    } //Если текущее число меньше 10, то добавляем ноль спереди
 
     $('#inspection_date, #calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата оценки
     //$('#calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата расчета
@@ -163,6 +167,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         });
     */
 
+
     let re = /(?=\B(?:\d{3})+(?!\d))/g;
     let formatted = '';
 
@@ -170,6 +175,38 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         formatted = number.toString().replace(re, ' ').replace('.', ',');
         return formatted;
     }
+
+    $('.square').each(function(i, elem) { //Записываем данные в квадраты навигации
+        $(this).data('id', i);
+    });
+
+    $('.section').each(function(i, elem) { //Те же данные в секкции
+        $(this).data('id', i);
+    });
+
+    $(".square").click(function() { //Функция показа определенной секции блоков
+        console.time('TEST');
+        let thisId = $(this).data('id');
+        $('.empty_div').css('height', '5.5em');
+        $(".square").css('background-color', 'LightSkyBlue');
+        $(this).css('background-color', 'red');
+        $('.section').hide();
+        $('.section').each(function(i, elem) {
+            if ($(this).data('id') == thisId) {
+                $(this).show();
+            }
+        });
+        console.timeEnd('TEST');
+    });
+
+    $("#intermediate_calc").click(function() { //Функция показа всех секций
+        console.time('TEST2');
+        $('.empty_div').css('height', '0');
+        $('#first_empty_div').css('height', '5.5em');
+        $(".square").css('background-color', 'LightSkyBlue');
+        $('.section').show();
+        console.timeEnd('TEST2');
+    });
 
     $('#calc_icon').on('click', function() { //Событие при щелчке на элементе с id=calc_icon
         console.time('FirstWay'); //Измеряем скорость. Можно посмотреть в консоли
