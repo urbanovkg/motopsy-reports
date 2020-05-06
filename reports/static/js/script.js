@@ -271,6 +271,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                     }
                     break;
                 case 'З': //Прочие услуги
+                case 'П': //Прочие услуги
                     if (fullArr[i].norm > 0) { //Если стоимость услуг больше 0, то записываем в акт осмотра
                         if (fullArr[i].position) {
                             repairText += fullArr[i].text + ' ' + fullArr[i].position + ' – ' + fullArr[i].action + '. ';
@@ -283,16 +284,16 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                     if (fullArr[i].text.substring(0, 7) == 'Окраска') {
                         if (firstTimePainting) { // Первый раз убираем слово "Окраска", но ставим двоеточие
                             if (fullArr[i].position) {
-                                paintingText += 'Окраска:' + fullArr[i].text.slice(7) + ' ' + fullArr[i].position + '; ';
+                                paintingText += 'Подготовка, грунтование и окраска:' + fullArr[i].text.slice(7) + ' ' + fullArr[i].position + ',';
                             } else {
-                                paintingText += 'Окраска:' + fullArr[i].text.slice(7) + '; ';
+                                paintingText += 'Подготовка, грунтование и окраска:' + fullArr[i].text.slice(7) + ',';
                             }
                             firstTimePainting = false;
                         } else { // Остальные разы убираем слово "Окраска"
                             if (fullArr[i].position) {
-                                paintingText += fullArr[i].text.slice(7) + ' ' + fullArr[i].position + ';';
+                                paintingText += fullArr[i].text.slice(7) + ' ' + fullArr[i].position + ',';
                             } else {
-                                paintingText += fullArr[i].text.slice(7) + ';';
+                                paintingText += fullArr[i].text.slice(7) + ',';
                             }
                         }
                     } else { //Если прочее в разделе "окраска"

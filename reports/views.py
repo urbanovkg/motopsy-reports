@@ -95,7 +95,7 @@ def cash_document(request, pk):
     activeSheet["B23"] = Report.RESULTS_CHOICES[int(all_report.results_purpose)][1]
     activeSheet["B24"] = Report.COST_CHOICES[int(all_report.cost_type)][1]
     activeSheet["B34"] = all_report.contract_price
-    activeSheet["B35"] = all_report.contract_price_in_words + ', 00 тыйын'
+    activeSheet["B35"] = all_report.contract_price_in_words + ' сом, 00 тыйын'
     activeSheet["B36"] = all_report.hourcost
     damageSheet = wb.worksheets[5]
 
