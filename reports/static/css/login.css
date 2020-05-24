@@ -1,0 +1,22 @@
+*{font-size: 48pt;}
+#button{background-color:#E6E6FA; position: relative;
+left: 50%;
+box-shadow: 0 0 1em gray;
+transform: translate(-50%, 0);
+height:3.5em;
+width:3.5em;
+border-radius: 50%;
+ background-image: url(fingerprint.png);
+ background-size:cover;}
+ #button:hover{background-color:#D3D3D3;
+
+  transition-duration: 0s;
+ }
+  #button:active{
+height:3.3em;
+width:3.3em;
+box-shadow: none;
+  transition-duration: 0.1s;
+ }
+#all{width:100%;}
+.textfield{width:100%}
