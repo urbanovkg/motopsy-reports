@@ -50,13 +50,13 @@
     text-align: center;
 }
 
-#line {display: none; width:4.5em; height:0.05em; background-color: green; position: relative; left: calc(50% - 2.25em);
-animation: scan  5s infinite;box-shadow: 0 0 0.3em rgba(0,255,0,1);opacity: .4;}
+#line {display: none; width:4.5em; height:0.1em; background-color: green; position: relative; left: calc(50% - 2.25em);
+animation: scan  5s infinite;box-shadow: 0 0 0.3em rgba(0,255,0,1);opacity: .4;border-radius: 0.05em;}
 
 @keyframes scan {
-from {top: 0; opacity: 0;}
+from {top: 0; opacity: 0; }
 25% {opacity: .4;}
-50% {top: -4em;opacity: 0;}
+50% {top: -4em;opacity: 0; }
 75% {opacity: .4;}
-to {top: 0;opacity: 0;}
+to {top: 0;opacity: 0; }
 }
