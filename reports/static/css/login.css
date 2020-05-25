@@ -33,8 +33,9 @@
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.8);
     height: 3.3em;
     width: 3.3em;
-    transition-duration: 0.5s;
-}
+    transition-duration: 0.5s;}
+
+
 
 #all {
     width: 100%;
@@ -47,4 +48,15 @@
 
 #header {
     text-align: center;
+}
+
+#line {display: none; width:4.5em; height:0.05em; background-color: green; position: relative; left: calc(50% - 2.25em);
+animation: scan  5s infinite;box-shadow: 0 0 0.3em rgba(0,255,0,1);opacity: .4;}
+
+@keyframes scan {
+from {top: 0; opacity: 0;}
+25% {opacity: .4;}
+50% {top: -4em;opacity: 0;}
+75% {opacity: .4;}
+to {top: 0;opacity: 0;}
 }
