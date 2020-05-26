@@ -15,41 +15,34 @@
 }
 
 /*navajowhite*/
-
 .reportdata {
     margin: 0.2em 0 0.2em 0.2em;
     display: flex;
-    flex:auto;
-    flex-wrap:wrap;
+    flex: auto;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-content:flex-start;
-
-
+    align-content: flex-start;
+    text-decoration: none;
 }
 
 .date {
     padding: 0.2em;
     text-decoration: underline;
-    height:auto;
+    height: auto;
 }
 
 .reportnum {
     padding: 0.2em;
     text-align: right;
     text-decoration: underline;
-
-    height:auto;
+    height: auto;
 }
 
 .reportname {
     padding: 0.2em;
     width: 100%;
 
-
 }
-
-
-
 
 .contractbill {
     margin: 0.2em;
@@ -58,14 +51,23 @@
 
 .contract {
     margin-right: 0.2em;
-    background-color: grey;
-    height: 4em;
+    background-color: white;
+    height:100%;
     width: 3em;
-
 }
 
 .bill {
-    background-color: blue;
-    height: 4em;
+    background-color: white;
     width: 3em;
+    height:100%;
+}
+
+.bill:active{
+    box-shadow: 0 2px 5px black inset;
+}
+.contract:active{
+    box-shadow: 0 2px 5px black inset;
+}
+.reportdata:active{
+    box-shadow: 0 2px 5px black inset;
 }
