@@ -1,0 +1,64 @@
+* {
+    font-size: 12pt;
+}
+
+#listall {
+    display: block;
+}
+
+.reportblock {
+    margin-bottom: 0.25em;
+    width: 100%;
+    background-color: lightskyblue;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*.reportblock :nth-child(odd){background-color:navajowhite;}*/
+.reportdata {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.contract {
+    margin-bottom: 0.1em;
+    background-color: grey;
+    height: 2em;
+    width: 2em;
+    display: flex;
+    align-self: flex-start;
+}
+
+.bill {
+    display: flex;
+    align-self: flex-end;
+    background-color: blue;
+    height: 2em;
+    width: 2em;
+}
+
+.contractbill {
+    width: 2.2em;
+    padding: 0.1em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reportdate {
+    padding: 0.1em;
+    width: calc(50% - 0.2em);
+    text-decoration: underline;
+}
+
+.reportnum {
+    padding: 0.1em;
+    width: calc(50% - 0.2em);
+    text-align: right;
+    text-decoration: underline;
+}
+
+.reportname {
+    padding: 0.1em;
+    width: 100%;
+}

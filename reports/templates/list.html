@@ -4,6 +4,7 @@
 
 <head>
     <title>Список отчетов</title>
+    <link href="{% static 'css/list.css' %}" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
 </head>
 
@@ -14,15 +15,23 @@
     <br>
     <a href="{% url 'index' %}">Создать новый отчет</a>
     <br><br>
+    <div id="listall">
     {% for report in reports %}
-    <div>
-        <small>{{ report.inspection_date }}</small><br>
-        <b><a href="{% url 'report_create' pk=report.pk %}">{{ report.report_number }} {{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</a></b>&emsp;
-        <a href="{% url 'contract_create' pk=report.pk %}">Договор</a>&emsp;
-        <a href="{% url 'cash_document' pk=report.pk %}">Квитанция</a>
-        <hr>
+
+    <div class="reportblock">
+        <div class="reportdata">
+            <div class="reportdate">{{ report.inspection_date }}</div>
+            <div class="reportnum">{{ report.report_number }}</div>
+            <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
+        </div>
+        <div class="contractbill">
+            <div class="contract"><a href="{% url 'contract_create' pk=report.pk %}">До</a></div>
+            <div class="bill"><a href="{% url 'cash_document' pk=report.pk %}">Кв</a></div>
+        </div>
     </div>
+
     {% endfor %}
+    </div>
     <br>
     <a href="{% url 'admin:index' %}">В админ-панель</a>
     {% endblock %}
