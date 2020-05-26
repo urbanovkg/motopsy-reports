@@ -14,51 +14,58 @@
     justify-content: space-between;
 }
 
-/*.reportblock :nth-child(odd){background-color:navajowhite;}*/
+/*navajowhite*/
+
 .reportdata {
-    width: 100%;
+    margin: 0.2em 0 0.2em 0.2em;
     display: flex;
-    flex-wrap: wrap;
+    flex:auto;
+    flex-wrap:wrap;
+    justify-content: space-between;
+    align-content:flex-start;
+
+
 }
 
-.contract {
-    margin-bottom: 0.1em;
-    background-color: grey;
-    height: 2em;
-    width: 2em;
-    display: flex;
-    align-self: flex-start;
-}
-
-.bill {
-    display: flex;
-    align-self: flex-end;
-    background-color: blue;
-    height: 2em;
-    width: 2em;
-}
-
-.contractbill {
-    width: 2.2em;
-    padding: 0.1em;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.reportdate {
-    padding: 0.1em;
-    width: calc(50% - 0.2em);
+.date {
+    padding: 0.2em;
     text-decoration: underline;
+    height:auto;
 }
 
 .reportnum {
-    padding: 0.1em;
-    width: calc(50% - 0.2em);
+    padding: 0.2em;
     text-align: right;
     text-decoration: underline;
+
+    height:auto;
 }
 
 .reportname {
-    padding: 0.1em;
+    padding: 0.2em;
     width: 100%;
+
+
+}
+
+
+
+
+.contractbill {
+    margin: 0.2em;
+    display: flex;
+}
+
+.contract {
+    margin-right: 0.2em;
+    background-color: grey;
+    height: 4em;
+    width: 3em;
+
+}
+
+.bill {
+    background-color: blue;
+    height: 4em;
+    width: 3em;
 }

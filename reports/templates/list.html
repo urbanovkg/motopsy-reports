@@ -17,21 +17,28 @@
     <a href="{% url 'index' %}">Создать новый отчет</a>
     <br><br>
     <div id="listall">
-    {% for report in reports %}
+        {% for report in reports %}
 
-    <div class="reportblock">
-        <div class="reportdata">
-            <div class="reportdate">{{ report.inspection_date }}</div>
-            <div class="reportnum">{{ report.report_number }}</div>
-            <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
-        </div>
-        <div class="contractbill">
-            <div class="contract"><a href="{% url 'contract_create' pk=report.pk %}">До</a></div>
-            <div class="bill"><a href="{% url 'cash_document' pk=report.pk %}">Кв</a></div>
-        </div>
-    </div>
 
-    {% endfor %}
+
+        <div class="reportblock">
+
+                <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
+                    <div class="date">{{ report.inspection_date }}</div>
+                    <div class="reportnum">{{ report.report_number }}</div>
+                    <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
+                </a>
+            <div class="contractbill">
+                <a href="{% url 'contract_create' pk=report.pk %}">
+                    <div class="contract"></div>
+                </a>
+                <a href="{% url 'cash_document' pk=report.pk %}">
+                    <div class="bill"></div>
+                </a>
+            </div>
+        </div>
+
+        {% endfor %}
     </div>
     <br>
     <a href="{% url 'admin:index' %}">В админ-панель</a>
