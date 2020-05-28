@@ -7,16 +7,44 @@
     display: block;
 }
 
+#newreport {
+    display:inline-block;
+    margin-right: 0.2em;
+    height: 4em;
+    width: 3em;
+    background-image: url(newreport.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#adminpanel {
+    display:inline-block;
+    margin-right: 0.2em;
+    height: 4em;
+    width: 3em;
+    background-image: url(admin.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    float:right;
+}
+
+#adminpanel:active, #newreport:active {
+    box-shadow: 0 2px 5px gray inset;
+}
+
 .reportblock {
     margin-bottom: 0.25em;
     width: 100%;
-    background-color: lightskyblue;
+    background-color: GhostWhite;
     display: flex;
     justify-content: space-between;
 }
 
 /*navajowhite*/
 .reportdata {
+        box-shadow: 0 2px 5px gray;
     margin: 0.2em 0 0.2em 0.2em;
     display: flex;
     flex: auto;
@@ -24,6 +52,7 @@
     justify-content: space-between;
     align-content: flex-start;
     text-decoration: none;
+    color:black;
 }
 
 .date {
@@ -42,7 +71,6 @@
 .reportname {
     padding: 0.2em;
     width: 100%;
-
 }
 
 .contractbill {
@@ -52,23 +80,34 @@
 
 .contract {
     margin-right: 0.2em;
-    background-color: white;
-    height:100%;
+box-shadow: 0 2px 5px gray;
+    height: 100%;
     width: 3em;
+    background-image: url(contr.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
 .bill {
-    background-color: white;
+box-shadow: 0 2px 5px gray;
     width: 3em;
-    height:100%;
+    height: 100%;
+    background-image: url(excel.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
-.bill:active{
-    box-shadow: 0 2px 5px black inset;
+
+.bill:active {
+    box-shadow: 0 2px 5px gray inset;
 }
-.contract:active{
-    box-shadow: 0 2px 5px black inset;
+
+.contract:active {
+    box-shadow: 0 2px 5px gray inset;
 }
-.reportdata:active{
-    box-shadow: 0 2px 5px black inset;
+
+.reportdata:active {
+    box-shadow: 0 2px 5px gray inset;
 }
