@@ -27,7 +27,7 @@
                 <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
                     <div class="date">{{ report.inspection_date }}</div>
                     <div class="reportnum">{{ report.report_number }}</div>
-                    <div class="reportname">sjksdfhkjsdhfkjh fhskdjhf skfh ksh shfk sdhf kshf ksf f{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
+                    <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
                 </a>
             <div class="contractbill">
                 <a href="{% url 'contract_create' pk=report.pk %}">
