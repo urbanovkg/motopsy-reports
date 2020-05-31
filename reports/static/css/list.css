@@ -47,7 +47,7 @@
 .reportblock {
     margin-bottom: 0.25em;
     width: 100%;
-    background-color: Wheat;
+    background-color: #FFF8DC;
     display: flex;
     justify-content: space-between;
 }
