@@ -12,23 +12,20 @@
 <body>
     {% block content %}
 
-    <p>Отчётов в базе данных: {{ num_reports }}</p>
-    <br>
     <a id="newreport" href="{% url 'index' %}"></a>
+    <div id="reportscount">Отчётов в базе данных: {{ num_reports }}</div>
     <a id="adminpanel" href="{% url 'admin:index' %}"></a>
     <br><br>
     <div id="listall">
-        {% for report in reports %}
-
-
+        {% for report in reports reversed %}
 
         <div class="reportblock">
 
-                <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
-                    <div class="date">{{ report.inspection_date }}</div>
-                    <div class="reportnum">{{ report.report_number }}</div>
-                    <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
-                </a>
+            <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
+                <div class="date">{{ report.inspection_date }}</div>
+                <div class="reportnum">{{ report.report_number }}</div>
+                <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
+            </a>
             <div class="contractbill">
                 <a href="{% url 'contract_create' pk=report.pk %}">
                     <div class="contract"></div>
