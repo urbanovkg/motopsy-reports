@@ -4,10 +4,13 @@ from datetime import date
 
 # Create your models here.
 class Report(models.Model):
-    report_number = models.CharField("Номер отчета (договора)", max_length=32, help_text="Введи в фомате ннн-мм/гг", default="000-00/20")
+    doc_type = models.CharField("Тип документа", max_length=32, help_text="Отчет или Заключение", default="Отчет")
+    ass_reason = models.CharField("Основание оценки", max_length=256, help_text="Договор, запрос, определение, постановление", default="Договор")
+
+    report_number = models.CharField("Номер отчета", max_length=32, help_text="Введи в фомате ннн-мм/гг", default="000-00/20")
     inspection_date = models.DateField("Дата осмотра (договора)", default=date.today)
     calculation_date = models.DateField("Дата расчета", default=date.today)
-    client_name = models.CharField("Ф.И.О. заказчика", max_length=128, help_text="Введи Ф.И.О. полностью", default="Н/у")
+    client_name = models.CharField("Ф.И.О. заказчика", max_length=256, help_text="Введи Ф.И.О. полностью", default="Н/у")
     PRIVATE = "0"
     MUNICIPAL = "1"
     STATE = "2"
@@ -19,7 +22,7 @@ class Report(models.Model):
         (UNKNOWN, 'Н/у'),
     ]
     ownership_identification = models.CharField("Право собственности", max_length=1, choices=OWNERSHIP_CHOICES, default=PRIVATE)
-    inspection_place = models.CharField("Место осмотра:", max_length=128, help_text="Введи хотя бы населенный пункт", default="Н/у")
+    inspection_place = models.CharField("Место осмотра:", max_length=256, help_text="Введи хотя бы населенный пункт", default="Н/у")
     ACCIDENT = "0"
     IGNITION = "1"
     OTHER = "2"
@@ -45,9 +48,23 @@ class Report(models.Model):
         (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства'),
     ]
     cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
+
+    FOR_RECOVERY = "0"
+    FOR_SCRAP = "1"
+    FOR_MARKET = "2"
+    METHOD_CHOICES = [
+        (FOR_RECOVERY, 'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
+        (FOR_SCRAP, 'Метод расчета годных остатков затратным подходом и метод рыночной информации сравнительного подхода'),
+        (FOR_MARKET, 'Метод сравнительного анализа продаж'),
+    ]
+    used_methods = models.CharField("Подходы и методы", max_length=1, choices=METHOD_CHOICES, default=FOR_RECOVERY)
+
+
     contract_price = models.CharField("Сумма оплаты (договора)", max_length=32, default="0")
-    contract_price_in_words = models.CharField("Сумма оплаты (прописью)", max_length=128, default="Ноль")
-    vehicle_model = models.CharField("Марка, модель ТС", max_length=128, default="Н/у")
+    contract_price_in_words = models.CharField("Сумма оплаты (прописью)", max_length=256, default="Ноль")
+    exchange_rate = models.CharField("Курс доллара к сому", max_length=32, default="75.0000")
+    ass_object = models.CharField("Объект оценки", max_length=256, default="Транспортное средство")
+    vehicle_model = models.CharField("Марка, модель ТС", max_length=256, default="Н/у")
     vehicle_year = models.CharField("Год выпуска", max_length=4, default="Н/у")
     vehicle_regnum = models.CharField("Гос. (рег.) номер ТС", max_length=32, default="Н/у")
     vehicle_vin = models.CharField("Номер кузова (VIN)", max_length=32, default="Н/у")
@@ -56,8 +73,10 @@ class Report(models.Model):
     vehicle_volume = models.CharField("Объем ДВС", max_length=32, default="", blank=True)
     vehicle_mileage = models.CharField("Пробег", max_length=32, default="Н/у")
     vehicle_color = models.CharField("Цвет", max_length=32, default="Н/у")
-    vehicle_type = models.CharField("Тип ТС", max_length=32, default="Н/у")
+    vehicle_type = models.CharField("Тип ТС", max_length=128, default="Н/у")
     vehicle_body = models.CharField("Тип кузова ТС", max_length=32, default="Н/у")
+    vehicle_gearbox = models.CharField("Тип коробки передач", max_length=32, default="Н/у")
+    vehicle_steering = models.CharField("Положение руля", max_length=32, default="Н/у")
     vehicle_owner = models.CharField("Владелец ТС", max_length=256, default="Н/у")
     vehicle_adress = models.CharField("Адрес регистрации ТС", max_length=256, default="Н/у")
     hourcost = models.IntegerField("Стоимость нормо-часа", default=600)

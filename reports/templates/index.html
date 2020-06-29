@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Автоотчет в. 0.5</title>
+	<title>Автоотчет в. 0.7</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	<link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
@@ -86,8 +86,11 @@
 		</a>
 
 		<div class="block">
-			Договор №:<br>
-			<input class="text_line" id="contract_number" type="text" value="Н/у">
+			Тип документа:<br>
+			<select id="doc_type" class="full_selectbox">
+				<option selected value="Отчет">Отчет</option>
+				<option value="Заключение">Заключение</option>
+			</select>
 		</div>
 		<div class="block">
 			Дата оценки:<br>
@@ -96,6 +99,14 @@
 		<div class="block">
 			Дата расчета:<br>
 			<input type="date" id="calc_date" class="dates" value="1970-01-01">
+		</div>
+		<div class="block">
+			№ отчета:<br>
+			<input class="text_line" id="contract_number" type="text" value="Н/у">
+		</div>
+		<div class="block">
+			Основание оценки:<br>
+			<input class="text_line" id="ass_reason" type="text" value="Н/у">
 		</div>
 		<div class="block">
 			Заказчик (полностью):<br>
@@ -138,6 +149,14 @@
 			</select>
 		</div>
 		<div class="block">
+			Подходы и методы:<br>
+			<select id="used_methods" class="full_selectbox">
+				<option selected value="0">Методы для восстановления</option>
+				<option value="1">Методы для годных остатков</option>
+				<option value="3">Метод сравнительного анализа продаж</option>
+			</select>
+		</div>
+		<div class="block">
 			Сумма оплаты цифрами, сом:<br>
 			<input id="contract_cost" class="text_line" type="text" value="0">
 		</div>
@@ -145,14 +164,22 @@
 			Сумма оплаты прописью, сом:<br>
 			<input id="contract_cost_in_words" class="text_line" type="text" value="Ноль">
 		</div>
+		<div class="block">
+			Курс доллара к сому:<br>
+			<input id="exchange_rate" class="text_line" type="text" value="75.0000">
+		</div>
 	</div>
 
 	<div id="vehicle_data" class="section">
 		<a name="vehicle_info">
 			<div class="empty_div"></div>
-			<h4 class="headline">Данные ТС:</h4>
+			<h4 class="headline">Данные объекта оценки:</h4>
 		</a>
 
+		<div class="block">
+			Объект оценки:<br>
+			<input id="ass_object" class="text_line" type="text" value="Транспортное средство">
+		</div>
 		<div class="block">
 			Марка/модель:<br>
 			<input id="vehicle_model" class="text_line" type="text" value="Н/у">
@@ -215,6 +242,25 @@
 			</select>
 			<input id="vehicle_body_type" type="text" size="10" value="седан">
 		</div>
+
+		<div class="block">
+			Тип коробки передач:<br>
+			<select id="vehicle_gearbox" class="full_selectbox">
+				<option selected value="Автоматическая">Автоматическая</option>
+				<option value="Механическая">Механическая</option>
+				<option value="Вариатор">Вариатор</option>
+				<option value="Робот">Робот</option>
+				<option value="Н/у">Н/у</option>
+			</select>
+		</div>
+		<div class="block">
+			Положение руля:<br>
+			<select id="vehicle_steering" class="full_selectbox">
+				<option selected value="Слева">Слева</option>
+				<option value="Справа">Справа</option>
+				<option value="Посередине">Посередине</option>
+			</select>
+		</div>
 		<div class="block">
 			Класс ТС:<br>
 			<select id="class" class="half_selectbox">
@@ -227,7 +273,7 @@
 			<input id="cost_per_hour" type="text" size="10" value="550">
 		</div>
 		<div class="block">
-			Собственник (полностью):<br>
+			Владелец (полностью):<br>
 			<input id="vehicle_owner" class="text_line" type="text" value="Н/у">
 		</div>
 		<div class="block">
@@ -923,7 +969,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К016">
 			<input class="text_style" type="text" size="40" value="Арка внутренняя заднего колеса">
-			<input class="position" type="text" size="10" value="левая">
+			<input class="position" type="text" size="10" value="левого">
 			<select class="action_type">
 				<option value="2.4">ремонт №1</option>
 				<option value="4.8">ремонт №2</option>
@@ -936,7 +982,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К016">
 			<input class="text_style" type="text" size="40" value="Арка внутренняя заднего колеса">
-			<input class="position" type="text" size="10" value="правая">
+			<input class="position" type="text" size="10" value="правого">
 			<select class="action_type">
 				<option value="2.4">ремонт №1</option>
 				<option value="4.8">ремонт №2</option>
@@ -2080,7 +2126,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З201">
 			<input class="text_style" type="text" size="40" value="Стекло опускное передней двери">
-			<input class="position" type="text" size="10" value="левое">
+			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
 				<option value="0">ремонт №1</option>
 				<option value="0">ремонт №2</option>
@@ -2093,7 +2139,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З201">
 			<input class="text_style" type="text" size="40" value="Стекло опускное передней двери">
-			<input class="position" type="text" size="10" value="правое">
+			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
 				<option value="0">ремонт №1</option>
 				<option value="0">ремонт №2</option>
@@ -2106,7 +2152,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З202">
 			<input class="text_style" type="text" size="40" value="Стекло опускное задней двери">
-			<input class="position" type="text" size="10" value="левое">
+			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
 				<option value="0">ремонт №1</option>
 				<option value="0">ремонт №2</option>
@@ -2119,7 +2165,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З202">
 			<input class="text_style" type="text" size="40" value="Стекло опускное задней двери">
-			<input class="position" type="text" size="10" value="правое">
+			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
 				<option value="0">ремонт №1</option>
 				<option value="0">ремонт №2</option>
@@ -2291,8 +2337,8 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З209">
-			<input class="text_style" type="text" size="40" value="Ручка передней двери наружная">
-			<input class="position" type="text" size="10" value="левая">
+			<input class="text_style" type="text" size="40" value="Ручка наружная передней двери">
+			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.4">ремонт №2</option>
@@ -2304,8 +2350,8 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З209">
-			<input class="text_style" type="text" size="40" value="Ручка передней двери наружная">
-			<input class="position" type="text" size="10" value="правая">
+			<input class="text_style" type="text" size="40" value="Ручка наружная передней двери">
+			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.4">ремонт №2</option>
@@ -2317,8 +2363,8 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З210">
-			<input class="text_style" type="text" size="40" value="Ручка задней двери наружная">
-			<input class="position" type="text" size="10" value="левая">
+			<input class="text_style" type="text" size="40" value="Ручка наружная задней двери">
+			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.4">ремонт №2</option>
@@ -2330,8 +2376,8 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З210">
-			<input class="text_style" type="text" size="40" value="Ручка задней двери наружная">
-			<input class="position" type="text" size="10" value="правая">
+			<input class="text_style" type="text" size="40" value="Ручка наружная задней двери">
+			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.4">ремонт №2</option>
@@ -2344,7 +2390,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З211">
 			<input class="text_style" type="text" size="40" value="Замок передней двери">
-			<input class="position" type="text" size="10" value="левый">
+			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2357,7 +2403,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З211">
 			<input class="text_style" type="text" size="40" value="Замок передней двери">
-			<input class="position" type="text" size="10" value="правый">
+			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2370,7 +2416,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З212">
 			<input class="text_style" type="text" size="40" value="Замок задней двери">
-			<input class="position" type="text" size="10" value="левый">
+			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2383,7 +2429,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З212">
 			<input class="text_style" type="text" size="40" value="Замок задней двери">
-			<input class="position" type="text" size="10" value="правый">
+			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
