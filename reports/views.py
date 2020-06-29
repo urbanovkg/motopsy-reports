@@ -66,7 +66,7 @@ def report_create(request, pk):
 def contract_create(request, pk):
     all_report = get_object_or_404(Report, pk=pk)
     doc = DocxTemplate(settings.MEDIA_ROOT + "/contract.docx")
-    context = {'document_type' : all_report.doc_type, 'assesment_object' : all_report.ass_object, 'contract_number' : all_report.report_number, 'inspection_date': dateformat.format(all_report.inspection_date, settings.DATE_FORMAT) + ' г.', 'customer_name': all_report.client_name, 'evaluation_purpose': Report.EVALUATION_CHOICES[int(all_report.evaluation_purpose)][1], 'contract_cost': all_report.contract_price, 'contract_cost_in_words': all_report.contract_price_in_words, 'vehicle_model': all_report.vehicle_model, 'vehicle_number': all_report.vehicle_regnum,}
+    context = {'document_type' : all_report.doc_type, 'assessment_object' : all_report.ass_object, 'contract_number' : all_report.report_number, 'inspection_date': dateformat.format(all_report.inspection_date, settings.DATE_FORMAT) + ' г.', 'customer_name': all_report.client_name, 'evaluation_purpose': Report.EVALUATION_CHOICES[int(all_report.evaluation_purpose)][1], 'contract_cost': all_report.contract_price, 'contract_cost_in_words': all_report.contract_price_in_words, 'vehicle_model': all_report.vehicle_model, 'vehicle_number': all_report.vehicle_regnum,}
     doc.render(context)
     byte_io = BytesIO()
     doc.save(byte_io)

@@ -44,8 +44,8 @@ class Report(models.Model):
     ONLY_RECOVERY = "0"
     RECOVERY_WIDTH_APPEARANCE = "1"
     COST_CHOICES = [
-        (ONLY_RECOVERY, 'Рыночная стоимость восстановления транспортного средства'),
-        (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости транспортного средства'),
+        (ONLY_RECOVERY, 'Рыночная стоимость восстановления'),
+        (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости'),
     ]
     cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
 
