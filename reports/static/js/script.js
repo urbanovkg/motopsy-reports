@@ -168,23 +168,36 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   });
 
   let d = new Date(); //Текущая дата
-  let god = d.getFullYear() - 2000; //Текущий краткий год
+  let fullgod = d.getFullYear(); //Текущий полный год
+  let shortgod = d.getFullYear() - 2000; //Текущий краткий год
   let mes = d.getMonth() + 1; //Текущий месяц
   let chi = d.getDate(); //Текущиее число
-
-  if (chi < 10) {
-    chi = '0' + chi;
-  } //Если текущее число меньше 10, то добавляем ноль спереди
 
   if (mes < 10) {
     mes = '0' + mes;
   } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
 
-  $('#inspection_date, #calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата оценки
+  if (chi < 10) {
+    chi = '0' + chi;
+  } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
 
-  chi = chi + 1;
-  $('#calc_date').val((god + 2000) + '-' + mes + '-' + chi); //Дата расчета
-  $('#contract_number').val('000-' + mes + '/' + god); //Номер договора
+  $('#inspection_date').val(fullgod + '-' + mes + '-' + chi); //Дата оценки
+  $('#contract_number').val('000-' + mes + '/' + shortgod); //Номер договора
+
+  d.setDate(d.getDate() + 1); //Следующий день
+  fullgod = d.getFullYear(); //Текущий полный год
+  mes = d.getMonth() + 1; //Текущий месяц
+  chi = d.getDate(); //Текущиее число
+
+  if (mes < 10) {
+    mes = '0' + mes;
+  } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
+
+  if (chi < 10) {
+    chi = '0' + chi;
+  } //Если текущий месяц меньше 10-го, то добавляем ноль спереди
+
+  $('#calc_date').val(fullgod + '-' + mes + '-' + chi); //Дата расчета
 
   $('.action_type_half').on('change', function() { //Событие при изменении разборок
     $(this).siblings('.text_style_hide').val($('option:selected', this).val() + $(this).siblings('.text_style_half').val()); //Записываем выбранный текст в скрытое поле

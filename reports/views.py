@@ -121,10 +121,15 @@ def cash_document(request, pk):
         damageSheet.cell(column=2, row=elem+2, value=services_table_list[elem]['text'])
         damageSheet.cell(column=3, row=elem+2, value=services_table_list[elem]['quant'])
         damageSheet.cell(column=4, row=elem+2, value=services_table_list[elem]['norm'])
-        damageSheet.cell(column=5, row=elem+2, value='=C{}'.format(elem+2)+'*D{}*G2'.format(elem+2))
+        damageSheet.cell(column=5, row=elem+2, value='=C{}'.format(elem+2)+'*D{}*Дано!$B$33'.format(elem+2))
+    damageSheet["G2"] = '=SUM(E2:E{}'.format(servicesLen+1)+')'
     materialsLen = len(materials_table_list)
     materialsStartRow = servicesLen+4
+    damageSheet.cell(column=1, row=materialsStartRow-1, value='№')
     damageSheet.cell(column=2, row=materialsStartRow-1, value='Материалы')
+    damageSheet.cell(column=3, row=materialsStartRow-1, value='Кол-во')
+    damageSheet.cell(column=4, row=materialsStartRow-1, value='Цена')
+    damageSheet.cell(column=5, row=materialsStartRow-1, value='Стоимость')
     for elem in range(materialsLen):
         damageSheet.cell(column=1, row=elem+materialsStartRow, value=elem+1)
         damageSheet.cell(column=2, row=elem+materialsStartRow, value=materials_table_list[elem]['text'])
@@ -133,15 +138,22 @@ def cash_document(request, pk):
         damageSheet.cell(column=5, row=elem+materialsStartRow, value='=C{}'.format(elem+materialsStartRow)+'*D{}'.format(elem+materialsStartRow))
     partsLen = len(parts_table_list)
     partsStartRow = materialsLen+materialsStartRow+2
+    damageSheet["H2"] = '=SUM(E{}'.format(materialsStartRow)+':E{}'.format(partsStartRow-3)+')'
+    damageSheet.cell(column=1, row=partsStartRow-1, value='№')
     damageSheet.cell(column=2, row=partsStartRow-1, value='Запасные части')
+    damageSheet.cell(column=3, row=partsStartRow-1, value='Кол-во')
+    damageSheet.cell(column=4, row=partsStartRow-1, value='Цена')
+    damageSheet.cell(column=5, row=partsStartRow-1, value='Стоимость')
     for elem in range(partsLen):
         damageSheet.cell(column=1, row=elem+partsStartRow, value=elem+1)
         damageSheet.cell(column=2, row=elem+partsStartRow, value=parts_table_list[elem]['text'])
         damageSheet.cell(column=3, row=elem+partsStartRow, value=parts_table_list[elem]['quant'])
         damageSheet.cell(column=4, row=elem+partsStartRow, value=0)
         damageSheet.cell(column=5, row=elem+partsStartRow, value='=C{}'.format(elem+partsStartRow)+'*D{}'.format(elem+partsStartRow))
-    damageSheet["H2"] = all_report.services_result
-    damageSheet["I2"] = all_report.materials_result
+    damageSheet["I2"] = '=SUM(E{}'.format(partsStartRow)+':E{}'.format(partsStartRow+partsLen-1)+')'
+    test = all_report.services_result.replace(' ', '')
+    damageSheet["G3"] = float(test)
+    damageSheet["H3"] = all_report.materials_result
     byte_io = BytesIO()
     wb.save(byte_io)
     byte_io.seek(0)
