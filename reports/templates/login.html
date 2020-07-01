@@ -3,45 +3,39 @@
 <html>
 
 <head>
-    <title>Авторизация</title>
-    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Авторизация</title>
+  <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
-    <div id="all">
+  <div id="all">
+
+    <div id="login">
         <h1 id="header">Вход</h1>
-        <script>
-         function hideLine() {
-         document.getElementById("line").style.display = "none";
-         }
-         function showLine() {
-         document.getElementById("line").style.display = "block";
+        <br>
+      <form action="/list/">
+        {% csrf_token %}
+        {% if error %}
+        {{ error }}
+        {% endif %}
+        {{ form.as_p }}
+        Имя:
+        <br>
+        <input class="textfield" type="text"></input>
+        <br>
+        Пароль:
+        <br>
+        <input class="textfield" type="password"></input>
+        <br>
+        <br>
 
-         }
-        </script>
-        <form action="/list/">
-            {% csrf_token %}
-            {% if error %}
-            {{ error }}
-            {% endif %}
-            {{ form.as_p }}
-            Имя:
-            <br>
-            <input class="textfield" type="text"></input>
-            <br>
-            Пароль:
-            <br>
-            <input class="textfield" type="password"></input>
-            <br>
-            <br>
+        <input id="button" type="submit" name="submit" value="войти"></input>
 
-                <input id="button" type="submit" name="submit" value="" onmouseover="showLine()" onmouseout="hideLine()"></input>
-<div id="line"></div>
+      </form>
     </div>
-    </form>
-
+  </div>
 
 </body>
 

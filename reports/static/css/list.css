@@ -12,7 +12,7 @@
     margin-left: 0.2em;
     height: 4em;
     width: 3em;
-    background-image: url(newreport.png);
+    background-image: url(img/newreport.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -24,7 +24,7 @@
     margin-right: 0.2em;
     height: 4em;
     width: 3em;
-    background-image: url(admin.png);
+    background-image: url(img/admin.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -93,7 +93,7 @@
     box-shadow: 0 2px 5px gray;
     height: 100%;
     width: 3em;
-    background-image: url(contr.png);
+    background-image: url(img/contr.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -103,7 +103,7 @@
     box-shadow: 0 2px 5px gray;
     width: 3em;
     height: 100%;
-    background-image: url(excel.png);
+    background-image: url(img/excel.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
