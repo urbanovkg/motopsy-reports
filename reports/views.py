@@ -120,7 +120,7 @@ def cash_document(request, pk):
         damageSheet.cell(column=1, row=elem+2, value=elem+1)
         damageSheet.cell(column=2, row=elem+2, value=services_table_list[elem]['text'])
         damageSheet.cell(column=3, row=elem+2, value=services_table_list[elem]['quant'])
-        damageSheet.cell(column=4, row=elem+2, value=services_table_list[elem]['norm'])
+        damageSheet.cell(column=4, row=elem+2, value=float(services_table_list[elem]['norm'].replace(' ', '').replace(',', '.')))
         damageSheet.cell(column=5, row=elem+2, value='=C{}'.format(elem+2)+'*D{}*Дано!$B$33'.format(elem+2))
     damageSheet["G2"] = '=SUM(E2:E{}'.format(servicesLen+1)+')'
     materialsLen = len(materials_table_list)
@@ -134,7 +134,7 @@ def cash_document(request, pk):
         damageSheet.cell(column=1, row=elem+materialsStartRow, value=elem+1)
         damageSheet.cell(column=2, row=elem+materialsStartRow, value=materials_table_list[elem]['text'])
         damageSheet.cell(column=3, row=elem+materialsStartRow, value=materials_table_list[elem]['quant'])
-        damageSheet.cell(column=4, row=elem+materialsStartRow, value=materials_table_list[elem]['norm'])
+        damageSheet.cell(column=4, row=elem+materialsStartRow, value=float(materials_table_list[elem]['norm'].replace(' ', '').replace(',', '.')))
         damageSheet.cell(column=5, row=elem+materialsStartRow, value='=C{}'.format(elem+materialsStartRow)+'*D{}'.format(elem+materialsStartRow))
     partsLen = len(parts_table_list)
     partsStartRow = materialsLen+materialsStartRow+2
@@ -151,9 +151,8 @@ def cash_document(request, pk):
         damageSheet.cell(column=4, row=elem+partsStartRow, value=0)
         damageSheet.cell(column=5, row=elem+partsStartRow, value='=C{}'.format(elem+partsStartRow)+'*D{}'.format(elem+partsStartRow))
     damageSheet["I2"] = '=SUM(E{}'.format(partsStartRow)+':E{}'.format(partsStartRow+partsLen-1)+')'
-    test = all_report.services_result.replace(' ', '')
-    damageSheet["G3"] = float(test)
-    damageSheet["H3"] = all_report.materials_result
+    damageSheet["G4"] = float(all_report.services_result.replace(' ', '').replace(',', '.'))
+    damageSheet["H4"] = float(all_report.materials_result.replace(' ', '').replace(',', '.'))
     byte_io = BytesIO()
     wb.save(byte_io)
     byte_io.seek(0)
