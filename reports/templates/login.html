@@ -10,31 +10,26 @@
 </head>
 
 <body>
-  <div id="all">
+  <div id="login">
+    <form action="/list/">
+      {% csrf_token %}
+      {% if error %}
+      {{ error }}
+      {% endif %}
+      {{ form.as_p }}
+      имя:
+      <br>
+      <input class="textfield" type="text"></input>
+      <br><br>
+      пароль:
+      <br>
+      <input class="textfield" type="password"></input>
+      <br>
+      <br>
 
-    <div id="login">
-        <h1 id="header">Вход</h1>
-        <br>
-      <form action="/list/">
-        {% csrf_token %}
-        {% if error %}
-        {{ error }}
-        {% endif %}
-        {{ form.as_p }}
-        Имя:
-        <br>
-        <input class="textfield" type="text"></input>
-        <br><br>
-        Пароль:
-        <br>
-        <input class="textfield" type="password"></input>
-        <br>
-        <br>
+      <input id="button" type="submit" name="submit" value="вход"></input>
 
-        <input id="button" type="submit" name="submit" value="войти"></input>
-
-      </form>
-    </div>
+    </form>
   </div>
 
 </body>

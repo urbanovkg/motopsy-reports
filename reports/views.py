@@ -83,8 +83,8 @@ def cash_document(request, pk):
     activeSheet["B1"] = all_report.doc_type
     activeSheet["B2"] = all_report.report_number
     activeSheet["B3"] = all_report.ass_reason
-    activeSheet["B4"] = all_report.inspection_date
-    activeSheet["B5"] = all_report.calculation_date
+    activeSheet["B4"] = dateformat.format(all_report.inspection_date, settings.DATE_FORMAT) + ' г.'
+    activeSheet["B5"] = dateformat.format(all_report.calculation_date, settings.DATE_FORMAT) + ' г.'
     activeSheet["B6"] = all_report.client_name
     activeSheet["B7"] = Report.OWNERSHIP_CHOICES[int(all_report.ownership_identification)][1]
     activeSheet["B8"] = all_report.inspection_place
@@ -92,7 +92,7 @@ def cash_document(request, pk):
     activeSheet["B10"] = Report.RESULTS_CHOICES[int(all_report.results_purpose)][1]
     activeSheet["B11"] = Report.COST_CHOICES[int(all_report.cost_type)][1]
     activeSheet["B12"] = Report.METHOD_CHOICES[int(all_report.used_methods)][1]
-    activeSheet["B13"] = all_report.contract_price
+    activeSheet["B13"] = float(all_report.contract_price.replace(' ', '').replace(',', '.'))
     activeSheet["B14"] = all_report.contract_price_in_words
 
     activeSheet["B16"] = all_report.ass_object
