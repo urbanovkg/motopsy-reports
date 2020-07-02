@@ -12,14 +12,18 @@
 <body>
     {% block content %}
 
-    <a id="newreport" href="{% url 'index' %}"></a>
+    <div id="header">
     <div id="reportscount">Отчётов в базе данных: {{ num_reports }}</div>
+    <div class="contractbill">
+    <a id="newreport" href="{% url 'index' %}"></a>
     <a id="adminpanel" href="{% url 'admin:index' %}"></a>
-    <br><br>
+  </div>
+  </div>
+    <br>
     <div id="listall">
         {% for report in reports reversed %}
 
-        <div class="reportblock">
+        <div class="reportblock" >
 
             <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
                 <div class="date">{{ report.inspection_date }}</div>
@@ -27,11 +31,11 @@
                 <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
             </a>
             <div class="contractbill">
-                <a href="{% url 'contract_create' pk=report.pk %}">
-                    <div class="contract"></div>
+                <a class="contract" href="{% url 'contract_create' pk=report.pk %}">
+
                 </a>
-                <a href="{% url 'cash_document' pk=report.pk %}">
-                    <div class="bill"></div>
+                <a class="bill" href="{% url 'cash_document' pk=report.pk %}">
+
                 </a>
             </div>
         </div>
@@ -44,7 +48,7 @@
 
     <script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
     <script>
-        $('.reportblock:odd').css('background-color', 'LightCyan'); //Все нечетные блоки окрашиваем
+        $('.reportblock:odd').css('background-color', '#3880B4'); //Все нечетные блоки окрашиваем
     </script>
 
 </body>

@@ -48,6 +48,7 @@ body {
     background: green;
     padding: 0.1em;
     opacity: .8;
+    border-radius: 0.2em;
 }
 
 .square {
@@ -56,6 +57,7 @@ body {
     margin: 0.1em;
     background: LightSkyBlue;
     background-size: cover;
+    border-radius: 0.5em;
 }
 
 .square:hover {
@@ -71,6 +73,7 @@ body {
     padding: 0.1em;
     background-color: navajowhite;
     vertical-align: bottom;
+    border-radius: 0.1em;
 }
 
 .checkbox_style {
@@ -85,6 +88,7 @@ body {
     float: left;
     border: none;
     padding: 0.0625em;
+        border-radius: 0.1em;
 }
 
 .text_style {

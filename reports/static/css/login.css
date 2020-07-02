@@ -7,6 +7,7 @@
 body, html {
   width: 100%;
   height: 100%;
+  background-color: #060606;
 }
 
 #login {
@@ -15,7 +16,7 @@ body, html {
   height: 16rem;
   bottom: calc(50% - 8rem);
   left: calc(50% - 8rem);
-  background: #C5C6C6;
+  background: #262626;
 }
 
 .textfield {
@@ -33,12 +34,12 @@ body, html {
   margin: 1rem;
   padding: 0;
   border: 0;
-  border-radius: 1rem;
-  background: #179AFF;
+  border-radius: 0.5rem;
+  background: #3880B4;
   color: white;
   font-weight: bold;
 }
 
 #button:active {
-  background: #008FFF;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.50)inset;
 }
