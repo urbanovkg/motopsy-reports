@@ -291,19 +291,19 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option1" value="Р001">
 			<input class="text_style" type="text" size="40" value="Разборка/сборка для ремонта и полной окраски /замены каркаса кузова">
-			<input class="norm" type="text" size="10" value="63.6">
+			<input class="norm" type="text" size="10" value="63.6" data-uts="2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="Р002">
 			<input class="text_style" type="text" size="40" value="Разборка/сборка для ремонта и наружной окраски">
-			<input class="norm" type="text" size="10" value="11">
+			<input class="norm" type="text" size="10" value="11" data-uts="1">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option4" value="Р003">
 			<input class="text_style" type="text" size="40" value="Разборка/сборка для замены каркаса кузова (обитого) /замены рамы">
-			<input class="norm" type="text" size="10" value="49.8">
+			<input class="norm" type="text" size="10" value="49.8" data-uts="1.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -595,12 +595,12 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="К025">
 			<input class="text_style" type="text" size="40" value="Устранение перекоса кузова">
 			<select class="action_type">
-				<option selected value="9.5">несложного</option>
-				<option value="20.8">средней сложности</option>
-				<option value="37.2">сложного</option>
-				<option value="49.9">особой сложности</option>
+				<option selected value="9.5" data-uts="0.5">несложного</option>
+				<option value="20.8" data-uts="1.5">средней сложности</option>
+				<option value="37.2" data-uts="2.5">сложного</option>
+				<option value="49.9" data-uts="4">особой сложности</option>
 			</select>
-			<input class="norm" type="text" size="10" value="9.5">
+			<input class="norm" type="text" size="10" value="9.5" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -620,12 +620,12 @@
 			<input class="text_style" type="text" size="40" value="Брызговик передний с лонжероном в сборе">
 			<input class="position" type="text" size="10" value="левый">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.6">ремонт №2</option>
-				<option value="4.8">ремонт №3</option>
-				<option selected value="14.2">замена</option>
+				<option value="1.7" data-uts="0.3">ремонт №1</option>
+				<option value="3.6" data-uts="0.6">ремонт №2</option>
+				<option value="4.8" data-uts="1.2">ремонт №3</option>
+				<option selected value="14.2" data-uts="0.7">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.2">
+			<input class="norm" type="text" size="10" value="14.2" data-uts="0.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -633,12 +633,12 @@
 			<input class="text_style" type="text" size="40" value="Брызговик передний с лонжероном в сборе">
 			<input class="position" type="text" size="10" value="правый">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.6">ремонт №2</option>
-				<option value="4.8">ремонт №3</option>
-				<option selected value="14.2">замена</option>
+				<option value="1.7" data-uts="0.3">ремонт №1</option>
+				<option value="3.6" data-uts="0.6">ремонт №2</option>
+				<option value="4.8" data-uts="1.2">ремонт №3</option>
+				<option selected value="14.2" data-uts="0.7">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.2">
+			<input class="norm" type="text" size="10" value="14.2" data-uts="0.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -646,12 +646,12 @@
 			<input class="text_style" type="text" size="40" value="Лонжерон передний">
 			<input class="position" type="text" size="10" value="левый">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.4">ремонт №2</option>
-				<option value="3.9">ремонт №3</option>
-				<option selected value="3.9">замена</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="3.4" data-uts="0.4">ремонт №2</option>
+				<option value="3.9" data-uts="1">ремонт №3</option>
+				<option selected value="3.9" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -659,12 +659,12 @@
 			<input class="text_style" type="text" size="40" value="Лонжерон передний">
 			<input class="position" type="text" size="10" value="правый">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.4">ремонт №2</option>
-				<option value="3.9">ремонт №3</option>
-				<option selected value="3.9">замена</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="3.4" data-uts="0.4">ремонт №2</option>
+				<option value="3.9" data-uts="1">ремонт №3</option>
+				<option selected value="3.9" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -672,12 +672,12 @@
 			<input class="text_style" type="text" size="40" value="Брызговик переднего крыла">
 			<input class="position" type="text" size="10" value="левого">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.6">ремонт №2</option>
-				<option value="4.8">ремонт №3</option>
-				<option selected value="4.1">замена</option>
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.6" data-uts="0.5">ремонт №2</option>
+				<option value="4.8" data-uts="1.1">ремонт №3</option>
+				<option selected value="4.1" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="4.1">
+			<input class="norm" type="text" size="10" value="4.1" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -685,61 +685,61 @@
 			<input class="text_style" type="text" size="40" value="Брызговик переднего крыла">
 			<input class="position" type="text" size="10" value="правого">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.6">ремонт №2</option>
-				<option value="4.8">ремонт №3</option>
-				<option selected value="4.1">замена</option>
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.6" data-uts="0.5">ремонт №2</option>
+				<option value="4.8" data-uts="1.1">ремонт №3</option>
+				<option selected value="4.1" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="4.1">
+			<input class="norm" type="text" size="10" value="4.1" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К004">
 			<input class="text_style" type="text" size="40" value="Рамка ветрового окна">
 			<select class="action_type">
-				<option value="1.5">ремонт №1</option>
-				<option value="3.2">ремонт №2</option>
-				<option value="5.1">ремонт №3</option>
-				<option selected value="6">замена</option>
+				<option value="1.5" data-uts="0.3">ремонт №1</option>
+				<option value="3.2" data-uts="0.4">ремонт №2</option>
+				<option value="5.1" data-uts="0.5">ремонт №3</option>
+				<option selected value="6" data-uts="0.7">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6">
+			<input class="norm" type="text" size="10" value="6" data-uts="0.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К005">
 			<input class="text_style" type="text" size="40" value="Капот">
 			<select class="action_type">
-				<option value="1.5">ремонт №1</option>
-				<option value="2.9">ремонт №2</option>
-				<option value="3.9">ремонт №3</option>
-				<option selected value="1">замена</option>
-				<option value="1">снять/установить по проему</option>
+				<option value="1.5" data-uts="0.1">ремонт №1</option>
+				<option value="2.9" data-uts="0.2">ремонт №2</option>
+				<option value="3.9" data-uts="0.4">ремонт №3</option>
+				<option selected value="1" data-uts="0">замена</option>
+				<option value="1" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="1">
+			<input class="norm" type="text" size="10" value="1" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К006">
 			<input class="text_style" type="text" size="40" value="Передняя панель">
 			<select class="action_type">
-				<option value="2.9">ремонт №1</option>
-				<option value="4.8">ремонт №2</option>
-				<option value="6.5">ремонт №3</option>
-				<option selected value="7.2">замена</option>
+				<option value="2.9" data-uts="0.2">ремонт №1</option>
+				<option value="4.8" data-uts="0.3">ремонт №2</option>
+				<option value="6.5" data-uts="0.4">ремонт №3</option>
+				<option selected value="7.2" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="7.2">
+			<input class="norm" type="text" size="10" value="7.2" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К007">
 			<input class="text_style" type="text" size="40" value="Щит передка">
 			<select class="action_type">
-				<option value="2.9">ремонт №1</option>
-				<option value="3.9">ремонт №2</option>
-				<option value="5.1">ремонт №3</option>
-				<option selected value="7">замена</option>
+				<option value="2.9" data-uts="0.4">ремонт №1</option>
+				<option value="3.9" data-uts="0.7">ремонт №2</option>
+				<option value="5.1" data-uts="1">ремонт №3</option>
+				<option selected value="7" data-uts="0.7">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="7">
+			<input class="norm" type="text" size="10" value="7" data-uts="0.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -747,12 +747,13 @@
 			<input class="text_style" type="text" size="40" value="Крыло переднее">
 			<input class="position" type="text" size="10" value="левое">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.2">ремонт №2</option>
-				<option value="4.6">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="3.2" data-uts="0.2">ремонт №2</option>
+				<option value="4.6" data-uts="0.3">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
+				<option value="0.8" data-uts="0">снять/установить</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -760,12 +761,13 @@
 			<input class="text_style" type="text" size="40" value="Крыло переднее">
 			<input class="position" type="text" size="10" value="правое">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.2">ремонт №2</option>
-				<option value="4.6">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="3.2" data-uts="0.2">ремонт №2</option>
+				<option value="4.6" data-uts="0.3">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
+				<option value="0.8" data-uts="0">снять/установить</option>
 			</select>
-			<input class="norm" type="text" size="10" value="3.6">
+			<input class="norm" type="text" size="10" value="3.6" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -773,12 +775,12 @@
 			<input class="text_style" type="text" size="40" value="Стойка передней двери">
 			<input class="position" type="text" size="10" value="левая">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.2">ремонт №2</option>
-				<option value="5.1">ремонт №3</option>
-				<option selected value="6">замена</option>
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.2" data-uts="0.3">ремонт №2</option>
+				<option value="5.1" data-uts="0.4">ремонт №3</option>
+				<option selected value="6" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6">
+			<input class="norm" type="text" size="10" value="6" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -786,24 +788,24 @@
 			<input class="text_style" type="text" size="40" value="Стойка передней двери">
 			<input class="position" type="text" size="10" value="правая">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.2">ремонт №2</option>
-				<option value="5.1">ремонт №3</option>
-				<option selected value="6">замена</option>
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.2" data-uts="0.3">ремонт №2</option>
+				<option value="5.1" data-uts="0.4">ремонт №3</option>
+				<option selected value="6" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6">
+			<input class="norm" type="text" size="10" value="6" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К010">
 			<input class="text_style" type="text" size="40" value="Панель крыши с усилителями">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6.5">ремонт №2</option>
-				<option value="14.4">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="3.6" data-uts="0.5">ремонт №1</option>
+				<option value="6.5" data-uts="0.9">ремонт №2</option>
+				<option value="14.4" data-uts="1.4">ремонт №3</option>
+				<option selected value="14.4" data-uts="1.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="1.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -811,12 +813,12 @@
 			<input class="text_style" type="text" size="40" value="Центральная стойка">
 			<input class="position" type="text" size="10" value="левая">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="7.7">ремонт №3</option>
-				<option selected value="14">замена</option>
+				<option value="3.6" data-uts="0.2">ремонт №1</option>
+				<option value="6" data-uts="0.3">ремонт №2</option>
+				<option value="7.7" data-uts="0.4">ремонт №3</option>
+				<option selected value="14" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14">
+			<input class="norm" type="text" size="10" value="14" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -824,12 +826,12 @@
 			<input class="text_style" type="text" size="40" value="Центральная стойка">
 			<input class="position" type="text" size="10" value="правая">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="7.7">ремонт №3</option>
-				<option selected value="14">замена</option>
+				<option value="3.6" data-uts="0.2">ремонт №1</option>
+				<option value="6" data-uts="0.3">ремонт №2</option>
+				<option value="7.7" data-uts="0.4">ремонт №3</option>
+				<option selected value="14" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14">
+			<input class="norm" type="text" size="10" value="14" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -837,12 +839,12 @@
 			<input class="text_style" type="text" size="40" value="Боковина кузова">
 			<input class="position" type="text" size="10" value="левая">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="7.7">ремонт №3</option>
-				<option selected value="14">замена</option>
+				<option value="3.6" data-uts="0.3">ремонт №1</option>
+				<option value="6" data-uts="0.5">ремонт №2</option>
+				<option value="7.7" data-uts="0.7">ремонт №3</option>
+				<option selected value="14" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14">
+			<input class="norm" type="text" size="10" value="14" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -850,12 +852,12 @@
 			<input class="text_style" type="text" size="40" value="Боковина кузова">
 			<input class="position" type="text" size="10" value="правая">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="7.7">ремонт №3</option>
-				<option selected value="14">замена</option>
+				<option value="3.6" data-uts="0.3">ремонт №1</option>
+				<option value="6" data-uts="0.5">ремонт №2</option>
+				<option value="7.7" data-uts="0.7">ремонт №3</option>
+				<option selected value="14" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14">
+			<input class="norm" type="text" size="10" value="14" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -863,12 +865,12 @@
 			<input class="text_style" type="text" size="40" value="Боковина кузова с центральной стойкой">
 			<input class="position" type="text" size="10" value="левая">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="7.7">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="3.6" data-uts="0.4">ремонт №1</option>
+				<option value="6" data-uts="0.6">ремонт №2</option>
+				<option value="7.7" data-uts="0.8">ремонт №3</option>
+				<option selected value="14.4" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -876,12 +878,12 @@
 			<input class="text_style" type="text" size="40" value="Боковина кузова с центральной стойкой">
 			<input class="position" type="text" size="10" value="правая">
 			<select class="action_type">
-				<option value="3.6">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="7.7">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="3.6" data-uts="0.4">ремонт №1</option>
+				<option value="6" data-uts="0.6">ремонт №2</option>
+				<option value="7.7" data-uts="0.8">ремонт №3</option>
+				<option selected value="14.4" data-uts="1.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="1.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -889,13 +891,13 @@
 			<input class="text_style" type="text" size="40" value="Дверь передняя">
 			<input class="position" type="text" size="10" value="левая">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="2.8">ремонт №2</option>
-				<option value="4.3">ремонт №3</option>
-				<option selected value="2.1">замена</option>
-				<option value="0.8">снять/установить по проему</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="2.8" data-uts="0.2">ремонт №2</option>
+				<option value="4.3" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.1" data-uts="0">замена</option>
+				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2.1">
+			<input class="norm" type="text" size="10" value="2.1" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -903,13 +905,13 @@
 			<input class="text_style" type="text" size="40" value="Дверь передняя">
 			<input class="position" type="text" size="10" value="правая">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="2.8">ремонт №2</option>
-				<option value="4.3">ремонт №3</option>
-				<option selected value="2.1">замена</option>
-				<option value="0.8">снять/установить по проему</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="2.8" data-uts="0.2">ремонт №2</option>
+				<option value="4.3" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.1" data-uts="0">замена</option>
+				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2.1">
+			<input class="norm" type="text" size="10" value="2.1" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -917,13 +919,13 @@
 			<input class="text_style" type="text" size="40" value="Дверь задняя">
 			<input class="position" type="text" size="10" value="левая">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="2.8">ремонт №2</option>
-				<option value="4.3">ремонт №3</option>
-				<option selected value="2.1">замена</option>
-				<option value="0.8">снять/установить по проему</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="2.8" data-uts="0.2">ремонт №2</option>
+				<option value="4.3" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.1" data-uts="0">замена</option>
+				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2.1">
+			<input class="norm" type="text" size="10" value="2.1" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -931,13 +933,13 @@
 			<input class="text_style" type="text" size="40" value="Дверь задняя">
 			<input class="position" type="text" size="10" value="правая">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="2.8">ремонт №2</option>
-				<option value="4.3">ремонт №3</option>
-				<option selected value="2.1">замена</option>
-				<option value="0.8">снять/установить по проему</option>
+				<option value="1.7" data-uts="0.1">ремонт №1</option>
+				<option value="2.8" data-uts="0.2">ремонт №2</option>
+				<option value="4.3" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.1" data-uts="0">замена</option>
+				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2.1">
+			<input class="norm" type="text" size="10" value="2.1" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -945,12 +947,12 @@
 			<input class="text_style" type="text" size="40" value="Лонжерон заднего пола">
 			<input class="position" type="text" size="10" value="левый">
 			<select class="action_type">
-				<option value="1.5">ремонт №1</option>
-				<option value="2.9">ремонт №2</option>
-				<option value="3.6">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="1.5" data-uts="0.5">ремонт №1</option>
+				<option value="2.9" data-uts="0.9">ремонт №2</option>
+				<option value="3.6" data-uts="1.3">ремонт №3</option>
+				<option selected value="14.4" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -958,12 +960,12 @@
 			<input class="text_style" type="text" size="40" value="Лонжерон заднего пола">
 			<input class="position" type="text" size="10" value="правый">
 			<select class="action_type">
-				<option value="1.5">ремонт №1</option>
-				<option value="2.9">ремонт №2</option>
-				<option value="3.6">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="1.5" data-uts="0.5">ремонт №1</option>
+				<option value="2.9" data-uts="0.9">ремонт №2</option>
+				<option value="3.6" data-uts="1.3">ремонт №3</option>
+				<option selected value="14.4" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -971,12 +973,12 @@
 			<input class="text_style" type="text" size="40" value="Арка внутренняя заднего колеса">
 			<input class="position" type="text" size="10" value="левого">
 			<select class="action_type">
-				<option value="2.4">ремонт №1</option>
-				<option value="4.8">ремонт №2</option>
-				<option value="7.2">ремонт №3</option>
-				<option selected value="8.4">замена</option>
+				<option value="2.4" data-uts="0.3">ремонт №1</option>
+				<option value="4.8" data-uts="0.5">ремонт №2</option>
+				<option value="7.2" data-uts="0.7">ремонт №3</option>
+				<option selected value="8.4" data-uts="0.4">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="8.4">
+			<input class="norm" type="text" size="10" value="8.4" data-uts="0.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -984,12 +986,12 @@
 			<input class="text_style" type="text" size="40" value="Арка внутренняя заднего колеса">
 			<input class="position" type="text" size="10" value="правого">
 			<select class="action_type">
-				<option value="2.4">ремонт №1</option>
-				<option value="4.8">ремонт №2</option>
-				<option value="7.2">ремонт №3</option>
-				<option selected value="8.4">замена</option>
+				<option value="2.4" data-uts="0.3">ремонт №1</option>
+				<option value="4.8" data-uts="0.5">ремонт №2</option>
+				<option value="7.2" data-uts="0.7">ремонт №3</option>
+				<option selected value="8.4" data-uts="0.4">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="8.4">
+			<input class="norm" type="text" size="10" value="8.4" data-uts="0.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -997,12 +999,12 @@
 			<input class="text_style" type="text" size="40" value="Крыло заднее">
 			<input class="position" type="text" size="10" value="левое">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.4">ремонт №2</option>
-				<option value="3.9">ремонт №3</option>
-				<option selected value="6.8">замена</option>
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.4" data-uts="0.3">ремонт №2</option>
+				<option value="3.9" data-uts="0.4">ремонт №3</option>
+				<option selected value="6.8" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6.8">
+			<input class="norm" type="text" size="10" value="6.8" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -1010,98 +1012,98 @@
 			<input class="text_style" type="text" size="40" value="Крыло заднее">
 			<input class="position" type="text" size="10" value="правое">
 			<select class="action_type">
-				<option value="1.7">ремонт №1</option>
-				<option value="3.4">ремонт №2</option>
-				<option value="3.9">ремонт №3</option>
-				<option selected value="6.8">замена</option>
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.4" data-uts="0.3">ремонт №2</option>
+				<option value="3.9" data-uts="0.4">ремонт №3</option>
+				<option selected value="6.8" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6.8">
+			<input class="norm" type="text" size="10" value="6.8" data-uts="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К018">
 			<input class="text_style" type="text" size="40" value="Задняя панель">
 			<select class="action_type">
-				<option value="2.2">ремонт №1</option>
-				<option value="3.6">ремонт №2</option>
-				<option value="5.1">ремонт №3</option>
-				<option selected value="6.5">замена</option>
+				<option value="2.2" data-uts="0.2">ремонт №1</option>
+				<option value="3.6" data-uts="0.3">ремонт №2</option>
+				<option value="5.1" data-uts="0.4">ремонт №3</option>
+				<option selected value="6.5" data-uts="0.4">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6.5">
+			<input class="norm" type="text" size="10" value="6.5" data-uts="0.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К019">
 			<input class="text_style" type="text" size="40" value="Крышка багажника">
 			<select class="action_type">
-				<option value="1.8">ремонт №1</option>
-				<option value="2.9">ремонт №2</option>
-				<option value="4.5">ремонт №3</option>
-				<option selected value="2.1">замена</option>
-				<option value="0.9">снять/установить по проему</option>
+				<option value="1.8" data-uts="0.1">ремонт №1</option>
+				<option value="2.9" data-uts="0.2">ремонт №2</option>
+				<option value="4.5" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.1" data-uts="0">замена</option>
+				<option value="0.9" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2.1">
+			<input class="norm" type="text" size="10" value="2.1" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К026">
 			<input class="text_style" type="text" size="40" value="Дверь задка">
 			<select class="action_type">
-				<option value="1.8">ремонт №1</option>
-				<option value="3">ремонт №2</option>
-				<option value="4.6">ремонт №3</option>
-				<option selected value="2.2">замена</option>
-				<option value="1.1">снять/установить по проему</option>
+				<option value="1.8" data-uts="0.1">ремонт №1</option>
+				<option value="3" data-uts="0.2">ремонт №2</option>
+				<option value="4.6" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.2" data-uts="0">замена</option>
+				<option value="1.1" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" size="10" value="2.2">
+			<input class="norm" type="text" size="10" value="2.2" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К020">
 			<input class="text_style" type="text" size="40" value="Рамка заднего окна">
 			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="1.5">ремонт №2</option>
-				<option value="3.4">ремонт №3</option>
-				<option selected value="6">замена</option>
+				<option value="1" data-uts="0.3">ремонт №1</option>
+				<option value="1.5" data-uts="0.5">ремонт №2</option>
+				<option value="3.4" data-uts="0.7">ремонт №3</option>
+				<option selected value="6" data-uts="0.6">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="6">
+			<input class="norm" type="text" size="10" value="6" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К021">
 			<input class="text_style" type="text" size="40" value="Пол передний">
 			<select class="action_type">
-				<option value="1.9">ремонт №1</option>
-				<option value="4.5">ремонт №2</option>
-				<option value="7.6">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="1.9" data-uts="0.4">ремонт №1</option>
+				<option value="4.5" data-uts="0.6">ремонт №2</option>
+				<option value="7.6" data-uts="0.9">ремонт №3</option>
+				<option selected value="14.4" data-uts="1.2">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="1.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К022">
 			<input class="text_style" type="text" size="40" value="Пол центральный">
 			<select class="action_type">
-				<option value="1.1">ремонт №1</option>
-				<option value="2.2">ремонт №2</option>
-				<option value="3.9">ремонт №3</option>
-				<option selected value="14.4">замена</option>
+				<option value="1.1" data-uts="0.4">ремонт №1</option>
+				<option value="2.2" data-uts="0.6">ремонт №2</option>
+				<option value="3.9" data-uts="0.9">ремонт №3</option>
+				<option selected value="14.4" data-uts="1.2">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="14.4">
+			<input class="norm" type="text" size="10" value="14.4" data-uts="1.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К023">
 			<input class="text_style" type="text" size="40" value="Пол задний">
 			<select class="action_type">
-				<option value="2.4">ремонт №1</option>
-				<option value="3.8">ремонт №2</option>
-				<option value="5.1">ремонт №3</option>
-				<option selected value="7.2">замена</option>
+				<option value="2.4" data-uts="0.4">ремонт №1</option>
+				<option value="3.8" data-uts="0.6">ремонт №2</option>
+				<option value="5.1" data-uts="0.9">ремонт №3</option>
+				<option selected value="7.2" data-uts="1.2">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="7.2">
+			<input class="norm" type="text" size="10" value="7.2" data-uts="1.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2984,12 +2986,12 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="З314">
 			<input class="text_style" type="text" size="40" value="Обивка багажного отсека">
 			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.7">ремонт №2</option>
-				<option value="3">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="0.6" data-uts="0.2">ремонт №1</option>
+				<option value="1.7" data-uts="0.4">ремонт №2</option>
+				<option value="3" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3040,12 +3042,12 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="З501">
 			<input class="text_style" type="text" size="40" value="Панель приборов">
 			<select class="action_type">
-				<option value="2">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="13">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="2" data-uts="0.2">ремонт №1</option>
+				<option value="6" data-uts="0.4">ремонт №2</option>
+				<option value="13" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3312,24 +3314,24 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="З518">
 			<input class="text_style" type="text" size="40" value="Обивка потолка">
 			<select class="action_type">
-				<option value="4">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="8">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="4" data-uts="0.2">ремонт №1</option>
+				<option value="6" data-uts="0.4">ремонт №2</option>
+				<option value="8" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З519">
 			<input class="text_style" type="text" size="40" value="Обивка пола">
 			<select class="action_type">
-				<option value="4">ремонт №1</option>
-				<option value="6">ремонт №2</option>
-				<option value="8">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="4" data-uts="0.2">ремонт №1</option>
+				<option value="6" data-uts="0.4">ремонт №2</option>
+				<option value="8" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3337,12 +3339,12 @@
 			<input class="text_style" type="text" size="40" value="Обшивка передней двери">
 			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.6">ремонт №2</option>
-				<option value="3.8">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="0.6" data-uts="0.2">ремонт №1</option>
+				<option value="1.6" data-uts="0.4">ремонт №2</option>
+				<option value="3.8" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3350,12 +3352,12 @@
 			<input class="text_style" type="text" size="40" value="Обшивка передней двери">
 			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.6">ремонт №2</option>
-				<option value="3.8">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="0.6" data-uts="0.2">ремонт №1</option>
+				<option value="1.6" data-uts="0.4">ремонт №2</option>
+				<option value="3.8" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3363,12 +3365,12 @@
 			<input class="text_style" type="text" size="40" value="Обшивка задней двери">
 			<input class="position" type="text" size="10" value="левой">
 			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.6">ремонт №2</option>
-				<option value="3.8">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="0.6" data-uts="0.2">ремонт №1</option>
+				<option value="1.6" data-uts="0.4">ремонт №2</option>
+				<option value="3.8" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3376,12 +3378,12 @@
 			<input class="text_style" type="text" size="40" value="Обшивка задней двери">
 			<input class="position" type="text" size="10" value="правой">
 			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.6">ремонт №2</option>
-				<option value="3.8">ремонт №3</option>
-				<option selected value="0">замена</option>
+				<option value="0.6" data-uts="0.2">ремонт №1</option>
+				<option value="1.6" data-uts="0.4">ремонт №2</option>
+				<option value="3.8" data-uts="0.6">ремонт №3</option>
+				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" size="10" value="0">
+			<input class="norm" type="text" size="10" value="0" data-uts="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -4471,21 +4473,21 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О005">
 			<input class="text_style" type="text" size="40" value="Полная окраска кузова">
-			<input class="norm" type="text" size="10" value="95.4">
+			<input class="norm" type="text" size="10" value="95.4" data-uts="0.5">
 			<input class="paint" type="text" size="10" value="3.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О006">
 			<input class="text_style" type="text" size="40" value="Наружная окраска кузова">
-			<input class="norm" type="text" size="10" value="69.2">
+			<input class="norm" type="text" size="10" value="69.2" data-uts="2">
 			<input class="paint" type="text" size="10" value="2.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О007">
 			<input class="text_style" type="text" size="40" value="Наружная окраска кузова без крыши">
-			<input class="norm" type="text" size="10" value="61.1">
+			<input class="norm" type="text" size="10" value="61.1" data-uts="2.5">
 			<input class="paint" type="text" size="10" value="2.1">
 			<div class="cost"></div>
 		</div>
@@ -4500,7 +4502,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О009">
 			<input class="text_style" type="text" size="40" value="Окраска бампера">
 			<input class="position" type="text" size="10" value="переднего">
-			<input class="norm" type="text" size="10" value="4.5">
+			<input class="norm" type="text" size="10" value="4.5" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.25">
 			<div class="cost"></div>
 		</div>
@@ -4508,7 +4510,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О009">
 			<input class="text_style" type="text" size="40" value="Окраска бампера">
 			<input class="position" type="text" size="10" value="заднего">
-			<input class="norm" type="text" size="10" value="4.5">
+			<input class="norm" type="text" size="10" value="4.5" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.25">
 			<div class="cost"></div>
 		</div>
@@ -4522,14 +4524,14 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О014">
 			<input class="text_style" type="text" size="40" value="Окраска передней панели">
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.15">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О013">
 			<input class="text_style" type="text" size="40" value="Окраска капота">
-			<input class="norm" type="text" size="10" value="7.9">
+			<input class="norm" type="text" size="10" value="7.9" data-uts="0.4">
 			<input class="paint" type="text" size="10" value="0.5">
 			<div class="cost"></div>
 		</div>
@@ -4537,7 +4539,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О025">
 			<input class="text_style" type="text" size="40" value="Окраска переднего крыла">
 			<input class="position" type="text" size="10" value="левого">
-			<input class="norm" type="text" size="10" value="3.8">
+			<input class="norm" type="text" size="10" value="3.8" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
@@ -4545,28 +4547,28 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О025">
 			<input class="text_style" type="text" size="40" value="Окраска переднего крыла">
 			<input class="position" type="text" size="10" value="правого">
-			<input class="norm" type="text" size="10" value="3.8">
+			<input class="norm" type="text" size="10" value="3.8" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О010">
 			<input class="text_style" type="text" size="40" value="Окраска моторного отсека">
-			<input class="norm" type="text" size="10" value="12.9">
+			<input class="norm" type="text" size="10" value="12.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О011">
 			<input class="text_style" type="text" size="40" value="Окраска 70% моторного отсека">
-			<input class="norm" type="text" size="10" value="9.7">
+			<input class="norm" type="text" size="10" value="9.7" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.45">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О012">
 			<input class="text_style" type="text" size="40" value="Окраска 30% моторного отсека">
-			<input class="norm" type="text" size="10" value="4.3">
+			<input class="norm" type="text" size="10" value="4.3" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
@@ -4574,7 +4576,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О016">
 			<input class="text_style" type="text" size="40" value="Окраска передней двери">
 			<input class="position" type="text" size="10" value="левой">
-			<input class="norm" type="text" size="10" value="4.4">
+			<input class="norm" type="text" size="10" value="4.4" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.25">
 			<div class="cost"></div>
 		</div>
@@ -4582,7 +4584,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О016">
 			<input class="text_style" type="text" size="40" value="Окраска передней двери">
 			<input class="position" type="text" size="10" value="правой">
-			<input class="norm" type="text" size="10" value="4.4">
+			<input class="norm" type="text" size="10" value="4.4" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.25">
 			<div class="cost"></div>
 		</div>
@@ -4590,7 +4592,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О019">
 			<input class="text_style" type="text" size="40" value="Окраска переднего дверного проема">
 			<input class="position" type="text" size="10" value="левого">
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
@@ -4598,14 +4600,14 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О019">
 			<input class="text_style" type="text" size="40" value="Окраска переднего дверного проема">
 			<input class="position" type="text" size="10" value="правого">
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О018">
 			<input class="text_style" type="text" size="40" value="Окраска панели крыши">
-			<input class="norm" type="text" size="10" value="7.9">
+			<input class="norm" type="text" size="10" value="7.9" data-uts="0.4">
 			<input class="paint" type="text" size="10" value="0.5">
 			<div class="cost"></div>
 		</div>
@@ -4613,7 +4615,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О017">
 			<input class="text_style" type="text" size="40" value="Окраска задней двери">
 			<input class="position" type="text" size="10" value="левой">
-			<input class="norm" type="text" size="10" value="4.4">
+			<input class="norm" type="text" size="10" value="4.4" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.25">
 			<div class="cost"></div>
 		</div>
@@ -4621,7 +4623,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О017">
 			<input class="text_style" type="text" size="40" value="Окраска задней двери">
 			<input class="position" type="text" size="10" value="правой">
-			<input class="norm" type="text" size="10" value="4.4">
+			<input class="norm" type="text" size="10" value="4.4" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.25">
 			<div class="cost"></div>
 		</div>
@@ -4629,7 +4631,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О020">
 			<input class="text_style" type="text" size="40" value="Окраска заднего дверного проема">
 			<input class="position" type="text" size="10" value="левого">
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
@@ -4637,7 +4639,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О020">
 			<input class="text_style" type="text" size="40" value="Окраска заднего дверного проема">
 			<input class="position" type="text" size="10" value="правого">
-			<input class="norm" type="text" size="10" value="3.9">
+			<input class="norm" type="text" size="10" value="3.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
@@ -4645,7 +4647,7 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О026">
 			<input class="text_style" type="text" size="40" value="Окраска заднего крыла">
 			<input class="position" type="text" size="10" value="левого">
-			<input class="norm" type="text" size="10" value="4.1">
+			<input class="norm" type="text" size="10" value="4.1" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
@@ -4653,49 +4655,49 @@
 			<input class="checkbox_style" type="checkbox" name="option2" value="О026">
 			<input class="text_style" type="text" size="40" value="Окраска заднего крыла">
 			<input class="position" type="text" size="10" value="правого">
-			<input class="norm" type="text" size="10" value="4.1">
+			<input class="norm" type="text" size="10" value="4.1" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О022">
 			<input class="text_style" type="text" size="40" value="Окраска багажного отделения">
-			<input class="norm" type="text" size="10" value="9.9">
+			<input class="norm" type="text" size="10" value="9.9" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О023">
 			<input class="text_style" type="text" size="40" value="Окраска 70% багажного отсека">
-			<input class="norm" type="text" size="10" value="7.2">
+			<input class="norm" type="text" size="10" value="7.2" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О024">
 			<input class="text_style" type="text" size="40" value="Окраска 30% багажного отсека">
-			<input class="norm" type="text" size="10" value="3.4">
+			<input class="norm" type="text" size="10" value="3.4" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О021">
 			<input class="text_style" type="text" size="40" value="Окраска крышки багажника">
-			<input class="norm" type="text" size="10" value="5.1">
+			<input class="norm" type="text" size="10" value="5.1" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О030">
 			<input class="text_style" type="text" size="40" value="Окраска двери задка">
-			<input class="norm" type="text" size="10" value="5.2">
+			<input class="norm" type="text" size="10" value="5.2" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О015">
 			<input class="text_style" type="text" size="40" value="Окраска задней панели">
-			<input class="norm" type="text" size="10" value="3.4">
+			<input class="norm" type="text" size="10" value="3.4" data-uts="0.3">
 			<input class="paint" type="text" size="10" value="0.15">
 			<div class="cost"></div>
 		</div>
@@ -5034,6 +5036,7 @@
 		<div class="result" id="total_calc"></div>
 		<div class="result" id="total_mat"></div>
 		<div class="result" id="total_sum"></div>
+		<div class="result" id="total_uts"></div>
 
 		<form method="post" action="{% url 'list' %}" target="_blank">
 			{% csrf_token %}
@@ -5043,6 +5046,7 @@
 			<input class="hidden_field" id="services_table" type="text" name="services_table" value="">
 			<input class="hidden_field" id="materials_table" type="text" name="materials_table" value="">
 			<input class="hidden_field" id="parts_table" type="text" name="parts_table" value="">
+			<input class="hidden_field" id="uts_table" type="text" name="uts_table" value="">
 			<input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
 		</form>
 	</div>

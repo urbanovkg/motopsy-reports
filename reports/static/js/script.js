@@ -80,8 +80,12 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   $('.action_type').on('change', function() { //Событие при выборе типа ремонтного воздействия из выпадающего списка
     let at = $(this).children('select option:selected').val(); //Записываем значение выбранного ремонтного воздействия в переменную
     let tn = $(this).next('.norm'); //Записываем адрес текущего нормо-часа
+    let us = $(this).children('select option:selected').attr('data-uts');
     tn.val(at); //Записываем значение в поле часов
     setCost(tn); //Функция изменения стоимости
+    if (us) {
+      tn.attr('data-uts', us);
+    }
   });
 
   $('.norm').on('change', function() { //Событие при изменении полей количества часов
@@ -221,11 +225,10 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#vehicle_owner').val($(this).val()); //Записываем текст в поле "владелец"
   });
 
-  /*
-      $('#icon_13').on('click', function() { //Выделяем все флажки ВРЕМЕННО
-          $('input:checkbox').attr('checked', 'checked');
-      });
-  */
+
+  $('#intermediate_calc').on('click', function() { //Выделяем все флажки ВРЕМЕННО
+    $('.checkbox_style').attr('checked', 'checked');
+  });
 
 
   let re = /(?=\B(?:\d{3})+(?!\d))/g;
@@ -245,7 +248,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   });
 
   $(".square").click(function() { //Функция показа определенной секции блоков
-    console.time('TEST');
+    console.time('Показ секции блока');
     let thisId = $(this).data('id');
     $('.empty_div').css('height', '5.5em');
     $(".square").css('background-color', 'LightSkyBlue');
@@ -256,20 +259,20 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         $(this).show();
       }
     });
-    console.timeEnd('TEST');
+    console.timeEnd('Показ секции блока');
   });
 
   $("#intermediate_calc").click(function() { //Функция показа всех секций
-    console.time('TEST2');
+    console.time('Показ всех секкций');
     $('.empty_div').css('height', '0');
     $('#first_empty_div').css('height', '5.5em');
     $(".square").css('background-color', 'LightSkyBlue');
     $('.section').show();
-    console.timeEnd('TEST2');
+    console.timeEnd('Показ всех секкций');
   });
 
   $('#calc_icon').on('click', function() { //Событие при щелчке на элементе с id=calc_icon
-    console.time('FirstWay'); //Измеряем скорость. Можно посмотреть в консоли
+    console.time('Весь расчет'); //Измеряем скорость. Можно посмотреть в консоли
 
     let fullArr = []; //Объявляем массив для хранения всех данных
     let disassemblyText = ''; // Текст разборок
@@ -281,17 +284,23 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     let idFirstSymbol; //Первый символ отмеченного ID
     let firstTimePainting = true; //Первое срабатывание цикла при обнаружении слова "Окраска"
 
+    console.time('Перебор флагов');
+    let sample;
+
     $('input:checkbox:checked').each(function(i, elem) { //Перебираем каждый отмеченный флажок
+      sample = $(this).nextAll();
       fullArr[i] = { //Записываем всё в массив объектов
         id: $(this).val(), //Записываем значение каждого отмеченного флажка
         text: $(this).next('input').val(), //Текст около флажка
-        position: $(this).nextAll('.position').val(), //Текст "позиция детали"
-        action: $(this).parent().find('.action_type :selected').text(), //Текст "тип ремонтного воздействия"
-        quant: $(this).nextAll('.quant').val(), //Количество нормо-часов
-        paint: $(this).nextAll('.paint').val(), //Количество краски
-        norm: $(this).nextAll('.norm').val(), //Значение нормо-часа
-        cost: $(this).nextAll('.cost').text() //Стоимость пункта
+        position: sample.filter('.position').val(), //Текст "позиция детали"
+        action: sample.filter('.action_type').children('option:selected').text(), //Текст "тип ремонтного воздействия"
+        quant: sample.filter('.quant').val(), //Количество нормо-часов
+        paint: sample.filter('.paint').val(), //Количество краски
+        norm: sample.filter('.norm').val(), //Значение нормо-часа
+        cost: sample.filter('.cost').text(), //Стоимость пункта
+        uts: sample.filter('.norm').attr('data-uts') //Процент УТС
       }
+
       //Если есть данные, то преобразуем в число, иначе 0
       if (fullArr[i].quant) {
         fullArr[i].quant = parseFloat(fullArr[i].quant);
@@ -312,6 +321,11 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         fullArr[i].cost = parseFloat(fullArr[i].cost);
       } else {
         fullArr[i].cost = 0;
+      }
+      if (fullArr[i].uts) {
+        fullArr[i].uts = parseFloat(fullArr[i].uts);
+      } else {
+        fullArr[i].uts = 0;
       }
 
       idFirstSymbol = fullArr[i].id.charAt(0); //Первый символ отмеченного ID
@@ -396,6 +410,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         fullArr[i].quant = 1;
       }
     }); //Конец перебора флажков
+    console.timeEnd('Перебор флагов');
 
     if (!firstTimePainting) { //Ставим точку в конце окрашиваемых деталей
       paintingText = paintingText.slice(0, -1) + '. ';
@@ -418,7 +433,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
           action: fullArr[i].action,
           quant: fullArr[i].quant + fullArr[i + 1].quant,
           norm: (fullArr[i].norm + fullArr[i + 1].norm) / 2,
-          cost: fullArr[i].cost + fullArr[i + 1].cost
+          cost: fullArr[i].cost + fullArr[i + 1].cost,
+          uts: fullArr[i].uts + fullArr[i + 1].uts
         }
         i++;
       } else {
@@ -429,7 +445,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
           action: fullArr[i].action,
           quant: fullArr[i].quant,
           norm: fullArr[i].norm,
-          cost: fullArr[i].cost
+          cost: fullArr[i].cost,
+          uts: fullArr[i].uts
         }
       }
       gluedArrCounter++;
@@ -447,7 +464,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     let partsArr = []; //Массив для хранения данных таблицы запчастей
     let partsCounter = 0;
     let partsTable = ''; //Переменная для хранения таблицы запчастей
-
+    let utsArr = []; //Массив для хранения данных таблицы УТС
+    let utsCounter = 0;
+    let totalUTS = 0; //Переменная для суммы УТС, %
 
     for (let i = 0; i < gluedArrLength; i++) {
       if (gluedArr[i].cost > 0) { //ТАБЛИЦЫ УСЛУГ И МАТЕРИАЛОВ
@@ -487,6 +506,17 @@ $(function() { //Событие ready полной загрузки HTML и CSS
               }
               servicesTable += '<tr><td>' + servicesCounter + '</td><td>' + gluedArr[i].text + '</td><td>' + gluedArr[i].quant.toString().replace('.', ',') + '</td><td>' + gluedArr[i].norm.toFixed(1).replace('.', ',') + '</td><td>' + gluedArr[i].cost.toFixed(2).replace('.', ',') + '</td></tr>';
             }
+
+            if (gluedArr[i].uts > 0) {
+              totalUTS += gluedArr[i].uts;
+              utsCounter++;
+              utsArr[utsCounter - 1] = {
+                text: servicesArr[servicesCounter - 1].text,
+                quant: servicesArr[servicesCounter - 1].quant,
+                uts: formatting(gluedArr[i].uts)
+              }
+            }
+
             break;
         }
       }
@@ -520,6 +550,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#total_calc').text('Услуг: ' + totalServicesCost + ' сом');
     $('#total_mat').text('Материалов: ' + totalMaterialsCost + ' сом');
     $('#total_sum').text('Всего: ' + totalCost + ' сом');
+    $('#total_uts').text('УТС: ' + totalUTS.toFixed(2) + ' %');
 
     let reportData = {
       doctype: $('#doc_type').val(),
@@ -538,7 +569,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       costinwords: $('#contract_cost_in_words').val(),
       exchangerate: $('#exchange_rate').val(),
       servicesres: formatting(totalServicesCost),
-      materialsres: formatting(totalMaterialsCost)
+      materialsres: formatting(totalMaterialsCost),
+      utspercent: formatting(totalUTS.toFixed(2))
     }
 
     let vehicleData = {
@@ -576,9 +608,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#services_table').val(JSON.stringify(servicesArr));
     $('#materials_table').val(JSON.stringify(materialsArr));
     $('#parts_table').val(JSON.stringify(partsArr));
-
+    $('#uts_table').val(JSON.stringify(utsArr));
     $('#hidden_button, #hidden_field, #hidden_br').show();
 
-    console.timeEnd('FirstWay');
+    console.timeEnd('Весь расчет');
   }); //Конец расчета
 }); //Конец события полной загрузки HTML и CSS

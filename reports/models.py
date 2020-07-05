@@ -91,9 +91,11 @@ class Report(models.Model):
     services_table = models.TextField("Таблица услуг (JSON)", default = "", blank=True)
     materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
     parts_table = models.TextField("Таблица запчастец (JSON)", default = "", blank=True)
+    uts_table = models.TextField("Таблица УТС (JSON)", default = "", blank=True)
 
     services_result = models.CharField("Всего услуг, сом", max_length=32, default=0)
     materials_result = models.CharField("Всего материалов, сом", max_length=32, default=0)
+    uts_percent = models.CharField("Всего УТС, %", max_length=32, default=0)
 
     def publish(self):
         self.save()
