@@ -124,7 +124,7 @@ def cash_document(request, pk):
         utsSheet.cell(column=2, row=elem+2, value=uts_table_list[elem]['text'])
         utsSheet.cell(column=3, row=elem+2, value=uts_table_list[elem]['quant'])
         utsSheet.cell(column=4, row=elem+2, value=float(uts_table_list[elem]['uts'].replace(' ', '').replace(',', '.')))
-        utsSheet.cell(column=5, row=elem+2, value='=D{}*Средн!$D$22'.format(elem+2))
+        utsSheet.cell(column=5, row=elem+2, value='=D{}*Средн!$D$22/100'.format(elem+2))
     utsSheet["G2"] = '=SUM(D2:D{}'.format(utsLen+1)+')'
     utsSheet["H2"] = '=SUM(E2:E{}'.format(utsLen+1)+')'
     utsSheet["G4"] = float(all_report.uts_percent.replace(' ', '').replace(',', '.'))

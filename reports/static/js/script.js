@@ -225,11 +225,11 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#vehicle_owner').val($(this).val()); //Записываем текст в поле "владелец"
   });
 
-
+/*
   $('#intermediate_calc').on('click', function() { //Выделяем все флажки ВРЕМЕННО
     $('.checkbox_style').attr('checked', 'checked');
   });
-
+*/
 
   let re = /(?=\B(?:\d{3})+(?!\d))/g;
   let formatted = '';
