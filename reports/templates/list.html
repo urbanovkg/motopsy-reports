@@ -13,10 +13,15 @@
     {% block content %}
 
     <div id="header">
-    <div id="reportscount">Отчётов в базе данных: {{ num_reports }}</div>
+    <div id="reportscount">Версия: 0,7й<br>Отчётов в базе данных: {{ num_reports }}</div>
     <div class="contractbill">
+
     <a id="newreport" href="{% url 'index' %}"></a>
+    <div id="logadmin">
+    <a id="logout" href="{% url 'login' %}"></a>
     <a id="adminpanel" href="{% url 'admin:index' %}"></a>
+  </div>
+
   </div>
   </div>
     <br>

@@ -25,6 +25,7 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
+
 }
 
 #newreport {
@@ -38,7 +39,7 @@ body {
 }
 
 #adminpanel {
-  height: 4em;
+  height: 2em;
   width: 3em;
   background-image: url(img/admin.png);
   background-repeat: no-repeat;
@@ -46,8 +47,26 @@ body {
   background-position: center;
   background-size: contain;
   border-radius: 0.25em;
+
 }
 
+#logout {
+  height: 2em;
+  width: 3em;
+  background-image: url(img/exit.png);
+  background-repeat: no-repeat;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-radius: 0.25em;
+
+
+}
+
+#logadmin {
+display:flex;
+  flex-direction: column;
+}
 
 .reportblock {
   margin-bottom: 0.25em;
