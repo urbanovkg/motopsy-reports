@@ -171,6 +171,14 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#vehicle_body_type').val($('option:selected', this).text()); //Записываем выбранный текст в соседнее поле
   });
 
+  $('#customer_names').on('change', function() { //Событие при выборе заказчика
+    $('#customer_name').val($('option:selected', this).val()); //Записываем выбранный текст в соседнее поле
+  });
+
+  $('#vehicle_locations').on('change', function() { //Событие при выборе места осмотра
+    $('#vehicle_location').val($('option:selected', this).val()); //Записываем выбранный текст в соседнее поле
+  });
+
   let d = new Date(); //Текущая дата
   let fullgod = d.getFullYear(); //Текущий полный год
   let shortgod = d.getFullYear() - 2000; //Текущий краткий год
@@ -225,11 +233,11 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#vehicle_owner').val($(this).val()); //Записываем текст в поле "владелец"
   });
 
-/*
-  $('#intermediate_calc').on('click', function() { //Выделяем все флажки ВРЕМЕННО
-    $('.checkbox_style').attr('checked', 'checked');
-  });
-*/
+  /*
+    $('#intermediate_calc').on('click', function() { //Выделяем все флажки ВРЕМЕННО
+      $('.checkbox_style').attr('checked', 'checked');
+    });
+  */
 
   let re = /(?=\B(?:\d{3})+(?!\d))/g;
   let formatted = '';
@@ -271,7 +279,12 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     console.timeEnd('Показ всех секкций');
   });
 
+
+
+
+
   $('#calc_icon').on('click', function() { //Событие при щелчке на элементе с id=calc_icon
+
     console.time('Весь расчет'); //Измеряем скорость. Можно посмотреть в консоли
 
     let fullArr = []; //Объявляем массив для хранения всех данных
@@ -570,6 +583,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       exchangerate: $('#exchange_rate').val(),
       servicesres: formatting(totalServicesCost),
       materialsres: formatting(totalMaterialsCost),
+      totalres: formatting(totalCost),
       utspercent: formatting(totalUTS.toFixed(2))
     }
 

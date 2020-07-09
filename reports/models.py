@@ -68,7 +68,7 @@ class Report(models.Model):
     vehicle_year = models.CharField("Год выпуска", max_length=4, default="Н/у")
     vehicle_regnum = models.CharField("Гос. (рег.) номер ТС", max_length=32, default="Н/у")
     vehicle_vin = models.CharField("Номер кузова (VIN)", max_length=32, default="Н/у")
-    vehicle_frame = models.CharField("Номер рамы (шасси)", max_length=32, default="Н/у")
+    vehicle_frame = models.CharField("Номер рамы (шасси)", max_length=32, default="-")
     vehicle_passport = models.CharField("Номер техпаспорта", max_length=32, default="Н/у")
     vehicle_volume = models.CharField("Объем ДВС", max_length=32, default="", blank=True)
     vehicle_mileage = models.CharField("Пробег", max_length=32, default="Н/у")
@@ -95,6 +95,7 @@ class Report(models.Model):
 
     services_result = models.CharField("Всего услуг, сом", max_length=32, default=0)
     materials_result = models.CharField("Всего материалов, сом", max_length=32, default=0)
+    total_result = models.CharField("Всего материалов и услуг, сом", max_length=32, default=0)
     uts_percent = models.CharField("Всего УТС, %", max_length=32, default=0)
 
     def publish(self):

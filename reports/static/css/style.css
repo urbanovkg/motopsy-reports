@@ -87,7 +87,7 @@ overscroll-behavior: none;
     border: 0;
 }
 
-.text_style, .quant, .cost, .norm, .position, .text_line, .paint, #vehicle_type, #vehicle_body_type, #cost_per_hour, .dates, .action_type_half, .text_style_half {
+.text_style, .quant, .cost, .norm, .position, .text_line, .paint, #vehicle_type, #vehicle_body_type, #cost_per_hour, #customer_name, #vehicle_location, .dates, .action_type_half, .text_style_half {
     float: left;
     border: none;
     padding: 0.0625em;
@@ -198,8 +198,8 @@ overscroll-behavior: none;
 .half_selectbox {
     float: left;
     height: 1.25em;
-    width: calc(50% - 0.15em);
-    margin-right: 0.1em;
+    width: calc(30% - 0.15em);
+    margin-left: 0.1em;
     background: white;
     border: none;
 }
@@ -211,8 +211,8 @@ overscroll-behavior: none;
     border: none;
 }
 
-#vehicle_type, #vehicle_body_type, #cost_per_hour {
-    width: calc(50% - 0.15em);
+#vehicle_type, #vehicle_body_type, #cost_per_hour, #customer_name, #vehicle_location {
+    width: calc(70% - 0.15em);
 }
 
 h4 {
