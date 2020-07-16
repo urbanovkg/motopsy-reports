@@ -41,6 +41,10 @@ def is_json(myjson):
     finally:
         return myvar
 
+def report_edit(request, pk):
+    all_report = get_object_or_404(Report, pk=pk)
+    return render(request, 'index.html', {})
+    print ("йо")
 
 def report_create(request, pk):
     all_report = get_object_or_404(Report, pk=pk)
