@@ -211,8 +211,12 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
   $('#calc_date').val(fullgod + '-' + mes + '-' + chi); //Дата расчета
 
-  $('.action_type_half').on('change', function() { //Событие при изменении разборок
+  $('.action_type_half').on('change', function() { //Событие при изменении разборок 1
     $(this).siblings('.text_style_hide').val($('option:selected', this).val() + $(this).siblings('.text_style_half').val()); //Записываем выбранный текст в скрытое поле
+  });
+
+  $('.text_style_half').on('change', function() { //Событие при изменении разборок 2
+    $(this).siblings('.text_style_hide').val($('option:selected', $(this).siblings('.action_type_half')).val() + $(this).val()); //Записываем выбранный текст в скрытое поле
   });
 
   let month = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
@@ -280,8 +284,25 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   });
 
 
+  $('.checkbox_style').each(function() {
+    let rrr = $(this).nextAll('.norm');
+    if (rrr.attr('data-ost')) {
+      $(this).css('box-shadow', 'inset 0 0 0.3em 0.3em green');
+    }
+  });
 
-
+  $('.cost').on('click', function() { // Функция убирает пункт из расчета остаточной...
+    let thisNorm = $(this).siblings('.norm');
+    if (thisNorm.attr('data-ost')) {
+      thisNorm.attr('data-ost-temp', thisNorm.attr('data-ost'));
+      thisNorm.removeAttr('data-ost');
+      $(this).siblings('.checkbox_style').css('box-shadow', 'inset 0 0 0.3em 0.3em #FF4500');
+    } else if (thisNorm.attr('data-ost-temp')) { // ...и возвращает
+      thisNorm.attr('data-ost', thisNorm.attr('data-ost-temp'));
+      thisNorm.removeAttr('data-ost-temp');
+      $(this).siblings('.checkbox_style').css('box-shadow', 'inset 0 0 0.3em 0.3em green');
+    }
+  });
 
   $('#calc_icon').on('click', function() { //Событие при щелчке на элементе с id=calc_icon
 
@@ -294,11 +315,74 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     let additionalText = ''; // Текст доп.работ
     let hiddenText = ''; // Текст скрытых поврежлений
     let partsText = ''; // Текст запчастей
+
+    let ostArr = []; //Объявляем массив для хранения остатков
+    let damagedBodyPartsText = ''; // Поврежденные кузовные части
+    let damagedOtherPartsText = ''; // Прочие поврежденные детали
+    let unbrokenPartsText = ''; // Текст уцелевших запчастей
+
     let idFirstSymbol; //Первый символ отмеченного ID
+    let idTwoFirstSymbols; //Первые 2 символа отмеченного ID
+    let damageType = Array(8).fill(0); //массив для типа повреждений
     let firstTimePainting = true; //Первое срабатывание цикла при обнаружении слова "Окраска"
 
     console.time('Перебор флагов');
     let sample;
+
+    function lcFirst(str) {
+      if (!str) return str;
+      return str[0].toLowerCase() + str.slice(1);
+    }
+
+    function ucFirst(str) {
+      if (!str) return str;
+      return str[0].toUpperCase() + str.slice(1);
+    }
+
+    $('.norm').each(function(i, elem) { //Перебираем каждый флажок для остатков
+      if ($(this).attr('data-ost')) {
+        ostArr[i] = { //Записываем всё в массив объектов
+          id: $(this).siblings('.checkbox_style').val(), //Записываем значение каждого отмеченного флажка
+          text: lcFirst($(this).siblings('.text_style').val()), //Текст около флажка
+          position: $(this).siblings('.position').val(), //Текст "позиция детали"
+          ost: $(this).attr('data-ost') //Процент остаточный
+        }
+
+        if (ostArr[i].ost) {
+          ostArr[i].ost = parseFloat(ostArr[i].ost);
+        }
+
+        idFirstSymbol = ostArr[i].id.charAt(0); //Первый символ отмеченного ID
+        if ($(this).siblings('.checkbox_style').prop('checked')) { //СПИСОК ОСТАТОЧНЫЙ
+          switch (idFirstSymbol) {
+            case 'К': //Кузовные ремонты
+              if (ostArr[i].position) {
+                damagedBodyPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+              } else {
+                damagedBodyPartsText += ostArr[i].text + '; ';
+              }
+              break;
+            default:
+              if (ostArr[i].position) {
+                damagedOtherPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+              } else {
+                damagedOtherPartsText += ostArr[i].text + '; ';
+              }
+              break;
+          }
+        } else {
+
+          if (ostArr[i].position) {
+            unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+          } else {
+            unbrokenPartsText += ostArr[i].text + '; ';
+          }
+
+        }
+      }
+
+    });
+
 
     $('input:checkbox:checked').each(function(i, elem) { //Перебираем каждый отмеченный флажок
       sample = $(this).nextAll();
@@ -311,7 +395,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         paint: sample.filter('.paint').val(), //Количество краски
         norm: sample.filter('.norm').val(), //Значение нормо-часа
         cost: sample.filter('.cost').text(), //Стоимость пункта
-        uts: sample.filter('.norm').attr('data-uts') //Процент УТС
+        uts: sample.filter('.norm').attr('data-uts'), //Процент УТС
       }
 
       //Если есть данные, то преобразуем в число, иначе 0
@@ -340,6 +424,39 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       } else {
         fullArr[i].uts = 0;
       }
+
+
+
+      idTwoFirstSymbols = fullArr[i].id.slice(0, 2); //Первые два символа отмеченного ID
+      switch (idTwoFirstSymbols) {
+        case 'К0': //Кузовные ремонты
+          damageType[0]++;
+          break;
+        case 'З1': //Передняя часть
+          damageType[1]++;
+          break;
+        case 'З2': //Центральная часть
+          damageType[2]++;
+          break;
+        case 'З3': //Задняя часть
+          damageType[3]++;
+          break;
+        case 'З4': //Моторный отсек
+          damageType[4]++;
+          break;
+        case 'З5': //Салон
+          damageType[5]++;
+          break;
+        case 'П1': //Передняя ходовка
+          damageType[6]++;
+          break;
+        case 'П2': //Задняя ходовка
+          damageType[7]++;
+          break;
+        default:
+          break;
+      }
+
 
       idFirstSymbol = fullArr[i].id.charAt(0); //Первый символ отмеченного ID
       switch (idFirstSymbol) { //СПИСОК ВОССТАНОВЛЕНИЯ
@@ -412,6 +529,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         default:
           break;
       }
+
+
+
       if (fullArr[i].action == 'замена') { //СПИСОК ЗАПЧАСТЕЙ
         if (fullArr[i].position) {
           partsText += fullArr[i].text + ' ' + fullArr[i].position + '; ';
@@ -560,10 +680,43 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             $('#finished_parts').html('<table border="1" cellspacing="0">' + partsTable + '</table>');
     */
 
-    $('#total_calc').text('Услуг: ' + totalServicesCost + ' сом');
-    $('#total_mat').text('Материалов: ' + totalMaterialsCost + ' сом');
-    $('#total_sum').text('Всего: ' + totalCost + ' сом');
-    $('#total_uts').text('УТС: ' + totalUTS.toFixed(2) + ' %');
+    let definitionText; // Текст "при осмотре установлено"
+
+    function makeDefinitionText() { //Функция создания текста "при осмотре установлено"
+
+      let damagedPartsText = ''; // Текст поврежденных частей
+      let damagedPartsOptions = [" кузова,", " передней части кузова,", " моторного отсека,", " центральной части кузова,", " задней части кузова,", " салона,", " передней ходовой части,", " задней ходовой части,"];
+      let damagedPartsSum = 0;
+      for (let i = 1; i < damageType.length; i++) { // Сумма всех элементов массива кроме первого
+        damagedPartsSum += damageType[i];
+        if (damageType[i] < 1) {
+          damagedPartsOptions[i] = "";
+        }
+      }
+
+      if (damagedPartsSum > 0) { // Если сумма элементов массива повреждений больше 0
+        damagedPartsText = ' Повреждены детали' + damagedPartsOptions[1] + damagedPartsOptions[6] + damagedPartsOptions[2] + damagedPartsOptions[3] + damagedPartsOptions[5] + damagedPartsOptions[7] + damagedPartsOptions[4];
+        damagedPartsText = damagedPartsText.slice(0, -1) + ".";
+      }
+
+      let skewText = ''; // Текст перекоса
+      if ($('#distortion').prop('checked')) { // Если выбран перекос
+        let skewOptions = ["несложную деформацию", "деформацию средней сложности", "сложную деформацию", "особо сложную деформацию"];
+        skewText = ' Кузов имеет ' + skewOptions[$('#selectedIndex').prop('selectedIndex')] + ' с нарушением геометрии - не соблюдены технологические зазоры между кузовными деталями.'
+      }
+      let accidentType = ["находится в разбитом состоянии после дорожно-транспортного происшествия.", "находится в обгоревшем состоянии.", "находится в поврежденном состоянии."];
+      let evalPurp = $('#evaluation_purpose').val();
+      definitionText = accidentType[evalPurp] + damagedPartsText + skewText;
+    }
+
+    makeDefinitionText();
+
+    damagedBodyPartsText = ucFirst(damagedBodyPartsText.slice(0, -2) + '.');
+    damagedOtherPartsText = ucFirst(damagedOtherPartsText.slice(0, -2) + '.');
+    unbrokenPartsText = ucFirst(unbrokenPartsText.slice(0, -2) + '.');
+    $('#total_calc').html('Услуг: ' + totalServicesCost + ' сом<br>Материалов: ' + totalMaterialsCost + ' сом<br>Всего: ' + totalCost + ' сом<br>УТС: ' + totalUTS.toFixed(2) + ' %<br>Кузовных повреждений: ' + damageType[0] + ' шт.<hr>');
+    $('#total_test').html('<b>При осмотре установлено:</b><br> Транспортное средство ' + definitionText + '<br><b>Деформированные кузовные детали:</b><br> ' + damagedBodyPartsText + '<br><b>Прочие повреждения:</b><br> ' + damagedOtherPartsText + '<br><b>Уцелевшие:</b><br> ' + unbrokenPartsText + '<hr>');
+
 
     let reportData = {
       doctype: $('#doc_type').val(),
@@ -608,6 +761,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     }
 
     let inspectionText = {
+      definition: definitionText,
       disassembly: disassemblyText,
       repair: repairText,
       painting: paintingText,
@@ -627,4 +781,6 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
     console.timeEnd('Весь расчет');
   }); //Конец расчета
+
+
 }); //Конец события полной загрузки HTML и CSS

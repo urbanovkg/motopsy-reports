@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Автоотчет в. 0.7</title>
+	<title>Автоотчет в. 0.8</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	<link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
@@ -617,9 +617,9 @@
 		</a>
 
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К025">
+			<input id="distortion" class="checkbox_style" type="checkbox" name="option2" value="К025">
 			<input class="text_style" type="text" value="Устранение перекоса кузова">
-			<select class="action_type">
+			<select id="selectedIndex" class="action_type">
 				<option selected value="9.5" data-uts="0.5">несложного</option>
 				<option value="20.8" data-uts="1.5">средней сложности</option>
 				<option value="37.2" data-uts="2.5">сложного</option>
@@ -637,35 +637,34 @@
 				<option value="21.6">ремонт №3</option>
 				<option selected value="28.8">замена</option>
 			</select>
-			<input class="norm" type="text" value="28.8">
+			<input class="norm" type="text" value="28.8" data-ost="5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К001">
-			<input class="text_style" type="text" value="Брызговик передний с лонжероном в сборе">
-			<input class="position" type="text" value="левый">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К024">
+			<input class="text_style" type="text" value="Бампер передний">
 			<select class="action_type">
-				<option value="1.7" data-uts="0.3">ремонт №1</option>
-				<option value="3.6" data-uts="0.6">ремонт №2</option>
-				<option value="4.8" data-uts="1.2">ремонт №3</option>
-				<option selected value="14.2" data-uts="0.7">замена</option>
+				<option value="1">ремонт №1</option>
+				<option value="3">ремонт №2</option>
+				<option value="6">ремонт №3</option>
+				<option selected value="1">замена</option>
 			</select>
-			<input class="norm" type="text" value="14.2" data-uts="0.7">
+			<input class="norm" type="text" value="1" data-ost="1.9">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К001">
-			<input class="text_style" type="text" value="Брызговик передний с лонжероном в сборе">
-			<input class="position" type="text" value="правый">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К006">
+			<input class="text_style" type="text" value="Панель передка">
 			<select class="action_type">
-				<option value="1.7" data-uts="0.3">ремонт №1</option>
-				<option value="3.6" data-uts="0.6">ремонт №2</option>
-				<option value="4.8" data-uts="1.2">ремонт №3</option>
-				<option selected value="14.2" data-uts="0.7">замена</option>
+				<option value="2.9" data-uts="0.2">ремонт №1</option>
+				<option value="4.8" data-uts="0.3">ремонт №2</option>
+				<option value="6.5" data-uts="0.4">ремонт №3</option>
+				<option selected value="7.2" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="14.2" data-uts="0.7">
+			<input class="norm" type="text" value="7.2" data-uts="0.5" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К002">
 			<input class="text_style" type="text" value="Лонжерон передний">
@@ -718,16 +717,31 @@
 			<input class="norm" type="text" value="4.1" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К004">
-			<input class="text_style" type="text" value="Рамка ветрового окна">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К001">
+			<input class="text_style" type="text" value="Брызговик передний с лонжероном в сборе">
+			<input class="position" type="text" value="левый">
 			<select class="action_type">
-				<option value="1.5" data-uts="0.3">ремонт №1</option>
-				<option value="3.2" data-uts="0.4">ремонт №2</option>
-				<option value="5.1" data-uts="0.5">ремонт №3</option>
-				<option selected value="6" data-uts="0.7">замена</option>
+				<option value="1.7" data-uts="0.3">ремонт №1</option>
+				<option value="3.6" data-uts="0.6">ремонт №2</option>
+				<option value="4.8" data-uts="1.2">ремонт №3</option>
+				<option selected value="14.2" data-uts="0.7">замена</option>
 			</select>
-			<input class="norm" type="text" value="6" data-uts="0.7">
+			<input class="norm" type="text" value="14.2" data-uts="0.7" data-ost="2.2">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К001">
+			<input class="text_style" type="text" value="Брызговик передний с лонжероном в сборе">
+			<input class="position" type="text" value="правый">
+			<select class="action_type">
+				<option value="1.7" data-uts="0.3">ремонт №1</option>
+				<option value="3.6" data-uts="0.6">ремонт №2</option>
+				<option value="4.8" data-uts="1.2">ремонт №3</option>
+				<option selected value="14.2" data-uts="0.7">замена</option>
+			</select>
+			<input class="norm" type="text" value="14.2" data-uts="0.7" data-ost="2.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -740,31 +754,7 @@
 				<option selected value="1" data-uts="0">замена</option>
 				<option value="1" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="1" data-uts="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К006">
-			<input class="text_style" type="text" value="Передняя панель">
-			<select class="action_type">
-				<option value="2.9" data-uts="0.2">ремонт №1</option>
-				<option value="4.8" data-uts="0.3">ремонт №2</option>
-				<option value="6.5" data-uts="0.4">ремонт №3</option>
-				<option selected value="7.2" data-uts="0.5">замена</option>
-			</select>
-			<input class="norm" type="text" value="7.2" data-uts="0.5">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К007">
-			<input class="text_style" type="text" value="Щит передка">
-			<select class="action_type">
-				<option value="2.9" data-uts="0.4">ремонт №1</option>
-				<option value="3.9" data-uts="0.7">ремонт №2</option>
-				<option value="5.1" data-uts="1">ремонт №3</option>
-				<option selected value="7" data-uts="0.7">замена</option>
-			</select>
-			<input class="norm" type="text" value="7" data-uts="0.7">
+			<input class="norm" type="text" value="1" data-uts="0" data-ost="1.9">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -778,9 +768,10 @@
 				<option selected value="0" data-uts="0">замена</option>
 				<option value="0.8" data-uts="0">снять/установить</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К008">
 			<input class="text_style" type="text" value="Крыло переднее">
@@ -792,9 +783,23 @@
 				<option selected value="0" data-uts="0">замена</option>
 				<option value="0.8" data-uts="0">снять/установить</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
+
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К007">
+			<input class="text_style" type="text" value="Щит передка">
+			<select class="action_type">
+				<option value="2.9" data-uts="0.4">ремонт №1</option>
+				<option value="3.9" data-uts="0.7">ремонт №2</option>
+				<option value="5.1" data-uts="1">ремонт №3</option>
+				<option selected value="7" data-uts="0.7">замена</option>
+			</select>
+			<input class="norm" type="text" value="7" data-uts="0.7" data-ost="0.3">
+			<div class="cost"></div>
+		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К009">
 			<input class="text_style" type="text" value="Стойка передней двери">
@@ -805,7 +810,7 @@
 				<option value="5.1" data-uts="0.4">ремонт №3</option>
 				<option selected value="6" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="6" data-uts="0.5">
+			<input class="norm" type="text" value="6" data-uts="0.5" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -818,9 +823,23 @@
 				<option value="5.1" data-uts="0.4">ремонт №3</option>
 				<option selected value="6" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="6" data-uts="0.5">
+			<input class="norm" type="text" value="6" data-uts="0.5" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К004">
+			<input class="text_style" type="text" value="Рамка ветрового окна">
+			<select class="action_type">
+				<option value="1.5" data-uts="0.3">ремонт №1</option>
+				<option value="3.2" data-uts="0.4">ремонт №2</option>
+				<option value="5.1" data-uts="0.5">ремонт №3</option>
+				<option selected value="6" data-uts="0.7">замена</option>
+			</select>
+			<input class="norm" type="text" value="6" data-uts="0.7">
+			<div class="cost"></div>
+		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К010">
 			<input class="text_style" type="text" value="Панель крыши с усилителями">
@@ -830,7 +849,7 @@
 				<option value="14.4" data-uts="1.4">ремонт №3</option>
 				<option selected value="14.4" data-uts="1.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="14.4" data-uts="1.5">
+			<input class="norm" type="text" value="14.4" data-uts="1.5" data-ost="2.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -895,7 +914,7 @@
 				<option value="7.7" data-uts="0.8">ремонт №3</option>
 				<option selected value="14.4" data-uts="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="14.4" data-uts="0.5">
+			<input class="norm" type="text" value="14.4" data-uts="0.5" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -908,9 +927,35 @@
 				<option value="7.7" data-uts="0.8">ремонт №3</option>
 				<option selected value="14.4" data-uts="1.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="14.4" data-uts="1.5">
+			<input class="norm" type="text" value="14.4" data-uts="1.5" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К021">
+			<input class="text_style" type="text" value="Пол передний">
+			<select class="action_type">
+				<option value="1.9" data-uts="0.4">ремонт №1</option>
+				<option value="4.5" data-uts="0.6">ремонт №2</option>
+				<option value="7.6" data-uts="0.9">ремонт №3</option>
+				<option selected value="14.4" data-uts="1.2">замена</option>
+			</select>
+			<input class="norm" type="text" value="14.4" data-uts="1.2">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К022">
+			<input class="text_style" type="text" value="Пол центральный">
+			<select class="action_type">
+				<option value="1.1" data-uts="0.4">ремонт №1</option>
+				<option value="2.2" data-uts="0.6">ремонт №2</option>
+				<option value="3.9" data-uts="0.9">ремонт №3</option>
+				<option selected value="14.4" data-uts="1.2">замена</option>
+			</select>
+			<input class="norm" type="text" value="14.4" data-uts="1.2">
+			<div class="cost"></div>
+		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К013">
 			<input class="text_style" type="text" value="Дверь передняя">
@@ -922,7 +967,7 @@
 				<option selected value="2.1" data-uts="0">замена</option>
 				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.1" data-uts="0">
+			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -936,7 +981,7 @@
 				<option selected value="2.1" data-uts="0">замена</option>
 				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.1" data-uts="0">
+			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -950,9 +995,10 @@
 				<option selected value="2.1" data-uts="0">замена</option>
 				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.1" data-uts="0">
+			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К014">
 			<input class="text_style" type="text" value="Дверь задняя">
@@ -964,9 +1010,68 @@
 				<option selected value="2.1" data-uts="0">замена</option>
 				<option value="0.8" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.1" data-uts="0">
+			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
+
+
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К020">
+			<input class="text_style" type="text" value="Рамка заднего окна">
+			<select class="action_type">
+				<option value="1" data-uts="0.3">ремонт №1</option>
+				<option value="1.5" data-uts="0.5">ремонт №2</option>
+				<option value="3.4" data-uts="0.7">ремонт №3</option>
+				<option selected value="6" data-uts="0.6">замена</option>
+			</select>
+			<input class="norm" type="text" value="6" data-uts="0.6">
+			<div class="cost"></div>
+		</div>
+
+
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К017">
+			<input class="text_style" type="text" value="Крыло заднее">
+			<input class="position" type="text" value="левое">
+			<select class="action_type">
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.4" data-uts="0.3">ремонт №2</option>
+				<option value="3.9" data-uts="0.4">ремонт №3</option>
+				<option selected value="6.8" data-uts="0.5">замена</option>
+			</select>
+			<input class="norm" type="text" value="6.8" data-uts="0.5" data-ost="2.1">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К017">
+			<input class="text_style" type="text" value="Крыло заднее">
+			<input class="position" type="text" value="правое">
+			<select class="action_type">
+				<option value="1.7" data-uts="0.2">ремонт №1</option>
+				<option value="3.4" data-uts="0.3">ремонт №2</option>
+				<option value="3.9" data-uts="0.4">ремонт №3</option>
+				<option selected value="6.8" data-uts="0.5">замена</option>
+			</select>
+			<input class="norm" type="text" value="6.8" data-uts="0.5" data-ost="2.1">
+			<div class="cost"></div>
+		</div>
+
+
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К019">
+			<input class="text_style" type="text" value="Крышка багажника (дверь задка)">
+			<select class="action_type">
+				<option value="1.8" data-uts="0.1">ремонт №1</option>
+				<option value="2.9" data-uts="0.2">ремонт №2</option>
+				<option value="4.5" data-uts="0.4">ремонт №3</option>
+				<option selected value="2.1" data-uts="0">замена</option>
+				<option value="0.9" data-uts="0">снять/установить по проему</option>
+			</select>
+			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.6">
+			<div class="cost"></div>
+		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К015">
 			<input class="text_style" type="text" value="Лонжерон заднего пола">
@@ -993,6 +1098,7 @@
 			<input class="norm" type="text" value="14.4" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К016">
 			<input class="text_style" type="text" value="Арка внутренняя заднего колеса">
@@ -1006,6 +1112,7 @@
 			<input class="norm" type="text" value="8.4" data-uts="0.4">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К016">
 			<input class="text_style" type="text" value="Арка внутренняя заднего колеса">
@@ -1019,106 +1126,8 @@
 			<input class="norm" type="text" value="8.4" data-uts="0.4">
 			<div class="cost"></div>
 		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К017">
-			<input class="text_style" type="text" value="Крыло заднее">
-			<input class="position" type="text" value="левое">
-			<select class="action_type">
-				<option value="1.7" data-uts="0.2">ремонт №1</option>
-				<option value="3.4" data-uts="0.3">ремонт №2</option>
-				<option value="3.9" data-uts="0.4">ремонт №3</option>
-				<option selected value="6.8" data-uts="0.5">замена</option>
-			</select>
-			<input class="norm" type="text" value="6.8" data-uts="0.5">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К017">
-			<input class="text_style" type="text" value="Крыло заднее">
-			<input class="position" type="text" value="правое">
-			<select class="action_type">
-				<option value="1.7" data-uts="0.2">ремонт №1</option>
-				<option value="3.4" data-uts="0.3">ремонт №2</option>
-				<option value="3.9" data-uts="0.4">ремонт №3</option>
-				<option selected value="6.8" data-uts="0.5">замена</option>
-			</select>
-			<input class="norm" type="text" value="6.8" data-uts="0.5">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К018">
-			<input class="text_style" type="text" value="Задняя панель">
-			<select class="action_type">
-				<option value="2.2" data-uts="0.2">ремонт №1</option>
-				<option value="3.6" data-uts="0.3">ремонт №2</option>
-				<option value="5.1" data-uts="0.4">ремонт №3</option>
-				<option selected value="6.5" data-uts="0.4">замена</option>
-			</select>
-			<input class="norm" type="text" value="6.5" data-uts="0.4">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К019">
-			<input class="text_style" type="text" value="Крышка багажника">
-			<select class="action_type">
-				<option value="1.8" data-uts="0.1">ремонт №1</option>
-				<option value="2.9" data-uts="0.2">ремонт №2</option>
-				<option value="4.5" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.1" data-uts="0">замена</option>
-				<option value="0.9" data-uts="0">снять/установить по проему</option>
-			</select>
-			<input class="norm" type="text" value="2.1" data-uts="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К026">
-			<input class="text_style" type="text" value="Дверь задка">
-			<select class="action_type">
-				<option value="1.8" data-uts="0.1">ремонт №1</option>
-				<option value="3" data-uts="0.2">ремонт №2</option>
-				<option value="4.6" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.2" data-uts="0">замена</option>
-				<option value="1.1" data-uts="0">снять/установить по проему</option>
-			</select>
-			<input class="norm" type="text" value="2.2" data-uts="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К020">
-			<input class="text_style" type="text" value="Рамка заднего окна">
-			<select class="action_type">
-				<option value="1" data-uts="0.3">ремонт №1</option>
-				<option value="1.5" data-uts="0.5">ремонт №2</option>
-				<option value="3.4" data-uts="0.7">ремонт №3</option>
-				<option selected value="6" data-uts="0.6">замена</option>
-			</select>
-			<input class="norm" type="text" value="6" data-uts="0.6">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К021">
-			<input class="text_style" type="text" value="Пол передний">
-			<select class="action_type">
-				<option value="1.9" data-uts="0.4">ремонт №1</option>
-				<option value="4.5" data-uts="0.6">ремонт №2</option>
-				<option value="7.6" data-uts="0.9">ремонт №3</option>
-				<option selected value="14.4" data-uts="1.2">замена</option>
-			</select>
-			<input class="norm" type="text" value="14.4" data-uts="1.2">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К022">
-			<input class="text_style" type="text" value="Пол центральный">
-			<select class="action_type">
-				<option value="1.1" data-uts="0.4">ремонт №1</option>
-				<option value="2.2" data-uts="0.6">ремонт №2</option>
-				<option value="3.9" data-uts="0.9">ремонт №3</option>
-				<option selected value="14.4" data-uts="1.2">замена</option>
-			</select>
-			<input class="norm" type="text" value="14.4" data-uts="1.2">
-			<div class="cost"></div>
-		</div>
+
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К023">
 			<input class="text_style" type="text" value="Пол задний">
@@ -1128,21 +1137,24 @@
 				<option value="5.1" data-uts="0.9">ремонт №3</option>
 				<option selected value="7.2" data-uts="1.2">замена</option>
 			</select>
-			<input class="norm" type="text" value="7.2" data-uts="1.2">
+			<input class="norm" type="text" value="7.2" data-uts="1.2" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
+
+
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К024">
-			<input class="text_style" type="text" value="Бампер передний">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К018">
+			<input class="text_style" type="text" value="Панель задка">
 			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="3">ремонт №2</option>
-				<option value="6">ремонт №3</option>
-				<option selected value="1">замена</option>
+				<option value="2.2" data-uts="0.2">ремонт №1</option>
+				<option value="3.6" data-uts="0.3">ремонт №2</option>
+				<option value="5.1" data-uts="0.4">ремонт №3</option>
+				<option selected value="6.5" data-uts="0.4">замена</option>
 			</select>
-			<input class="norm" type="text" value="1">
+			<input class="norm" type="text" value="6.5" data-uts="0.4" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К025">
 			<input class="text_style" type="text" value="Бампер задний">
@@ -1152,7 +1164,7 @@
 				<option value="6">ремонт №3</option>
 				<option selected value="1">замена</option>
 			</select>
-			<input class="norm" type="text" value="1">
+			<input class="norm" type="text" value="1" data-ost="1.6">
 			<div class="cost"></div>
 		</div>
 	</div>
@@ -1165,14 +1177,14 @@
 
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З101">
-			<input class="text_style" type="text" value="Облицовка радиатора">
+			<input class="text_style" type="text" value="Облицовка (решетка) радиатора">
 			<select class="action_type">
 				<option value="0.6">ремонт №1</option>
 				<option value="1">ремонт №2</option>
 				<option value="2">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -1297,7 +1309,7 @@
 				<option value="5">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="2.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -1310,7 +1322,7 @@
 				<option value="5">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="2.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -1471,7 +1483,7 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З113">
-			<input class="text_style" type="text" value="Противотуманная фара">
+			<input class="text_style" type="text" value="Фара противотуманная">
 			<input class="position" type="text" value="левая">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
@@ -1479,12 +1491,12 @@
 				<option value="1.4">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З113">
-			<input class="text_style" type="text" value="Противотуманная фара">
+			<input class="text_style" type="text" value="Фара противотуманная">
 			<input class="position" type="text" value="правая">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
@@ -1492,7 +1504,7 @@
 				<option value="1.4">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -1708,378 +1720,552 @@
 			<h4 class="headline">4. Моторный отсек:</h4>
 		</a>
 
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З401">
-			<input class="text_style" type="text" value="Радиатор основной">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З402">
-			<input class="text_style" type="text" value="Радиатор кондиционера">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З498">
-			<input class="text_style" type="text" value="Патрубки кондиционера">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З403">
-			<input class="text_style" type="text" value="Радиатор масляный">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З404">
-			<input class="text_style" type="text" value="Диффузор с вентилятором">
-			<select class="action_type">
-				<option value="0.7">ремонт №1</option>
-				<option value="1.5">ремонт №2</option>
-				<option value="2">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З405">
-			<input class="text_style" type="text" value="Вискомуфта с лопостями">
-			<select class="action_type">
-				<option value="0.5">ремонт №1</option>
-				<option value="1.5">ремонт №2</option>
-				<option value="2.1">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З496">
-			<input class="text_style" type="text" value="Дефлектор радиатора">
-			<select class="action_type">
-				<option value="0.5">ремонт №1</option>
-				<option value="1.5">ремонт №2</option>
-				<option value="2.1">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З497">
-			<input class="text_style" type="text" value="Накладка передней панели">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З406">
-			<input class="text_style" type="text" value="Воздухозаборник">
-			<select class="action_type">
-				<option value="0.4">ремонт №1</option>
-				<option value="1">ремонт №2</option>
-				<option value="1.6">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З499">
-			<input class="text_style" type="text" value="Корпус воздушного фильтра">
-			<select class="action_type">
-				<option value="0.4">ремонт №1</option>
-				<option value="1">ремонт №2</option>
-				<option value="1.6">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З407">
-			<input class="text_style" type="text" value="Декоративная крышка двигателя">
-			<select class="action_type">
-				<option value="0.4">ремонт №1</option>
-				<option value="1">ремонт №2</option>
-				<option value="1.6">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З408">
-			<input class="text_style" type="text" value="Корпус электромонтажного блока">
-			<select class="action_type">
-				<option value="0.4">ремонт №1</option>
-				<option value="1">ремонт №2</option>
-				<option value="2">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З409">
-			<input class="text_style" type="text" value="Аккумуляторная батарея">
-			<select class="action_type">
-				<option value="0.4">ремонт №1</option>
-				<option value="0.6">ремонт №2</option>
-				<option value="0.8">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З410">
-			<input class="text_style" type="text" value="Ремень приводной">
-			<select class="action_type">
-				<option value="0.4">ремонт №1</option>
-				<option value="0.6">ремонт №2</option>
-				<option value="1">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З411">
-			<input class="text_style" type="text" value="Расширительный бачок">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З412">
-			<input class="text_style" type="text" value="Бачок стеклоомывателя">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З413">
-			<input class="text_style" type="text" value="Бачок тормозной жидкости">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З414">
-			<input class="text_style" type="text" value="Бачок ГУР">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З415">
-			<input class="text_style" type="text" value="Генератор">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="3">ремонт №2</option>
-				<option value="5">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З416">
-			<input class="text_style" type="text" value="Стартер">
-			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З417">
-			<input class="text_style" type="text" value="Впускной коллектор">
-			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="1.3">ремонт №2</option>
-				<option value="1.9">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З418">
-			<input class="text_style" type="text" value="Клаксон">
-			<select class="action_type">
-				<option value="0.1">ремонт №1</option>
-				<option value="0.2">ремонт №2</option>
-				<option value="0.3">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З419">
-			<input class="text_style" type="text" value="Насос ГУР">
-			<select class="action_type">
-				<option value="0.6">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З420">
-			<input class="text_style" type="text" value="Поддон двигателя">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="3">ремонт №2</option>
-				<option value="6">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З421">
-			<input class="text_style" type="text" value="Блок АБС">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З495">
-			<input class="text_style" type="text" value="Блок управления подушками безопасности">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З422">
-			<input class="text_style" type="text" value="Выпускной коллектор">
-			<select class="action_type">
-				<option value="0.7">ремонт №1</option>
-				<option value="1.4">ремонт №2</option>
-				<option value="2">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З423">
-			<input class="text_style" type="text" value="Жгут проводов переднего контура">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="3">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З424">
-			<input class="text_style" type="text" value="Опоры крепления двигателя и КПП">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З425">
-			<input class="text_style" type="text" value="Турбина">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З426">
-			<input class="text_style" type="text" value="Гофра глушителя">
-			<select class="action_type">
-				<option value="0">ремонт №1</option>
-				<option value="0">ремонт №2</option>
-				<option value="0">ремонт №3</option>
-				<option selected value="0">замена</option>
-			</select>
-			<input class="norm" type="text" value="0">
-			<div class="cost"></div>
-		</div>
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З497">
+		<input class="text_style" type="text" value="Накладка панели передка">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З496">
+		<input class="text_style" type="text" value="Дефлектор радиатора">
+		<select class="action_type">
+			<option value="0.5">ремонт №1</option>
+			<option value="1.5">ремонт №2</option>
+			<option value="2.1">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З401">
+		<input class="text_style" type="text" value="Радиатор основной">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.8">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З402">
+		<input class="text_style" type="text" value="Радиатор кондиционера">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.6">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З498">
+		<input class="text_style" type="text" value="Патрубки кондиционера">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З403">
+		<input class="text_style" type="text" value="Радиатор масляный">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З494">
+		<input class="text_style" type="text" value="Интеркулер">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.6">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З404">
+		<input class="text_style" type="text" value="Диффузор с вентилятором">
+		<select class="action_type">
+			<option value="0.7">ремонт №1</option>
+			<option value="1.5">ремонт №2</option>
+			<option value="2">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З405">
+		<input class="text_style" type="text" value="Вискомуфта с лопостями">
+		<select class="action_type">
+			<option value="0.5">ремонт №1</option>
+			<option value="1.5">ремонт №2</option>
+			<option value="2.1">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З424">
+		<input class="text_style" type="text" value="Опоры крепления двигателя и КПП">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З493">
+		<input class="text_style" type="text" value="Двигатель в сборе без навесного оборудования">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="4.9">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З407">
+		<input class="text_style" type="text" value="Декоративная крышка двигателя">
+		<select class="action_type">
+			<option value="0.4">ремонт №1</option>
+			<option value="1">ремонт №2</option>
+			<option value="1.6">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З420">
+		<input class="text_style" type="text" value="Поддон двигателя">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="3">ремонт №2</option>
+			<option value="6">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З489">
+		<input class="text_style" type="text" value="Коробка передач в сборе">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="4.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З406">
+		<input class="text_style" type="text" value="Воздухозаборник">
+		<select class="action_type">
+			<option value="0.4">ремонт №1</option>
+			<option value="1">ремонт №2</option>
+			<option value="1.6">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З499">
+		<input class="text_style" type="text" value="Короб воздушного фильтра">
+		<select class="action_type">
+			<option value="0.4">ремонт №1</option>
+			<option value="1">ремонт №2</option>
+			<option value="1.6">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З410">
+		<input class="text_style" type="text" value="Ремень приводной">
+		<select class="action_type">
+			<option value="0.4">ремонт №1</option>
+			<option value="0.6">ремонт №2</option>
+			<option value="1">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З415">
+		<input class="text_style" type="text" value="Генератор">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="3">ремонт №2</option>
+			<option value="5">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.8">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З416">
+		<input class="text_style" type="text" value="Стартер">
+		<select class="action_type">
+			<option value="0.6">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З486">
+		<input class="text_style" type="text" value="Насос кондиционера">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З419">
+		<input class="text_style" type="text" value="Насос ГУР">
+		<select class="action_type">
+			<option value="0.6">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.8">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З414">
+		<input class="text_style" type="text" value="Бачок ГУР">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З411">
+		<input class="text_style" type="text" value="Бачок расширительный">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З412">
+		<input class="text_style" type="text" value="Бачок стеклоомывателя">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З413">
+		<input class="text_style" type="text" value="Бачок тормозной жидкости">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З488">
+		<input class="text_style" type="text" value="Главный тормозной цилиндр">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З421">
+		<input class="text_style" type="text" value="Блок управления АБС">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.7">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З486">
+		<input class="text_style" type="text" value="Блок управления двигателем">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="1">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З495">
+		<input class="text_style" type="text" value="Блок управления подушками безопасности">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З408">
+		<input class="text_style" type="text" value="Электромонтажный блок">
+		<select class="action_type">
+			<option value="0.4">ремонт №1</option>
+			<option value="1">ремонт №2</option>
+			<option value="2">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З418">
+		<input class="text_style" type="text" value="Клаксон">
+		<select class="action_type">
+			<option value="0.1">ремонт №1</option>
+			<option value="0.2">ремонт №2</option>
+			<option value="0.3">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З409">
+		<input class="text_style" type="text" value="Аккумуляторная батарея">
+		<select class="action_type">
+			<option value="0.4">ремонт №1</option>
+			<option value="0.6">ремонт №2</option>
+			<option value="0.8">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З423">
+		<input class="text_style" type="text" value="Жгут проводов переднего контура">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="3">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.9">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З487">
+		<input class="text_style" type="text" value="Катушки зажигания с проводами">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З490">
+		<input class="text_style" type="text" value="Система подачи топлива (магистраль и форсунки)">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="1.8">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З491">
+		<input class="text_style" type="text" value="Дроссельный узел с заслонкой в сборе">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="1.4">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З417">
+		<input class="text_style" type="text" value="Коллектор впускной">
+		<select class="action_type">
+			<option value="0.6">ремонт №1</option>
+			<option value="1.3">ремонт №2</option>
+			<option value="1.9">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З425">
+		<input class="text_style" type="text" value="Турбонагнетатель">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="1.4">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З422">
+		<input class="text_style" type="text" value="Коллектор выпускной">
+		<select class="action_type">
+			<option value="0.7">ремонт №1</option>
+			<option value="1.4">ремонт №2</option>
+			<option value="2">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.5">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З426">
+		<input class="text_style" type="text" value="Гофра глушителя">
+		<select class="action_type">
+			<option value="0">ремонт №1</option>
+			<option value="0">ремонт №2</option>
+			<option value="0">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З485">
+		<input class="text_style" type="text" value="Глушитель основной">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="1">замена</option>
+		</select>
+		<input class="norm" type="text" value="1">
+		<div class="cost"></div>
+	</div>
+
+	<div class="block">
+		<input class="checkbox_style" type="checkbox" name="option2" value="З492">
+		<input class="text_style" type="text" value="Выпускной тракт в сборе">
+		<select class="action_type">
+			<option value="1">ремонт №1</option>
+			<option value="2">ремонт №2</option>
+			<option value="4">ремонт №3</option>
+			<option selected value="0">замена</option>
+		</select>
+		<input class="norm" type="text" value="0" data-ost="0.8">
+		<div class="cost"></div>
+	</div>
+
 	</div>
 
 	<div id="center_damage" class="section">
@@ -2088,8 +2274,8 @@
 			<h4 class="headline">5. Центральная часть:</h4>
 		</a>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З118">
-			<input class="text_style" type="text" value="Ветровое стекло">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З294">
+			<input class="text_style" type="text" value="Стекло ветровое">
 			<select class="action_type">
 				<option value="2">ремонт №1</option>
 				<option value="2">ремонт №2</option>
@@ -2097,11 +2283,11 @@
 				<option selected value="2">замена</option>
 				<option value="2">снять/установить</option>
 			</select>
-			<input class="norm" type="text" value="2">
+			<input class="norm" type="text" value="2" data-ost="1.7">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З119">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З295">
 			<input class="text_style" type="text" value="Панель стеклоочистителя ветрового стекла">
 			<select class="action_type">
 				<option value="0.5">ремонт №1</option>
@@ -2113,7 +2299,7 @@
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З120">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З296">
 			<input class="text_style" type="text" value="Щетки стеклоочистителя ветрового стекла">
 			<select class="action_type">
 				<option value="0.2">ремонт №1</option>
@@ -2125,8 +2311,8 @@
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З114">
-			<input class="text_style" type="text" value="Боковое наружное зеркало заднего вида">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З297">
+			<input class="text_style" type="text" value="Зеркало заднего вида наружное">
 			<input class="position" type="text" value="левое">
 			<select class="action_type">
 				<option value="0.6">ремонт №1</option>
@@ -2134,12 +2320,12 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="1.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З114">
-			<input class="text_style" type="text" value="Боковое наружное зеркало заднего вида">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З297">
+			<input class="text_style" type="text" value="Зеркало заднего вида наружное">
 			<input class="position" type="text" value="правое">
 			<select class="action_type">
 				<option value="0.6">ремонт №1</option>
@@ -2147,7 +2333,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="1.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2261,7 +2447,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З205">
 			<input class="text_style" type="text" value="Механизм стеклоподъемника передней двери">
-			<input class="position" type="text" value="левый">
+			<input class="position" type="text" value="левой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.5">ремонт №2</option>
@@ -2274,7 +2460,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З205">
 			<input class="text_style" type="text" value="Механизм стеклоподъемника передней двери">
-			<input class="position" type="text" value="правый">
+			<input class="position" type="text" value="правой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.5">ремонт №2</option>
@@ -2287,7 +2473,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З206">
 			<input class="text_style" type="text" value="Механизм стеклоподъемника задней двери">
-			<input class="position" type="text" value="левый">
+			<input class="position" type="text" value="левой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.5">ремонт №2</option>
@@ -2300,7 +2486,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З206">
 			<input class="text_style" type="text" value="Механизм стеклоподъемника задней двери">
-			<input class="position" type="text" value="правый">
+			<input class="position" type="text" value="правой">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="1.5">ремонт №2</option>
@@ -2313,7 +2499,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З207">
 			<input class="text_style" type="text" value="Молдинг передней двери">
-			<input class="position" type="text" value="левый">
+			<input class="position" type="text" value="левой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2326,7 +2512,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З207">
 			<input class="text_style" type="text" value="Молдинг передней двери">
-			<input class="position" type="text" value="правый">
+			<input class="position" type="text" value="правой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2339,7 +2525,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З208">
 			<input class="text_style" type="text" value="Молдинг задней двери">
-			<input class="position" type="text" value="левый">
+			<input class="position" type="text" value="левой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2352,7 +2538,7 @@
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З208">
 			<input class="text_style" type="text" value="Молдинг задней двери">
-			<input class="position" type="text" value="правый">
+			<input class="position" type="text" value="правой">
 			<select class="action_type">
 				<option value="0.4">ремонт №1</option>
 				<option value="0.8">ремонт №2</option>
@@ -2714,7 +2900,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="1">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2727,7 +2913,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="1">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2896,7 +3082,7 @@
 				<option selected value="2">замена</option>
 				<option value="2">снять/установить</option>
 			</select>
-			<input class="norm" type="text" value="2">
+			<input class="norm" type="text" value="2" data-ost="1.9">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -2925,28 +3111,17 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З307">
-			<input class="text_style" type="text" value="Топливный бак">
+			<input class="text_style" type="text" value="Бак топливный">
 			<select class="action_type">
 				<option value="1">ремонт №1</option>
 				<option value="2">ремонт №2</option>
 				<option value="4">ремонт №3</option>
 				<option selected value="3">замена</option>
 			</select>
-			<input class="norm" type="text" value="3">
+			<input class="norm" type="text" value="3" data-ost="0.7">
 			<div class="cost"></div>
 		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="З308">
-			<input class="text_style" type="text" value="Глушитель основной">
-			<select class="action_type">
-				<option value="1">ремонт №1</option>
-				<option value="2">ремонт №2</option>
-				<option value="4">ремонт №3</option>
-				<option selected value="1">замена</option>
-			</select>
-			<input class="norm" type="text" value="1">
-			<div class="cost"></div>
-		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З309">
 			<input class="text_style" type="text" value="Лючок бака">
@@ -3016,7 +3191,7 @@
 				<option value="3" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="1.1">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3072,7 +3247,7 @@
 				<option value="13" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="2.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3084,7 +3259,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="1.2">замена</option>
 			</select>
-			<input class="norm" type="text" value="1.2">
+			<input class="norm" type="text" value="1.2" data-ost="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3096,7 +3271,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3210,7 +3385,7 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="1">замена</option>
 			</select>
-			<input class="norm" type="text" value="1">
+			<input class="norm" type="text" value="1" data-ost="0.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3275,14 +3450,14 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="З514">
-			<input class="text_style" type="text" value="Центральная консоль">
+			<input class="text_style" type="text" value="Консоль центральная">
 			<select class="action_type">
 				<option value="1.5">ремонт №1</option>
 				<option value="3">ремонт №2</option>
 				<option value="5">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3295,7 +3470,7 @@
 				<option value="5.6">ремонт №3</option>
 				<option selected value="1.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="1.5">
+			<input class="norm" type="text" value="1.5" data-ost="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3308,7 +3483,7 @@
 				<option value="5.6">ремонт №3</option>
 				<option selected value="1.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="1.5">
+			<input class="norm" type="text" value="1.5" data-ost="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3320,7 +3495,7 @@
 				<option value="8.4">ремонт №3</option>
 				<option selected value="2">замена</option>
 			</select>
-			<input class="norm" type="text" value="2">
+			<input class="norm" type="text" value="2" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3332,7 +3507,7 @@
 				<option value="1">ремонт №3</option>
 				<option selected value="0.5">замена</option>
 			</select>
-			<input class="norm" type="text" value="0.5">
+			<input class="norm" type="text" value="0.5" data-ost="0.2">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3344,7 +3519,7 @@
 				<option value="8" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.8">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3369,7 +3544,7 @@
 				<option value="3.8" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3382,7 +3557,7 @@
 				<option value="3.8" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3395,7 +3570,7 @@
 				<option value="3.8" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3408,7 +3583,7 @@
 				<option value="3.8" data-uts="0.6">ремонт №3</option>
 				<option selected value="0" data-uts="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0" data-uts="0">
+			<input class="norm" type="text" value="0" data-uts="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3421,7 +3596,7 @@
 				<option value="1.6">ремонт №3</option>
 				<option selected value="1">замена</option>
 			</select>
-			<input class="norm" type="text" value="1">
+			<input class="norm" type="text" value="1" data-ost="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3434,7 +3609,7 @@
 				<option value="1.6">ремонт №3</option>
 				<option selected value="1">замена</option>
 			</select>
-			<input class="norm" type="text" value="1">
+			<input class="norm" type="text" value="1" data-ost="0.3">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3458,7 +3633,43 @@
 				<option value="3">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.8">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З598">
+			<input class="text_style" type="text" value="Ручной тормоз">
+			<select class="action_type">
+				<option value="0.6">ремонт №1</option>
+				<option value="1.2">ремонт №2</option>
+				<option value="3">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="0.3">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З597">
+			<input class="text_style" type="text" value="Блок отопителя салона в сборе">
+			<select class="action_type">
+				<option value="0.6">ремонт №1</option>
+				<option value="1.2">ремонт №2</option>
+				<option value="3">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="2.1">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="З596">
+			<input class="text_style" type="text" value="Жгут проводов салона">
+			<select class="action_type">
+				<option value="0.6">ремонт №1</option>
+				<option value="1.2">ремонт №2</option>
+				<option value="3">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="0.3">
 			<div class="cost"></div>
 		</div>
 	</div>
@@ -3469,6 +3680,32 @@
 			<h4 class="headline">8. Передняя ходовая и рулевое управление:</h4>
 		</a>
 
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="П197">
+			<input class="text_style" type="text" value="Подвеска передняя в сборе">
+			<input class="position" type="text" value="левая">
+			<select class="action_type">
+				<option value="0">ремонт №1</option>
+				<option value="0">ремонт №2</option>
+				<option value="0">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="2">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="П197">
+			<input class="text_style" type="text" value="Подвеска передняя в сборе">
+			<input class="position" type="text" value="правая">
+			<select class="action_type">
+				<option value="0">ремонт №1</option>
+				<option value="0">ремонт №2</option>
+				<option value="0">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="2">
+			<div class="cost"></div>
+		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="П101">
 			<input class="text_style" type="text" value="Верхняя опора передняя">
@@ -3752,7 +3989,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3765,7 +4002,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3893,7 +4130,19 @@
 				<option value="2.6">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="1.2">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="П198">
+			<input class="text_style" type="text" value="Рулевая колонка с валом">
+			<select class="action_type">
+				<option value="1">ремонт №1</option>
+				<option value="1.8">ремонт №2</option>
+				<option value="2.6">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -3905,7 +4154,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="3.6">замена</option>
 			</select>
-			<input class="norm" type="text" value="3.6">
+			<input class="norm" type="text" value="3.6" data-ost="1.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -4008,6 +4257,32 @@
 			<h4 class="headline">9. Задняя ходовая часть:</h4>
 		</a>
 
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="П298">
+			<input class="text_style" type="text" value="Подвеска задняя в сборе">
+			<input class="position" type="text" value="левая">
+			<select class="action_type">
+				<option value="0">ремонт №1</option>
+				<option value="0">ремонт №2</option>
+				<option value="0">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="1.5">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="П298">
+			<input class="text_style" type="text" value="Подвеска задняя в сборе">
+			<input class="position" type="text" value="правая">
+			<select class="action_type">
+				<option value="0">ремонт №1</option>
+				<option value="0">ремонт №2</option>
+				<option value="0">ремонт №3</option>
+				<option selected value="0">замена</option>
+			</select>
+			<input class="norm" type="text" value="0" data-ost="1.5">
+			<div class="cost"></div>
+		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="П201">
 			<input class="text_style" type="text" value="Пружина задняя">
@@ -4291,7 +4566,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -4304,7 +4579,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="0.5">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -4380,7 +4655,7 @@
 				<option value="0">ремонт №3</option>
 				<option selected value="0">замена</option>
 			</select>
-			<input class="norm" type="text" value="0">
+			<input class="norm" type="text" value="0" data-ost="1.5">
 			<div class="cost"></div>
 		</div>
 
@@ -5067,9 +5342,7 @@
 		<div id="finished_mat"></div>
 		<div id="finished_parts"></div>
 		<div class="result" id="total_calc"></div>
-		<div class="result" id="total_mat"></div>
-		<div class="result" id="total_sum"></div>
-		<div class="result" id="total_uts"></div>
+		<div class="result" id="total_test"></div>
 
 		<form method="post" action="{% url 'list' %}" target="_blank">
 			{% csrf_token %}
