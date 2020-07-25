@@ -170,7 +170,9 @@
 			Вид определяемой стоимости:<br>
 			<select id="cost_type" class="full_selectbox">
 				<option selected value="0">Рыночная стоимость восстановления</option>
-				<option value="1">Рыночная стоимость восстановления и УТС</option>
+				<option value="1">Восстановление и УТС</option>
+				<option value="2">Рыночная стоимость годных остатков</option>
+				<option value="3">Восстановление и годные остатки</option>
 			</select>
 		</div>
 		<div class="block">
@@ -5353,6 +5355,7 @@
 			<input class="hidden_field" id="materials_table" type="text" name="materials_table" value="">
 			<input class="hidden_field" id="parts_table" type="text" name="parts_table" value="">
 			<input class="hidden_field" id="uts_table" type="text" name="uts_table" value="">
+			<input class="hidden_field" id="ost_table" type="text" name="ost_table" value="">
 			<input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
 		</form>
 	</div>

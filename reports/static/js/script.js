@@ -320,6 +320,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     let damagedBodyPartsText = ''; // Поврежденные кузовные части
     let damagedOtherPartsText = ''; // Прочие поврежденные детали
     let unbrokenPartsText = ''; // Текст уцелевших запчастей
+    let totalOst = 4.5; //Переменная для остатков, %
 
     let idFirstSymbol; //Первый символ отмеченного ID
     let idTwoFirstSymbols; //Первые 2 символа отмеченного ID
@@ -336,53 +337,83 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
     function ucFirst(str) {
       if (!str) return str;
-      return str[0].toUpperCase() + str.slice(1);
+      return (str[0].toUpperCase() + str.slice(1)).slice(0, -2) + '.';
     }
 
-    $('.norm').each(function(i, elem) { //Перебираем каждый флажок для остатков
-      if ($(this).attr('data-ost')) {
-        ostArr[i] = { //Записываем всё в массив объектов
-          id: $(this).siblings('.checkbox_style').val(), //Записываем значение каждого отмеченного флажка
-          text: lcFirst($(this).siblings('.text_style').val()), //Текст около флажка
-          position: $(this).siblings('.position').val(), //Текст "позиция детали"
-          ost: $(this).attr('data-ost') //Процент остаточный
-        }
 
-        if (ostArr[i].ost) {
-          ostArr[i].ost = parseFloat(ostArr[i].ost);
-        }
-
-        idFirstSymbol = ostArr[i].id.charAt(0); //Первый символ отмеченного ID
-        if ($(this).siblings('.checkbox_style').prop('checked')) { //СПИСОК ОСТАТОЧНЫЙ
-          switch (idFirstSymbol) {
-            case 'К': //Кузовные ремонты
-              if (ostArr[i].position) {
-                damagedBodyPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
-              } else {
-                damagedBodyPartsText += ostArr[i].text + '; ';
-              }
-              break;
-            default:
-              if (ostArr[i].position) {
-                damagedOtherPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
-              } else {
-                damagedOtherPartsText += ostArr[i].text + '; ';
-              }
-              break;
-          }
-        } else {
-
-          if (ostArr[i].position) {
-            unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
-          } else {
-            unbrokenPartsText += ostArr[i].text + '; ';
-          }
-
-        }
+    $('[data-ost]').each(function(i, elem) { //Перебираем каждый флажок для остатков
+      ostArr[i] = { //Записываем всё в массив объектов
+        id: $(this).siblings('.checkbox_style').val(), //Записываем значение каждого отмеченного флажка
+        checked: $(this).siblings('.checkbox_style').prop('checked'),
+        text: lcFirst($(this).siblings('.text_style').val()), //Текст около флажка
+        position: $(this).siblings('.position').val(), //Текст "позиция детали"
+        ost: $(this).attr('data-ost') //Процент остаточный
       }
+
+      if (ostArr[i].ost) {
+        ostArr[i].ost = parseFloat(ostArr[i].ost);
+      } else {
+        ostArr[i].ost = 0;
+      }
+
+      idFirstSymbol = ostArr[i].id.charAt(0); //Первый символ отмеченного ID
+      if (ostArr[i].checked) { //СПИСОК ОСТАТОЧНЫЙ
+        switch (idFirstSymbol) {
+          case 'К': //Кузовные
+            if (ostArr[i].position) {
+              damagedBodyPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+            } else {
+              damagedBodyPartsText += ostArr[i].text + '; ';
+            }
+            break;
+          default:
+            if (ostArr[i].position) {
+              damagedOtherPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+            } else {
+              damagedOtherPartsText += ostArr[i].text + '; ';
+            }
+            break;
+        }
+      } else {
+        totalOst += ostArr[i].ost;
+        if (ostArr[i].position) {
+          unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+        } else {
+          unbrokenPartsText += ostArr[i].text + '; ';
+        }
+
+      }
+
 
     });
 
+
+
+    let ostArrLength = ostArr.length;
+
+    let gluedOstArr = []; //Массив для хранения объединенных данных для таблицы
+    let ostCounter = 0;
+
+
+    for (let i = 0; i < ostArrLength; i++) { //Перебор всего массива отмеченных данных. УБИРАЕМ ПОВТОРЯЮЩИЕСЯ ПУНКТЫ
+      if (ostArr[i].checked) {
+        if ((i + 1 < ostArrLength) && (ostArr[i].text == ostArr[i + 1].text)) {
+          gluedOstArr[ostCounter] = {
+            text: ostArr[i].text + ' - 2 шт.',
+            position: false,
+            ost: ostArr[i].ost + ostArr[i + 1].ost
+          }
+          i++;
+        } else {
+          gluedOstArr[ostCounter] = {
+            text: ostArr[i].text,
+            position: ostArr[i].position,
+            ost: ostArr[i].ost
+          }
+        }
+        ostCounter++;
+      }
+    }
 
     $('input:checkbox:checked').each(function(i, elem) { //Перебираем каждый отмеченный флажок
       sample = $(this).nextAll();
@@ -424,6 +455,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       } else {
         fullArr[i].uts = 0;
       }
+
 
 
 
@@ -601,6 +633,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     let utsCounter = 0;
     let totalUTS = 0; //Переменная для суммы УТС, %
 
+
     for (let i = 0; i < gluedArrLength; i++) {
       if (gluedArr[i].cost > 0) { //ТАБЛИЦЫ УСЛУГ И МАТЕРИАЛОВ
         idFirstSymbol = gluedArr[i].id.charAt(0);
@@ -649,6 +682,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
                 uts: formatting(gluedArr[i].uts)
               }
             }
+
 
             break;
         }
@@ -711,10 +745,45 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
     makeDefinitionText();
 
-    damagedBodyPartsText = ucFirst(damagedBodyPartsText.slice(0, -2) + '.');
-    damagedOtherPartsText = ucFirst(damagedOtherPartsText.slice(0, -2) + '.');
-    unbrokenPartsText = ucFirst(unbrokenPartsText.slice(0, -2) + '.');
-    $('#total_calc').html('Услуг: ' + totalServicesCost + ' сом<br>Материалов: ' + totalMaterialsCost + ' сом<br>Всего: ' + totalCost + ' сом<br>УТС: ' + totalUTS.toFixed(2) + ' %<br>Кузовных повреждений: ' + damageType[0] + ' шт.<hr>');
+    function calcKv(year) { //Функция расчета Кв
+      let da = new Date(); //Текущая дата
+      let fullYear = da.getFullYear(); //Текущий полный год
+      let age = Number(year);
+      let kv;
+      if (age) {
+        age = fullYear - age;
+      }
+      switch (true) {
+        case (age <= 5):
+          kv = 0.8;
+          break;
+        case (5 < age) && (age <= 10):
+          kv = 0.65;
+          break;
+        case (10 < age) && (age <= 15):
+          kv = 0.55;
+          break;
+        case (15 < age) && (age <= 20):
+          kv = 0.4;
+          break;
+        default:
+          kv = 0.35;
+          break;
+      }
+      return kv;
+    }
+
+    function calcKop(percent) { //Функция расчета Коп
+      let kop =  (percent/200 + 0.5).toFixed(2)
+      return kop;
+    }
+
+    let ostForCalc = (0.7 * calcKv($('#vehicle_year').val()) * calcKop(totalOst) * totalOst).toFixed(2);
+    damagedBodyPartsText = ucFirst(damagedBodyPartsText);
+    damagedOtherPartsText = ucFirst(damagedOtherPartsText);
+    unbrokenPartsText = ucFirst(unbrokenPartsText);
+    $('#total_calc').html('Услуг: ' + totalServicesCost + ' сом<br>Материалов: ' + totalMaterialsCost + ' сом<br>Всего: ' + totalCost + ' сом<br>УТС: ' + totalUTS.toFixed(2) + ' %<br>Кузовных повреждений: ' + damageType[0] + ' шт.<br>Остатки: ' + totalOst.toFixed(2) + ' %<br>Кз = 0.7<br>Kв = ' + calcKv($('#vehicle_year').val()) + '<br>Kоп = ' + calcKop(totalOst) + '<br>Остатки для расчета: ' + ostForCalc + ' %<hr>');
+
     $('#total_test').html('<b>При осмотре установлено:</b><br> Транспортное средство ' + definitionText + '<br><b>Деформированные кузовные детали:</b><br> ' + damagedBodyPartsText + '<br><b>Прочие повреждения:</b><br> ' + damagedOtherPartsText + '<br><b>Уцелевшие:</b><br> ' + unbrokenPartsText + '<hr>');
 
 
@@ -737,7 +806,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       servicesres: formatting(totalServicesCost),
       materialsres: formatting(totalMaterialsCost),
       totalres: formatting(totalCost),
-      utspercent: formatting(totalUTS.toFixed(2))
+      utspercent: formatting(totalUTS.toFixed(2)),
+      ostpercent: formatting(totalOst.toFixed(2))
     }
 
     let vehicleData = {
@@ -757,7 +827,10 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       steering: $('#vehicle_steering').val(),
       hourcost: $('#cost_per_hour').val(),
       owner: $('#vehicle_owner').val(),
-      adress: $('#vehicle_adress').val()
+      adress: $('#vehicle_adress').val(),
+      kz: 0.7,
+      kv: calcKv($('#vehicle_year').val()),
+      kop: calcKop(totalOst)
     }
 
     let inspectionText = {
@@ -767,7 +840,10 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       painting: paintingText,
       additional: additionalText,
       hidden: hiddenText,
-      parts: partsText
+      parts: partsText,
+      damagedBodyParts: damagedBodyPartsText,
+      damagedOtherParts: damagedOtherPartsText,
+      unbrokenParts: unbrokenPartsText
     }
 
     $('#vehicle_data_text').val(JSON.stringify(vehicleData));
@@ -777,6 +853,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#materials_table').val(JSON.stringify(materialsArr));
     $('#parts_table').val(JSON.stringify(partsArr));
     $('#uts_table').val(JSON.stringify(utsArr));
+    $('#ost_table').val(JSON.stringify(gluedOstArr));
     $('#hidden_button, #hidden_field, #hidden_br').show();
 
     console.timeEnd('Весь расчет');

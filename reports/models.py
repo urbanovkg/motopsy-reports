@@ -43,9 +43,13 @@ class Report(models.Model):
     results_purpose = models.CharField("Назначение результатов оценки", max_length=1, choices=RESULTS_CHOICES, default=REPARATION)
     ONLY_RECOVERY = "0"
     RECOVERY_WIDTH_APPEARANCE = "1"
+    ONLY_SCRAP = "2"
+    RECOVERY_WIDTH_SCRAP = "3"
     COST_CHOICES = [
         (ONLY_RECOVERY, 'Рыночная стоимость восстановления'),
         (RECOVERY_WIDTH_APPEARANCE, 'Рыночная стоимость восстановления и утрата товарной стоимости'),
+        (ONLY_SCRAP, 'Рыночная стоимость годных остатков (утилизационная стоимость)'),
+        (RECOVERY_WIDTH_SCRAP, 'Рыночная стоимость годных остатков (утилизационная стоимость)'),
     ]
     cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
 
@@ -80,23 +84,32 @@ class Report(models.Model):
     vehicle_owner = models.CharField("Владелец ТС", max_length=256, default="Н/у")
     vehicle_adress = models.CharField("Адрес регистрации ТС", max_length=256, default="Н/у")
     hourcost = models.IntegerField("Стоимость нормо-часа", default=600)
+    kz = models.IntegerField("Кз", default=0.7)
+    kv = models.IntegerField("Кв", default=0.35)
+    kop = models.IntegerField("Коп", default=0.5)
 
+    definition_text = models.TextField("Текст осмотра", default="", blank=True)
     disassembly_text = models.TextField("Текст разборок", default="", blank=True)
     repair_text = models.TextField("Текст ремонтов", default="", blank=True)
     painting_text = models.TextField("Текст окраски", default="", blank=True)
     additional_text = models.TextField("Текст доп. работ", default="", blank=True)
     hidden_text = models.TextField("Текст скрытых повреждений", default="", blank=True)
     parts_text = models.TextField("Текст запчастей", default="", blank=True)
+    damaged_body_parts_text = models.TextField("Текст осмотра", default="", blank=True)
+    damaged_other_parts_text = models.TextField("Текст осмотра", default="", blank=True)
+    unbroken_parts_text = models.TextField("Текст осмотра", default="", blank=True)
 
     services_table = models.TextField("Таблица услуг (JSON)", default = "", blank=True)
     materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
     parts_table = models.TextField("Таблица запчастец (JSON)", default = "", blank=True)
     uts_table = models.TextField("Таблица УТС (JSON)", default = "", blank=True)
+    ost_table = models.TextField("Таблица остатков (JSON)", default = "", blank=True)
 
     services_result = models.CharField("Всего услуг, сом", max_length=32, default=0)
     materials_result = models.CharField("Всего материалов, сом", max_length=32, default=0)
     total_result = models.CharField("Всего материалов и услуг, сом", max_length=32, default=0)
     uts_percent = models.CharField("Всего УТС, %", max_length=32, default=0)
+    ost_percent = models.CharField("Всего остатков, %", max_length=32, default=0)
 
     def publish(self):
         self.save()
