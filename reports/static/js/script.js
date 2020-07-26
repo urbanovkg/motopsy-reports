@@ -830,7 +830,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       adress: $('#vehicle_adress').val(),
       kz: 0.7,
       kv: calcKv($('#vehicle_year').val()),
-      kop: calcKop(totalOst)
+      kop: calcKop(totalOst))
     }
 
     let inspectionText = {

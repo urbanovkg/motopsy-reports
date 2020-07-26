@@ -56,10 +56,12 @@ class Report(models.Model):
     FOR_RECOVERY = "0"
     FOR_SCRAP = "1"
     FOR_MARKET = "2"
+    FOR_RECOVERYSCRAP = "3"
     METHOD_CHOICES = [
         (FOR_RECOVERY, 'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
         (FOR_SCRAP, 'Метод расчета годных остатков затратным подходом и метод рыночной информации сравнительного подхода'),
         (FOR_MARKET, 'Метод сравнительного анализа продаж'),
+        (FOR_RECOVERYSCRAP, 'Методы поэлементного расчета восстановления и годных остатков затратными подходами, метод рыночной информации сравнительного подхода'),
     ]
     used_methods = models.CharField("Подходы и методы", max_length=1, choices=METHOD_CHOICES, default=FOR_RECOVERY)
 
@@ -84,9 +86,9 @@ class Report(models.Model):
     vehicle_owner = models.CharField("Владелец ТС", max_length=256, default="Н/у")
     vehicle_adress = models.CharField("Адрес регистрации ТС", max_length=256, default="Н/у")
     hourcost = models.IntegerField("Стоимость нормо-часа", default=600)
-    kz = models.IntegerField("Кз", default=0.7)
-    kv = models.IntegerField("Кв", default=0.35)
-    kop = models.IntegerField("Коп", default=0.5)
+    kz = models.CharField("Кз", max_length=32, default="0.7")
+    kv = models.CharField("Кв", max_length=32, default="0.35")
+    kop = models.CharField("Коп", max_length=32, default="0.5")
 
     definition_text = models.TextField("Текст осмотра", default="", blank=True)
     disassembly_text = models.TextField("Текст разборок", default="", blank=True)
@@ -95,9 +97,9 @@ class Report(models.Model):
     additional_text = models.TextField("Текст доп. работ", default="", blank=True)
     hidden_text = models.TextField("Текст скрытых повреждений", default="", blank=True)
     parts_text = models.TextField("Текст запчастей", default="", blank=True)
-    damaged_body_parts_text = models.TextField("Текст осмотра", default="", blank=True)
-    damaged_other_parts_text = models.TextField("Текст осмотра", default="", blank=True)
-    unbroken_parts_text = models.TextField("Текст осмотра", default="", blank=True)
+    damaged_body_parts_text = models.TextField("Текст повреждений кузова", default="", blank=True)
+    damaged_other_parts_text = models.TextField("Текст прочих повреждений", default="", blank=True)
+    unbroken_parts_text = models.TextField("Текст уцелевших деталей", default="", blank=True)
 
     services_table = models.TextField("Таблица услуг (JSON)", default = "", blank=True)
     materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
