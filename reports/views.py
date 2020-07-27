@@ -86,6 +86,7 @@ def cash_document(request, pk):
     materials_table_list = is_json(all_report.materials_table)
     parts_table_list = is_json(all_report.parts_table)
     uts_table_list = is_json(all_report.uts_table)
+    ost_table_list = is_json(all_report.ost_table)
     wb = load_workbook(settings.MEDIA_ROOT + "/excel.xlsx")
     activeSheet = wb.active
     activeSheet["B1"] = all_report.doc_type
@@ -133,6 +134,19 @@ def cash_document(request, pk):
     utsSheet["G2"] = '=SUM(D2:D{}'.format(utsLen+1)+')'
     utsSheet["H2"] = '=SUM(E2:E{}'.format(utsLen+1)+')'
     utsSheet["G4"] = float(all_report.uts_percent.replace(' ', '').replace(',', '.'))
+
+    ostSheet = wb.worksheets[8]
+    ostLen = len(ost_table_list)
+    for elem in range(ostLen):
+        ostSheet.cell(column=1, row=elem+3, value=ost_table_list[elem]['text'])
+        ostSheet.cell(column=2, row=elem+3, value=float(ost_table_list[elem]['ost'].replace(' ', '').replace(',', '.')))
+        ostSheet.cell(column=3, row=elem+3, value='=($E$2*$F$2*$G$2*Средн!$D$22*B{})/100'.format(elem+3))
+    ostSheet["E2"] = float(all_report.kz.replace(' ', '').replace(',', '.'))
+    ostSheet["F2"] = float(all_report.kv.replace(' ', '').replace(',', '.'))
+    ostSheet["G2"] = float(all_report.kop.replace(' ', '').replace(',', '.'))
+    ostSheet["E4"] = float(all_report.ost_percent.replace(' ', '').replace(',', '.'))
+    ostSheet["F4"] = '=SUM(B3:B{}'.format(ostLen+2)+')'
+    ostSheet["G4"] = '=SUM(C3:C{}'.format(ostLen+2)+')'
 
     damageSheet = wb.worksheets[5]
     servicesLen = len(services_table_list)

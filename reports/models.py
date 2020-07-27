@@ -54,14 +54,14 @@ class Report(models.Model):
     cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
 
     FOR_RECOVERY = "0"
-    FOR_SCRAP = "1"
-    FOR_MARKET = "2"
-    FOR_RECOVERYSCRAP = "3"
+    FOR_RECOVERY_UTS = "1"
+    FOR_SCRAP = "2"
+    FOR_RECOVERY_SCRAP = "3"
     METHOD_CHOICES = [
         (FOR_RECOVERY, 'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
+        (FOR_RECOVERY_UTS, 'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
         (FOR_SCRAP, 'Метод расчета годных остатков затратным подходом и метод рыночной информации сравнительного подхода'),
-        (FOR_MARKET, 'Метод сравнительного анализа продаж'),
-        (FOR_RECOVERYSCRAP, 'Методы поэлементного расчета восстановления и годных остатков затратными подходами, метод рыночной информации сравнительного подхода'),
+        (FOR_RECOVERY_SCRAP, 'Методы поэлементного расчета восстановления и годных остатков затратными подходами, метод рыночной информации сравнительного подхода'),
     ]
     used_methods = models.CharField("Подходы и методы", max_length=1, choices=METHOD_CHOICES, default=FOR_RECOVERY)
 
@@ -103,7 +103,7 @@ class Report(models.Model):
 
     services_table = models.TextField("Таблица услуг (JSON)", default = "", blank=True)
     materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
-    parts_table = models.TextField("Таблица запчастец (JSON)", default = "", blank=True)
+    parts_table = models.TextField("Таблица запчастей (JSON)", default = "", blank=True)
     uts_table = models.TextField("Таблица УТС (JSON)", default = "", blank=True)
     ost_table = models.TextField("Таблица остатков (JSON)", default = "", blank=True)
 

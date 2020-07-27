@@ -247,7 +247,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   let formatted = '';
 
   function formatting(number) { //Функция превращения числа в строку формата "1 280 154,00"
-    formatted = number.toString().replace(re, ' ').replace('.', ',');
+    formatted = number + "";
+    formatted = formatted.toString().replace(re, ' ').replace('.', ',');
     return formatted;
   }
 
@@ -320,7 +321,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     let damagedBodyPartsText = ''; // Поврежденные кузовные части
     let damagedOtherPartsText = ''; // Прочие поврежденные детали
     let unbrokenPartsText = ''; // Текст уцелевших запчастей
-    let totalOst = 4.5; //Переменная для остатков, %
+    let totalOst = 0; //Переменная для остатков, %
 
     let idFirstSymbol; //Первый символ отмеченного ID
     let idTwoFirstSymbols; //Первые 2 символа отмеченного ID
@@ -337,9 +338,13 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
     function ucFirst(str) {
       if (!str) return str;
-      return (str[0].toUpperCase() + str.slice(1)).slice(0, -2) + '.';
+      return str[0].toUpperCase() + str.slice(1);
     }
 
+    function endDot(str) {
+      if (!str) return str;
+      return str.slice(0, -2) + '.';
+    }
 
     $('[data-ost]').each(function(i, elem) { //Перебираем каждый флажок для остатков
       ostArr[i] = { //Записываем всё в массив объектов
@@ -387,6 +392,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
     });
 
+totalOst += 4.5;
 
 
     let ostArrLength = ostArr.length;
@@ -396,23 +402,30 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
 
     for (let i = 0; i < ostArrLength; i++) { //Перебор всего массива отмеченных данных. УБИРАЕМ ПОВТОРЯЮЩИЕСЯ ПУНКТЫ
-      if (ostArr[i].checked) {
+      if (!ostArr[i].checked) {
         if ((i + 1 < ostArrLength) && (ostArr[i].text == ostArr[i + 1].text)) {
           gluedOstArr[ostCounter] = {
-            text: ostArr[i].text + ' - 2 шт.',
+            text: ucFirst(ostArr[i].text) + ' - 2 шт.',
             position: false,
-            ost: ostArr[i].ost + ostArr[i + 1].ost
+            ost: formatting((ostArr[i].ost + ostArr[i + 1].ost).toFixed(1))
           }
           i++;
         } else {
           gluedOstArr[ostCounter] = {
-            text: ostArr[i].text,
+            text: ucFirst(ostArr[i].text),
             position: ostArr[i].position,
-            ost: ostArr[i].ost
+            ost: formatting(ostArr[i].ost.toFixed(1))
           }
         }
         ostCounter++;
       }
+    }
+
+    let gluedOstArrLength = gluedOstArr.length;
+    gluedOstArr[gluedOstArrLength] = {
+      text: 'Прочее',
+      position: false,
+      ost: formatting('4.5')
     }
 
     $('input:checkbox:checked').each(function(i, elem) { //Перебираем каждый отмеченный флажок
@@ -566,9 +579,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
       if (fullArr[i].action == 'замена') { //СПИСОК ЗАПЧАСТЕЙ
         if (fullArr[i].position) {
-          partsText += fullArr[i].text + ' ' + fullArr[i].position + '; ';
+          partsText += lcFirst(fullArr[i].text) + ' ' + fullArr[i].position + '; ';
         } else {
-          partsText += fullArr[i].text + '; ';
+          partsText += lcFirst(fullArr[i].text) + '; ';
         }
       }
       if (!fullArr[i].quant) { //Если количество = 0 то пусть = 1
@@ -580,9 +593,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     if (!firstTimePainting) { //Ставим точку в конце окрашиваемых деталей
       paintingText = paintingText.slice(0, -1) + '. ';
     }
-    if (partsText) {
-      partsText = partsText.slice(0, -2) + '.';
-    } //Ставим точку в конце списка запчастей
+
+      partsText = ucFirst(endDot(partsText));
+
 
     let fullText = disassemblyText + '<br>' + repairText + '<br>' + paintingText + '<br>' + additionalText + '<br>' + hiddenText + '<br>' + partsText + '<br>'; //Весь текст акта осмотра
 
@@ -719,7 +732,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     function makeDefinitionText() { //Функция создания текста "при осмотре установлено"
 
       let damagedPartsText = ''; // Текст поврежденных частей
-      let damagedPartsOptions = [" кузова,", " передней части кузова,", " моторного отсека,", " центральной части кузова,", " задней части кузова,", " салона,", " передней ходовой части,", " задней ходовой части,"];
+      let damagedPartsOptions = [" кузова,", " передней части кузова,", " центральной части кузова,", " задней части кузова,", " моторного отсека,", " салона,", " передней ходовой части,", " задней ходовой части,"];
       let damagedPartsSum = 0;
       for (let i = 1; i < damageType.length; i++) { // Сумма всех элементов массива кроме первого
         damagedPartsSum += damageType[i];
@@ -729,14 +742,14 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       }
 
       if (damagedPartsSum > 0) { // Если сумма элементов массива повреждений больше 0
-        damagedPartsText = ' Повреждены детали' + damagedPartsOptions[1] + damagedPartsOptions[6] + damagedPartsOptions[2] + damagedPartsOptions[3] + damagedPartsOptions[5] + damagedPartsOptions[7] + damagedPartsOptions[4];
+        damagedPartsText = ' Повреждены детали' + damagedPartsOptions[1] + damagedPartsOptions[6] + damagedPartsOptions[4] + damagedPartsOptions[2] + damagedPartsOptions[5] + damagedPartsOptions[3] + damagedPartsOptions[7];
         damagedPartsText = damagedPartsText.slice(0, -1) + ".";
       }
 
       let skewText = ''; // Текст перекоса
       if ($('#distortion').prop('checked')) { // Если выбран перекос
         let skewOptions = ["несложную деформацию", "деформацию средней сложности", "сложную деформацию", "особо сложную деформацию"];
-        skewText = ' Кузов имеет ' + skewOptions[$('#selectedIndex').prop('selectedIndex')] + ' с нарушением геометрии - не соблюдены технологические зазоры между кузовными деталями.'
+        skewText = ' Кузов имеет ' + skewOptions[$('#selectedIndex').prop('selectedIndex')] + ' с нарушением геометрии – не соблюдены технологические зазоры между кузовными деталями.'
       }
       let accidentType = ["находится в разбитом состоянии после дорожно-транспортного происшествия.", "находится в обгоревшем состоянии.", "находится в поврежденном состоянии."];
       let evalPurp = $('#evaluation_purpose').val();
@@ -774,18 +787,15 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     }
 
     function calcKop(percent) { //Функция расчета Коп
-      let kop =  (percent/200 + 0.5).toFixed(2)
+      let kop = (percent / 200 + 0.5).toFixed(2);
       return kop;
     }
 
     let ostForCalc = (0.7 * calcKv($('#vehicle_year').val()) * calcKop(totalOst) * totalOst).toFixed(2);
-    damagedBodyPartsText = ucFirst(damagedBodyPartsText);
-    damagedOtherPartsText = ucFirst(damagedOtherPartsText);
-    unbrokenPartsText = ucFirst(unbrokenPartsText);
+    damagedBodyPartsText = ucFirst(endDot(damagedBodyPartsText));
+    damagedOtherPartsText = ucFirst(endDot(damagedOtherPartsText));
+    unbrokenPartsText = ucFirst(endDot(unbrokenPartsText));
     $('#total_calc').html('Услуг: ' + totalServicesCost + ' сом<br>Материалов: ' + totalMaterialsCost + ' сом<br>Всего: ' + totalCost + ' сом<br>УТС: ' + totalUTS.toFixed(2) + ' %<br>Кузовных повреждений: ' + damageType[0] + ' шт.<br>Остатки: ' + totalOst.toFixed(2) + ' %<br>Кз = 0.7<br>Kв = ' + calcKv($('#vehicle_year').val()) + '<br>Kоп = ' + calcKop(totalOst) + '<br>Остатки для расчета: ' + ostForCalc + ' %<hr>');
-
-    $('#total_test').html('<b>При осмотре установлено:</b><br> Транспортное средство ' + definitionText + '<br><b>Деформированные кузовные детали:</b><br> ' + damagedBodyPartsText + '<br><b>Прочие повреждения:</b><br> ' + damagedOtherPartsText + '<br><b>Уцелевшие:</b><br> ' + unbrokenPartsText + '<hr>');
-
 
     let reportData = {
       doctype: $('#doc_type').val(),
@@ -799,7 +809,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       purpose: $('#evaluation_purpose').val(),
       appointment: $('#evaluation_appointment').val(),
       costtype: $('#cost_type').val(),
-      usedmethods: $('#used_methods').val(),
+      usedmethods: $('#cost_type').val(),
       contractcost: $('#contract_cost').val(),
       costinwords: $('#contract_cost_in_words').val(),
       exchangerate: $('#exchange_rate').val(),
@@ -828,9 +838,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       hourcost: $('#cost_per_hour').val(),
       owner: $('#vehicle_owner').val(),
       adress: $('#vehicle_adress').val(),
-      kz: 0.7,
-      kv: calcKv($('#vehicle_year').val()),
-      kop: calcKop(totalOst)
+      kz: formatting($('#vehicle_types').children('select option:selected').attr('data-kz')),
+      kv: formatting(calcKv($('#vehicle_year').val())),
+      kop: formatting(calcKop(totalOst))
     }
 
     let inspectionText = {

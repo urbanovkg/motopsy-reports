@@ -176,14 +176,6 @@
 			</select>
 		</div>
 		<div class="block">
-			Подходы и методы:<br>
-			<select id="used_methods" class="full_selectbox">
-				<option selected value="0">Методы для восстановления</option>
-				<option value="1">Методы для годных остатков</option>
-				<option value="2">Метод сравнительного анализа продаж</option>
-			</select>
-		</div>
-		<div class="block">
 			Сумма оплаты цифрами, сом:<br>
 			<input id="contract_cost" class="text_line" type="text" value="0">
 		</div>
@@ -247,10 +239,10 @@
 			Тип ТС:<br>
 			<input id="vehicle_type" type="text" value="Легковой">
 			<select id="vehicle_types" class="half_selectbox">
-				<option selected value="1">Легковой</option>
-				<option value="2">Грузовой</option>
-				<option value="3">Автобус</option>
-				<option value="4">Специальный</option>
+				<option selected value="1" data-kz="0.7">Легковой</option>
+				<option value="2" data-kz="0.6">Грузовой</option>
+				<option value="3" data-kz="0.6">Автобус</option>
+				<option value="4" data-kz="0.6">Специальный</option>
 			</select>
 		</div>
 		<div class="block">
@@ -394,12 +386,12 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option9" value="Р007">
-			<input class="text_style_hide" type="text" value="Разборка/сборка для замены передней панели">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены панели передка">
 			<select class="action_type_half">
 				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
 				<option selected value="Разборка/сборка для замены ">...для замены</option>
 			</select>
-			<input class="text_style_half" type="text" value="передней панели">
+			<input class="text_style_half" type="text" value="панели передка">
 			<input class="norm" type="text" value="1.6">
 			<div class="cost"></div>
 		</div>
@@ -512,12 +504,12 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option15" value="Р013">
-			<input class="text_style_hide" type="text" value="Разборка/сборка для замены задней панели">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены панели задка">
 			<select class="action_type_half">
 				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
 				<option selected value="Разборка/сборка для замены ">...для замены</option>
 			</select>
-			<input class="text_style_half" type="text" value="задней панели">
+			<input class="text_style_half" type="text" value="панели задка">
 			<input class="norm" type="text" value="1.5">
 			<div class="cost"></div>
 		</div>
@@ -619,7 +611,7 @@
 		</a>
 
 		<div class="block">
-			<input id="distortion" class="checkbox_style" type="checkbox" name="option2" value="К025">
+			<input id="distortion" class="checkbox_style" type="checkbox" name="option2" value="К099">
 			<input class="text_style" type="text" value="Устранение перекоса кузова">
 			<select id="selectedIndex" class="action_type">
 				<option selected value="9.5" data-uts="0.5">несложного</option>
@@ -631,7 +623,7 @@
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="К024">
+			<input class="checkbox_style" type="checkbox" name="option2" value="К098">
 			<input class="text_style" type="text" value="Рама транспортного средства">
 			<select class="action_type">
 				<option value="6">ремонт №1</option>
@@ -893,6 +885,7 @@
 			<input class="norm" type="text" value="14" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К011">
 			<input class="text_style" type="text" value="Боковина кузова">
@@ -906,6 +899,7 @@
 			<input class="norm" type="text" value="14" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К012">
 			<input class="text_style" type="text" value="Боковина кузова с центральной стойкой">
@@ -919,6 +913,7 @@
 			<input class="norm" type="text" value="14.4" data-uts="0.5" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К012">
 			<input class="text_style" type="text" value="Боковина кузова с центральной стойкой">
@@ -945,6 +940,7 @@
 			<input class="norm" type="text" value="14.4" data-uts="1.2">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К022">
 			<input class="text_style" type="text" value="Пол центральный">
@@ -972,6 +968,7 @@
 			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
+
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К013">
 			<input class="text_style" type="text" value="Дверь передняя">
@@ -1016,8 +1013,6 @@
 			<div class="cost"></div>
 		</div>
 
-
-
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К020">
 			<input class="text_style" type="text" value="Рамка заднего окна">
@@ -1030,7 +1025,6 @@
 			<input class="norm" type="text" value="6" data-uts="0.6">
 			<div class="cost"></div>
 		</div>
-
 
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К017">
@@ -1058,7 +1052,6 @@
 			<input class="norm" type="text" value="6.8" data-uts="0.5" data-ost="2.1">
 			<div class="cost"></div>
 		</div>
-
 
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="К019">
@@ -4833,7 +4826,7 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О014">
-			<input class="text_style" type="text" value="Окраска передней панели">
+			<input class="text_style" type="text" value="Окраска панели передка">
 			<input class="norm" type="text" value="3.9" data-uts="0.3">
 			<input class="paint" type="text" value="0.15">
 			<div class="cost"></div>
@@ -5006,7 +4999,7 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="О015">
-			<input class="text_style" type="text" value="Окраска задней панели">
+			<input class="text_style" type="text" value="Окраска панели задка">
 			<input class="norm" type="text" value="3.4" data-uts="0.3">
 			<input class="paint" type="text" value="0.15">
 			<div class="cost"></div>
