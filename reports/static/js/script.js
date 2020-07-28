@@ -403,7 +403,7 @@ totalOst += 4.5;
 
     for (let i = 0; i < ostArrLength; i++) { //Перебор всего массива отмеченных данных. УБИРАЕМ ПОВТОРЯЮЩИЕСЯ ПУНКТЫ
       if (!ostArr[i].checked) {
-        if ((i + 1 < ostArrLength) && (ostArr[i].text == ostArr[i + 1].text)) {
+        if ((i + 1 < ostArrLength) && (ostArr[i].text == ostArr[i + 1].text) && (ostArr[i+1].checked)) {
           gluedOstArr[ostCounter] = {
             text: ucFirst(ostArr[i].text) + ' - 2 шт.',
             position: false,
