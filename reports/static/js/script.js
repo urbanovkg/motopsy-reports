@@ -361,6 +361,9 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         ostArr[i].ost = 0;
       }
 
+
+
+
       idFirstSymbol = ostArr[i].id.charAt(0); //Первый символ отмеченного ID
       if (ostArr[i].checked) { //СПИСОК ОСТАТОЧНЫЙ
         switch (idFirstSymbol) {
@@ -381,39 +384,43 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         }
       } else {
         totalOst += ostArr[i].ost;
-        if (ostArr[i].position) {
-          unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
-        } else {
-          unbrokenPartsText += ostArr[i].text + '; ';
-        }
-
       }
-
+      /* else {
+             if (ostArr[i].position) {
+               unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+             } else {
+               unbrokenPartsText += ostArr[i].text + '; ';
+             }
+           } */
 
     });
 
-totalOst += 4.5;
+
+
 
 
     let ostArrLength = ostArr.length;
-
     let gluedOstArr = []; //Массив для хранения объединенных данных для таблицы
     let ostCounter = 0;
 
 
-    for (let i = 0; i < ostArrLength; i++) { //Перебор всего массива отмеченных данных. УБИРАЕМ ПОВТОРЯЮЩИЕСЯ ПУНКТЫ
+    for (let i = 0; i < ostArrLength; i++) { //Перебор всего массива зеленых флагов. УБИРАЕМ ПОВТОРЯЮЩИЕСЯ ПУНКТЫ
       if (!ostArr[i].checked) {
         if ((i + 1 < ostArrLength) && (ostArr[i].text == ostArr[i + 1].text) && (!ostArr[i + 1].checked)) {
           gluedOstArr[ostCounter] = {
+            id: ostArr[i].id.charAt(0), //Первый символ ID
             text: ucFirst(ostArr[i].text) + ' - 2 шт.',
-            position: false,
+            position: ostArr[i].position,
+            textFull: ucFirst(ostArr[i].text) + ' (' + ostArr[i].position + ' и ' + ostArr[i + 1].position + ')',
             ost: formatting((ostArr[i].ost + ostArr[i + 1].ost).toFixed(1))
           }
           i++;
         } else {
           gluedOstArr[ostCounter] = {
+            id: ostArr[i].id.charAt(0), //Первый символ ID
             text: ucFirst(ostArr[i].text),
             position: ostArr[i].position,
+            textFull: ucFirst(ostArr[i].text) + ' ' + ostArr[i].position,
             ost: formatting(ostArr[i].ost.toFixed(1))
           }
         }
@@ -421,7 +428,19 @@ totalOst += 4.5;
       }
     }
 
+    totalOst += 4.5;
+
     let gluedOstArrLength = gluedOstArr.length;
+    for (let i = 0; i < gluedOstArrLength; i++) {
+      if (gluedOstArr[i].position) {
+        unbrokenPartsText += lcFirst(gluedOstArr[i].textFull) + '; ';
+      } else {
+        unbrokenPartsText += lcFirst(gluedOstArr[i].text) + '; ';
+      }
+    }
+
+    lcFirst(unbrokenPartsText);
+
     gluedOstArr[gluedOstArrLength] = {
       text: 'Прочее',
       position: false,
@@ -594,7 +613,7 @@ totalOst += 4.5;
       paintingText = paintingText.slice(0, -1) + '. ';
     }
 
-      partsText = ucFirst(endDot(partsText));
+    partsText = ucFirst(endDot(partsText));
 
 
     let fullText = disassemblyText + '<br>' + repairText + '<br>' + paintingText + '<br>' + additionalText + '<br>' + hiddenText + '<br>' + partsText + '<br>'; //Весь текст акта осмотра
