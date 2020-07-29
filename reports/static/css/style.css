@@ -46,12 +46,13 @@ overscroll-behavior: none;
 
 #intermediate_calc {
     position: fixed;
-    bottom: 3em;
-    right: 3.5em;
-    background: green;
-    padding: 0.15em;
-    opacity: .8;
-    border-radius: 0.2em;
+    bottom: 2.5em;
+    right: 2.5em;
+    background: black;
+    color: white;
+    padding: 0.1em 0.3em 0.1em 0.3em;
+    opacity: .6;
+    border-radius: 0.5em;
     text-align: right;
 }
 
