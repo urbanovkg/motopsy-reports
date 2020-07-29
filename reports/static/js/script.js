@@ -133,7 +133,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         intPaint += parseFloat($(this).val()) * parseFloat(intQuant);
       } //Если меняется количество краски отмеченного блока пересчитываем предварительный результат
     });
-    $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
+    $('#intermediate_calc').html(intCalc + ' с<br>' + intPaint.toFixed(1) + ' л');
     console.timeEnd('Расчет количества краски');
   }
 
@@ -149,7 +149,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     } //Если нет предыдущего то 0
     intCalc += costElVal - costElement.data('tempCost');
     costElement.data('tempCost', costElVal); //при установке флажка записываем в элемент ДОМ значение стоимости блока
-    $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
+    $('#intermediate_calc').html(intCalc + ' с<br>' + intPaint.toFixed(1) + ' л');
   }
 
   $("input:checkbox").on("change", function() { //Событие при выделении пунктов
@@ -159,7 +159,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       let costElement2 = $(this).nextAll('.cost');
       intCalc -= parseFloat(costElement2.data('tempCost')); //при снятии флажка отнимаем из общей суммы старое значение "стоимости блока"
       costElement2.removeData('tempCost'); //Удаляем из элемена ДОМ значение при снятии флажка
-      $('#intermediate_calc').html(intCalc + ' с | ' + intPaint.toFixed(1) + ' л');
+      $('#intermediate_calc').html(intCalc + ' с<br>' + intPaint.toFixed(1) + ' л');
     }
   });
 
@@ -275,12 +275,44 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     console.timeEnd('Показ секции блока');
   });
 
+  let showCounter = 0;
   $("#intermediate_calc").click(function() { //Функция показа всех секций
     console.time('Показ всех секкций');
-    $('.empty_div').css('height', '0');
-    $('#first_empty_div').css('height', '5.5em');
-    $(".square").css('background-color', 'LightSkyBlue');
-    $('.section').show();
+    switch (showCounter) {
+      case 0: //показать все блоки
+        $('.empty_div').css('height', '0');
+        $('#first_empty_div').css('height', '5.5em');
+        $(".square").css('background-color', 'LightSkyBlue');
+        $('.section').show();
+        $('.block').show();
+      alert('Все блоки');
+        showCounter += 1;
+        break;
+      case 1: //показать блоки для остатков
+        $('.empty_div').css('height', '0');
+        $('#first_empty_div').css('height', '5.5em');
+        $(".square").css('background-color', 'LightSkyBlue');
+        $('.section').show();
+        $('.block').hide();
+        $('[data-ost]').parent().show();
+        $('#distortion').parent().show();
+        $('#hidden_damage').children('.block').show();
+        alert('Блоки годных остатков');
+        showCounter += 1;
+        break;
+      default: //показать выделенные блоки
+        $('.empty_div').css('height', '0');
+        $('#first_empty_div').css('height', '5.5em');
+        $(".square").css('background-color', 'LightSkyBlue');
+        $('.section').show();
+        $('.block').hide();
+        $('input:checkbox:checked').parent().show();
+        alert('Отмеченные блоки');
+        showCounter = 0;
+        break;
+    }
+
+
     console.timeEnd('Показ всех секкций');
   });
 
@@ -361,9 +393,12 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         ostArr[i].ost = 0;
       }
 
+      if (!ostArr[i].checked) {
+        totalOst += ostArr[i].ost;
+      }
 
 
-
+      /*
       idFirstSymbol = ostArr[i].id.charAt(0); //Первый символ отмеченного ID
       if (ostArr[i].checked) { //СПИСОК ОСТАТОЧНЫЙ
         switch (idFirstSymbol) {
@@ -383,24 +418,20 @@ $(function() { //Событие ready полной загрузки HTML и CSS
             break;
         }
       } else {
-        totalOst += ostArr[i].ost;
-      }
-      /* else {
-             if (ostArr[i].position) {
-               unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
-             } else {
-               unbrokenPartsText += ostArr[i].text + '; ';
-             }
-           } */
+                 if (ostArr[i].position) {
+                   unbrokenPartsText += ostArr[i].text + ' ' + ostArr[i].position + '; ';
+                 } else {
+                   unbrokenPartsText += ostArr[i].text + '; ';
+                 }
+               } */
 
     });
 
-
-
-
+    totalOst += 4.5;
 
     let ostArrLength = ostArr.length;
     let gluedOstArr = []; //Массив для хранения объединенных данных для таблицы
+    let gluedDamArr = []; //Массив для хранения объединенных данных для поврежденных частей
     let ostCounter = 0;
 
 
@@ -428,8 +459,6 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       }
     }
 
-    totalOst += 4.5;
-
     let gluedOstArrLength = gluedOstArr.length;
     for (let i = 0; i < gluedOstArrLength; i++) {
       if (gluedOstArr[i].position) {
@@ -439,6 +468,54 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       }
     }
 
+    ostCounter = 0;
+    for (let i = 0; i < ostArrLength; i++) { //Перебор всего массива зеленых флагов. УБИРАЕМ ПОВТОРЯЮЩИЕСЯ ПУНКТЫ
+      if (ostArr[i].checked) { //Отмеченных
+        if ((i + 1 < ostArrLength) && (ostArr[i].text == ostArr[i + 1].text) && (ostArr[i + 1].checked)) {
+          gluedDamArr[ostCounter] = {
+            id: ostArr[i].id.charAt(0), //Первый символ ID
+            text: ucFirst(ostArr[i].text) + ' - 2 шт.',
+            position: ostArr[i].position,
+            textFull: ucFirst(ostArr[i].text) + ' (' + ostArr[i].position + ' и ' + ostArr[i + 1].position + ')',
+          }
+          i++;
+        } else {
+          gluedDamArr[ostCounter] = {
+            id: ostArr[i].id.charAt(0), //Первый символ ID
+            text: ucFirst(ostArr[i].text),
+            position: ostArr[i].position,
+            textFull: ucFirst(ostArr[i].text) + ' ' + ostArr[i].position,
+          }
+        }
+        ostCounter++;
+      }
+    }
+
+
+
+    let gluedOstDamLength = gluedDamArr.length;
+    for (let i = 0; i < gluedOstDamLength; i++) {
+      switch (gluedDamArr[i].id) {
+        case 'К': //Кузовные
+          if (gluedDamArr[i].position) {
+            damagedBodyPartsText += lcFirst(gluedDamArr[i].textFull) + '; ';
+          } else {
+            damagedBodyPartsText += lcFirst(gluedDamArr[i].text) + '; ';
+          }
+          break;
+        default:
+          if (gluedDamArr[i].position) {
+            damagedOtherPartsText += lcFirst(gluedDamArr[i].textFull) + '; ';
+          } else {
+            damagedOtherPartsText += lcFirst(gluedDamArr[i].text) + '; ';
+          }
+          break;
+      }
+
+    }
+
+    lcFirst(damagedBodyPartsText);
+    lcFirst(damagedOtherPartsText);
     lcFirst(unbrokenPartsText);
 
     gluedOstArr[gluedOstArrLength] = {
