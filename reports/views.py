@@ -8,6 +8,7 @@ from io import BytesIO
 from datetime import date, datetime
 from django.utils import dateformat
 from openpyxl import Workbook, load_workbook
+from docx2pdf import convert
 
 # Create your views here.
 def login(request):
@@ -69,6 +70,35 @@ def report_create(request, pk):
     doc.save(byte_io)
     byte_io.seek(0)
     return FileResponse(byte_io, as_attachment=True, filename=all_report.report_number.split('/')[0] + file_name)
+
+def pdf_create(request, pk):
+    all_report = get_object_or_404(Report, pk=pk)
+
+    services_table_list = is_json(all_report.services_table)
+    materials_table_list = is_json(all_report.materials_table)
+    parts_table_list = is_json(all_report.parts_table)
+    uts_table_list = is_json(all_report.uts_table)
+    ost_table_list = is_json(all_report.ost_table)
+
+    obj_lowercase = all_report.ass_object.lower()
+    doc = DocxTemplate(settings.MEDIA_ROOT + "/report.docx")
+    context = {'document_type' : all_report.doc_type, 'assessment_reason' : all_report.ass_reason, 'used_methods' : Report.METHOD_CHOICES[int(all_report.used_methods)][1], 'assessment_object' : all_report.ass_object, 'vehicle_gearbox' : all_report.vehicle_gearbox, 'vehicle_steering' : all_report.vehicle_steering, 'exchange_rate' : all_report.exchange_rate, 'object_lowercase' : obj_lowercase, 'contract_number' : all_report.report_number, 'inspection_date': dateformat.format(all_report.inspection_date, settings.DATE_FORMAT) + ' г.', 'calc_date': dateformat.format(all_report.calculation_date, settings.DATE_FORMAT) + ' г.' , 'customer_name': all_report.client_name, 'property_owner': Report.OWNERSHIP_CHOICES[int(all_report.ownership_identification)][1], 'vehicle_location': all_report.inspection_place , 'evaluation_purpose': Report.EVALUATION_CHOICES[int(all_report.evaluation_purpose)][1], 'evaluation_appointment': Report.RESULTS_CHOICES[int(all_report.results_purpose)][1], 'cost_type': Report.COST_CHOICES[int(all_report.cost_type)][1], 'cost_type_id': all_report.cost_type, 'contract_cost': all_report.contract_price,  'vehicle_model': all_report.vehicle_model, 'vehicle_year': all_report.vehicle_year, 'vehicle_number': all_report.vehicle_regnum, 'vehicle_vin': all_report.vehicle_vin, 'vehicle_frame': all_report.vehicle_frame, 'vehicle_passport': all_report.vehicle_passport, 'vehicle_engine_volume': all_report.vehicle_volume, 'vehicle_mileage': all_report.vehicle_mileage, 'vehicle_color': all_report.vehicle_color, 'vehicle_type': all_report.vehicle_type, 'vehicle_body_type': all_report.vehicle_body, 'cost_per_hour': all_report.hourcost, 'vehicle_owner': all_report.vehicle_owner, 'vehicle_adress': all_report.vehicle_adress, 'disassembly': all_report.disassembly_text, 'damagedBodyParts': all_report.damaged_body_parts_text, 'unbrokenParts': all_report.unbroken_parts_text, 'damagedOtherParts': all_report.damaged_other_parts_text, 'definition': all_report.definition_text, 'repair': all_report.repair_text, 'painting': all_report.painting_text, 'additional': all_report.additional_text, 'hidden': all_report.hidden_text, 'parts': all_report.parts_text, 'services_table': services_table_list, 'materials_table': materials_table_list, 'parts_table': parts_table_list, 'uts_table': uts_table_list, 'ost_table': ost_table_list, 's_result': all_report.services_result, 'm_result': all_report.materials_result, 't_result': all_report.total_result, 'uts_percent': all_report.uts_percent, 'ost_percent': all_report.ost_percent, 'kv': all_report.kv, 'kz': all_report.kz, 'kop': all_report.kop,}
+
+    if all_report.cost_type == "0":
+        file_name = ' Ремонт.docx'
+    elif all_report.cost_type == "1":
+        file_name = ' Ремонт и УТС.docx'
+    elif all_report.cost_type == "2":
+        file_name = ' Лом.docx'
+    else:
+        file_name = ' Лом и ремонт.docx'
+
+    doc.render(context)
+    byte_io = BytesIO()
+    doc.save(byte_io)
+    byte_io.seek(0)
+    return FileResponse(byte_io, as_attachment=True, filename=all_report.report_number.split('/')[0] + file_name)
+
 
 def contract_create(request, pk):
     all_report = get_object_or_404(Report, pk=pk)
