@@ -113,16 +113,17 @@
 			<input id="customer_name" type="text" value="Н/у">
 			<select id="customer_names" class="half_selectbox">
 				<option selected value="Н/у">Н/у</option>
-				<option value="ЗАО «Страховая компания «АЮ Гарант»">Аю Гарант</option>
-				<option value="ЗАО СК «Алма-Иншуренс»">Алма</option>
-				<option value="ЗАО СК «АТН Полис»">АТН Полис</option>
-				<option value="ЗАО СК «Кыргызстан»">Кыргызстан</option>
 				<option value="ЗАО «НСК»">НСК</option>
+				<option value="ЗАО «СК «АЮ Гарант»">Аю Гарант</option>
+				<option value="ЗАО СК «Алма-Иншуренс»">Алма</option>
+				<option value="ЗАО «Джубили Кыргызстан Иншуренс Компани»">Джубили</option>
+				<option value="ЗАО СК «АТН Полис»">АТН Полис</option>
+				<option value="ЗАО «Сакбол»">Сакбол</option>
+				<option value="ЗАО СК «Кыргызстан»">Кыргызстан</option>
+				<option value="ОАО «Государственная Страховая Организация»">ГСО</option>
+				<option value="ЗАО «СК «А Плюс»">А Плюс</option>
 				<option value="ЗСАО «Ингосстрах»">Ингосстрах</option>
 				<option value="ЗАО «СК Арсеналъ-Кыргызстан»">Арсеналъ</option>
-				<option value="ЗАО «Джубили Кыргызстан Иншуренс Компани»">Джубили</option>
-				<option value="ЗАО «Сакбол»">Сакбол</option>
-				<option value="ЗЗАО «Страховая компания «А Плюс»">А Плюс</option>
 			</select>
 		</div>
 		<div class="block">
@@ -202,19 +203,19 @@
 			<input id="vehicle_year" class="text_line" type="text" value="Н/у">
 		</div>
 		<div class="block">
-			Рег. (гос.) №:<br>
+			Рег. (инв.) №:<br>
 			<input id="vehicle_number" class="text_line" type="text" value="Н/у">
 		</div>
 		<div class="block">
-			Кузов (VIN) №:<br>
+			VIN (кузов) №:<br>
 			<input id="vehicle_vin" class="text_line" type="text" value="Н/у">
 		</div>
 		<div class="block">
-			Рама (шасси) №:<br>
+			Рама (шасси) № (не заполняй):<br>
 			<input id="vehicle_frame" class="text_line" type="text" value="-">
 		</div>
 		<div class="block">
-			Тех. паспорт №:<br>
+			Тех. паспорт № (не заполняй):<br>
 			<input id="vehicle_passport" class="text_line" type="text" value="Н/у">
 		</div>
 		<div class="block">
@@ -278,12 +279,13 @@
 			Класс ТС (нормо-час, сом):<br>
 			<input id="cost_per_hour" type="text" value="750">
 			<select id="class" class="half_selectbox">
-				<option value="550">Малый</option>
-				<option value="650">Средний</option>
-				<option selected value="750">Базовый</option>
-				<option value="850">Бизнес</option>
-				<option value="950">Премиум</option>
-				<option value="1150">Грузовой</option>
+				<option value="550">Бюджетный /малый /самокат</option>
+				<option value="650">Базовый /маршрутка /скутер</option>
+				<option selected value="750">Средний /микроавтобус база</option>
+				<option value="850">Бизнес /мотоцикл /автобус база</option>
+				<option value="950">Премиум /грузовой и автобус бюджет</option>
+				<option value="1150">Эксклюзив /грузовой и автобус бизнес</option>
+				<option value="1250">Элитный /грузовой и автобус премиум</option>
 			</select>
 		</div>
 		<div class="block">
@@ -309,15 +311,27 @@
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option2" value="Р002">
-			<input class="text_style" type="text" value="Разборка/сборка для ремонта и наружной окраски">
+			<input class="checkbox_style" type="checkbox" name="option4" value="Р002">
+			<input class="text_style" type="text" value="Разборка/сборка для замены рамы /обитого каркаса кузова">
+			<input class="norm" type="text" value="49.8" data-uts="1.5">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="Р003">
+			<input class="text_style" type="text" value="Разборка/сборка для ремонта и наружной окраски кузова">
 			<input class="norm" type="text" value="11" data-uts="1">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option4" value="Р003">
-			<input class="text_style" type="text" value="Разборка/сборка для замены каркаса кузова (обитого) /замены рамы">
-			<input class="norm" type="text" value="49.8" data-uts="1.5">
+			<input class="checkbox_style" type="checkbox" name="option9" value="Р007">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены панели передка">
+			<select class="action_type_half">
+				<option value="Разборка/сборка для окраски ">...для окраски</option>
+				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
+				<option selected value="Разборка/сборка для замены ">...для замены</option>
+			</select>
+			<input class="text_style_half" type="text" value="панели передка">
+			<input class="norm" type="text" value="1.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -368,6 +382,32 @@
 				<option selected value="Разборка/сборка для замены ">...для замены</option>
 			</select>
 			<input class="text_style_half" type="text" value="переднего лонжерона">
+			<input class="position" type="text" value="правого">
+			<input class="norm" type="text" value="2.5">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option7" value="Р885">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены брызговика переднего крыла">
+			<select class="action_type_half">
+				<option value="Разборка/сборка для окраски ">...для окраски</option>
+				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
+				<option selected value="Разборка/сборка для замены ">...для замены</option>
+			</select>
+			<input class="text_style_half" type="text" value="брызговика переднего крыла">
+			<input class="position" type="text" value="левого">
+			<input class="norm" type="text" value="2.5">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option7" value="Р885">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены брызговика переднего крыла">
+			<select class="action_type_half">
+				<option value="Разборка/сборка для окраски ">...для окраски</option>
+				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
+				<option selected value="Разборка/сборка для замены ">...для замены</option>
+			</select>
+			<input class="text_style_half" type="text" value="брызговика переднего крыла">
 			<input class="position" type="text" value="правого">
 			<input class="norm" type="text" value="2.5">
 			<div class="cost"></div>
@@ -382,18 +422,6 @@
 			</select>
 			<input class="text_style_half" type="text" value="капота">
 			<input class="norm" type="text" value="0.4">
-			<div class="cost"></div>
-		</div>
-		<div class="block">
-			<input class="checkbox_style" type="checkbox" name="option9" value="Р007">
-			<input class="text_style_hide" type="text" value="Разборка/сборка для замены панели передка">
-			<select class="action_type_half">
-				<option value="Разборка/сборка для окраски ">...для окраски</option>
-				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
-				<option selected value="Разборка/сборка для замены ">...для замены</option>
-			</select>
-			<input class="text_style_half" type="text" value="панели передка">
-			<input class="norm" type="text" value="1.6">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -526,16 +554,29 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option16" value="Р014">
-			<input class="text_style_hide" type="text" value="Разборка/сборка для замены крышки багажника (двери задка)">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены крышки багажника">
 			<select class="action_type_half">
 				<option value="Разборка/сборка для окраски ">...для окраски</option>
 				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
 				<option selected value="Разборка/сборка для замены ">...для замены</option>
 			</select>
-			<input class="text_style_half" type="text" value="крышки багажника (двери задка)">
+			<input class="text_style_half" type="text" value="крышки багажника">
 			<input class="norm" type="text" value="0.9">
 			<div class="cost"></div>
 		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option16" value="Р814">
+			<input class="text_style_hide" type="text" value="Разборка/сборка для замены двери задка">
+			<select class="action_type_half">
+				<option value="Разборка/сборка для окраски ">...для окраски</option>
+				<option value="Разборка/сборка для ремонта ">...для ремонта</option>
+				<option selected value="Разборка/сборка для замены ">...для замены</option>
+			</select>
+			<input class="text_style_half" type="text" value="двери задка">
+			<input class="norm" type="text" value="1.2">
+			<div class="cost"></div>
+		</div>
+		<hr>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option17" value="Р015">
 			<input class="text_style" type="text" value="Снять/установить обивку пола">
@@ -5331,13 +5372,37 @@
 		</a>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="С001">
-			<input class="text_style" type="text" value="Проверить работу двигателя и коробки передач не представляется возможным, поскольку они смещены с посадочного места, разбит радиатор и неисправно электрооборудование">
+			<input class="text_style" type="text" value="Проверить работу двигателя и коробки передач не представляется возможным">
 			<input id="inv" class="norm" type="text" value="0">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="С002">
-			<input class="text_style" type="text" value="В связи с обширными повреждениями целесообразно произвести замену всего каркаса кузова">
+			<input class="text_style" type="text" value="Проверить геометрию ходовой части – балки переднего моста не представляется возможным">
+			<input id="inv" class="norm" type="text" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="С003">
+			<input class="text_style" type="text" value="Необходим осмотр с частичной разборкой и диагностикой на специализированном предприятии">
+			<input id="inv" class="norm" type="text" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="С004">
+			<input class="text_style" type="text" value="В связи с обширными повреждениями целесообразно произвести замену каркаса кабины целиком">
+			<input id="inv" class="norm" type="text" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="С005">
+			<input class="text_style" type="text" value="Восстановление и дальнейшая эксплуатация нецелесообразна">
+			<input id="inv" class="norm" type="text" value="0">
+			<div class="cost"></div>
+		</div>
+		<div class="block">
+			<input class="checkbox_style" type="checkbox" name="option2" value="С006">
+			<input class="text_style" type="text" value="Наступила конструктивная гибель транспортного средства">
 			<input id="inv" class="norm" type="text" value="0">
 			<div class="cost"></div>
 		</div>
