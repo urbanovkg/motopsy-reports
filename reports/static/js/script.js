@@ -99,7 +99,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         $('#contract_cost_in_words').val("Семь тысяч пятьсот");
         break;
       case "8 000":
-        $('#contract_cost_in_words').val("Восемь тысяч);
+        $('#contract_cost_in_words').val("Восемь тысяч");
         break;
       case "8 500":
         $('#contract_cost_in_words').val("Восемь тысяч пятьсот");
