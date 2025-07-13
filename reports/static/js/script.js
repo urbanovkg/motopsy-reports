@@ -74,6 +74,45 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       case "3 500":
         $('#contract_cost_in_words').val("Три тысячи пятьсот");
         break;
+      case "4 000":
+        $('#contract_cost_in_words').val("Четыре тысячи");
+        break;
+      case "4 500":
+        $('#contract_cost_in_words').val("Четыре тысячи пятьсот");
+        break;
+      case "5 000":
+        $('#contract_cost_in_words').val("Пять тысяч");
+        break;
+      case "5 500":
+        $('#contract_cost_in_words').val("Пять тысяч пятьсот");
+        break;
+      case "6 000":
+        $('#contract_cost_in_words').val("Шесть тысяч");
+        break;
+      case "6 500":
+        $('#contract_cost_in_words').val("Шесть тысяч пятьсот");
+        break;
+      case "7 000":
+        $('#contract_cost_in_words').val("Семь тысяч");
+        break;
+      case "7 500":
+        $('#contract_cost_in_words').val("Семь тысяч пятьсот");
+        break;
+      case "8 000":
+        $('#contract_cost_in_words').val("Восемь тысяч);
+        break;
+      case "8 500":
+        $('#contract_cost_in_words').val("Восемь тысяч пятьсот");
+        break;
+      case "9 000":
+        $('#contract_cost_in_words').val("Девять тысяч");
+        break;
+      case "9 500":
+        $('#contract_cost_in_words').val("Девять тысяч пятьсот");
+        break;
+      case "10 000":
+        $('#contract_cost_in_words').val("Десять тысяч");
+        break;
     }
   });
 

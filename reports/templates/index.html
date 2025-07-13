@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Автоотчет в. 0.93 07.01.23</title>
+	<title>Автоотчет в. 0.94 13.07.25</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	<link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
@@ -121,7 +121,7 @@
 				<option value="ЗСАО «Ингосстрах»">Ингосстрах</option>
 				<option value="ЗАО «СК Арсеналъ-Кыргызстан»">Арсеналъ</option>
 				<option value="ЗАО «Джубили Кыргызстан Иншуренс Компани»">Джубили</option>
-				<option value="ЗАО «Мега Иншуренс Групп»">Мега Иншуренс</option>
+				<option value="ЗАО «Сакбол»">Сакбол</option>
 				<option value="ЗЗАО «Страховая компания «А Плюс»">А Плюс</option>
 			</select>
 		</div>
@@ -140,13 +140,7 @@
 			<select id="vehicle_locations" class="half_selectbox">
 				<option selected value="г. Бишкек">Бишкек</option>
 				<option value="г. Бишкек, ул. Атбашинская, 2/1">Офис</option>
-				<option value="г. Бишкек, штрафстоянка на пер. Багижском, 78 («Щербакова»)">Щербакова</option>
-				<option value="г. Бишкек, штрафстоянка на пересечении ул. Анкара и Чокана Валиханова">Респ. ГАИ</option>
-				<option value="г. Бишкек, штрафстоянка на ул. 7 апреля, 4Б/2">Ак-Жол</option>
-				<option value="г. Бишкек, штрафстоянка вблизи пересечения ул. Фучика и Московской">Фучика</option>
-				<option value="г. Бишкек, штрафстоянка на ул. Горького, 19/2">ГорГАИ</option>
-				<option value="г. Шопоков, штрафстоянка">Шопоков</option>
-				<option value="г. Кант, штрафстоянка">Кант</option>
+				<option value="По фото- и видеоматериалам">Фото</option>
 				<option value="Без осмотра">Без осмотра</option>
 			</select>
 		</div>
@@ -161,8 +155,8 @@
 		<div class="block">
 			Назначение результатов оценки:<br>
 			<select id="evaluation_appointment" class="full_selectbox">
-				<option selected value="0">Для возмещения убытков (ст. 14 ГК КР)</option>
-				<option value="1">Для страховой выплаты</option>
+				<option selected value="0">Для страховой выплаты</option>
+				<option value="1">Для возмещения убытков (ст. 14 ГК КР)</option>
 				<option value="2">Для принятия управленческих решений</option>
 			</select>
 		</div>
@@ -185,7 +179,7 @@
 		</div>
 		<div class="block">
 			Курс доллара к сому:<br>
-			<input id="exchange_rate" class="text_line" type="text" value="75.0000">
+			<input id="exchange_rate" class="text_line" type="text" value="87.4500">
 		</div>
 	</div>
 
@@ -282,13 +276,14 @@
 		</div>
 		<div class="block">
 			Класс ТС (нормо-час, сом):<br>
-			<input id="cost_per_hour" type="text" value="550">
+			<input id="cost_per_hour" type="text" value="750">
 			<select id="class" class="half_selectbox">
-				<option value="450">Малый</option>
-				<option selected value="550">Средний</option>
-				<option value="650">Бизнес</option>
-				<option value="750">Премиум</option>
-				<option value="850">Грузовой</option>
+				<option value="550">Малый</option>
+				<option value="650">Средний</option>
+				<option selected value="750">Базовый</option>
+				<option value="850">Бизнес</option>
+				<option value="950">Премиум</option>
+				<option value="1150">Грузовой</option>
 			</select>
 		</div>
 		<div class="block">
@@ -5182,21 +5177,21 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М103">
-			<input class="text_style" type="text" value="Шлифшкурка 1, шт">
+			<input class="text_style" type="text" value="Шлифшкурка 1, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="60">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М104">
-			<input class="text_style" type="text" value="Шлифшкурка 2, шт">
+			<input class="text_style" type="text" value="Шлифшкурка 2, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="30">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М105">
-			<input class="text_style" type="text" value="Липкая лента, шт">
+			<input class="text_style" type="text" value="Липкая лента, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="150">
 			<div class="cost"></div>
@@ -5245,21 +5240,21 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М112">
-			<input class="text_style" type="text" value="Герметик, шт">
+			<input class="text_style" type="text" value="Герметик, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="250">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М113">
-			<input class="text_style" type="text" value="Пыльник, смазка и хомуты для ШРУСа, шт">
+			<input class="text_style" type="text" value="Пыльник, смазка и хомуты для ШРУСа, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="150">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М114">
-			<input class="text_style" type="text" value="Держатели молдингов и обивок, шт">
+			<input class="text_style" type="text" value="Держатели молдингов и обивок, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="30">
 			<div class="cost"></div>
@@ -5273,14 +5268,14 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М199">
-			<input class="text_style" type="text" value="Масляный фильтр, шт">
+			<input class="text_style" type="text" value="Масляный фильтр, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="550">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М198">
-			<input class="text_style" type="text" value="Воздушный фильтр, шт">
+			<input class="text_style" type="text" value="Воздушный фильтр, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="400">
 			<div class="cost"></div>
@@ -5301,7 +5296,7 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М118">
-			<input class="text_style" type="text" value="Газ фреон (с заправкой), шт">
+			<input class="text_style" type="text" value="Газ фреон (с заправкой), шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="2500">
 			<div class="cost"></div>
@@ -5322,7 +5317,7 @@
 		</div>
 		<div class="block">
 			<input class="checkbox_style" type="checkbox" name="option2" value="М121">
-			<input class="text_style" type="text" value="Рамка номерного знака, шт">
+			<input class="text_style" type="text" value="Рамка номерного знака, шт.">
 			<input class="quant" type="text" value="1">
 			<input class="norm" type="text" value="250">
 			<div class="cost"></div>
