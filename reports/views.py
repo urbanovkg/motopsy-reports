@@ -8,31 +8,128 @@ from io import BytesIO
 from datetime import date, datetime
 from django.utils import dateformat
 from openpyxl import Workbook, load_workbook
+from django.http import JsonResponse  # вверху файла
 
 # Create your views here.
-def login(request):
-    return render(request, 'login.html', {})
+# views.py
+from django.contrib.auth.decorators import login_required
+
+# УДАЛИ/КОММЕНТИРУЙ это (не нужно):
+# def login(request):
+#     return render(request, 'login.html', {})
+
+
 
 def index(request):
     return render(request, 'index.html', {})
 
+
+@login_required
 def list(request):
     if request.method == 'POST':
-        report_data = json.loads (request.POST.get("report_data_text", None))
-        vehicle_data = json.loads (request.POST.get("vehicle_data_text", None))
-        inspection_text = json.loads (request.POST.get("inspection_text", None))
-        services = request.POST.get("services_table", None)
-        materials = request.POST.get("materials_table", None)
-        parts = request.POST.get("parts_table", None)
-        uts = request.POST.get("uts_table", None)
-        ost = request.POST.get("ost_table", None)
+        # 0) pk для режима редактирования
+        pk = request.POST.get('report_id') or None
 
-        obj = Report.objects.create(doc_type=report_data['doctype'], ass_reason=report_data['assreason'], used_methods=report_data['usedmethods'], exchange_rate=report_data['exchangerate'], report_number=report_data['contractnum'], inspection_date=report_data['idate'], calculation_date=report_data['cdate'], client_name=report_data['customer'], ownership_identification=report_data['property'], inspection_place=report_data['position'], evaluation_purpose=report_data['purpose'], results_purpose=report_data['appointment'], cost_type=report_data['costtype'], contract_price=report_data['contractcost'], contract_price_in_words=report_data['costinwords'], vehicle_model=vehicle_data['model'], vehicle_year=vehicle_data['year'], vehicle_regnum=vehicle_data['regnum'], vehicle_vin=vehicle_data['vin'], vehicle_frame=vehicle_data['frame'], vehicle_passport=vehicle_data['passport'], vehicle_volume=vehicle_data['volume'], vehicle_mileage=vehicle_data['mileage'], vehicle_color=vehicle_data['color'], vehicle_gearbox=vehicle_data['gearbox'], vehicle_steering=vehicle_data['steering'], ass_object=vehicle_data['assobject'], vehicle_type=vehicle_data['type'], vehicle_body=vehicle_data['body'], hourcost=vehicle_data['hourcost'], vehicle_owner=vehicle_data['owner'], vehicle_adress=vehicle_data['adress'], definition_text=inspection_text['definition'], disassembly_text=inspection_text['disassembly'], damaged_body_parts_text=inspection_text['damagedBodyParts'], unbroken_parts_text=inspection_text['unbrokenParts'], damaged_other_parts_text=inspection_text['damagedOtherParts'], repair_text=inspection_text['repair'], painting_text=inspection_text['painting'], additional_text=inspection_text['additional'], hidden_text=inspection_text['hidden'], parts_text=inspection_text['parts'], services_table=services, materials_table=materials, parts_table=parts, uts_table=uts, ost_table=ost, services_result=report_data['servicesres'], materials_result=report_data['materialsres'], total_result=report_data['totalres'], uts_percent=report_data['utspercent'], kv=vehicle_data['kv'], kz=vehicle_data['kz'], kop=vehicle_data['kop'], ost_percent=report_data['ostpercent'])
+        # 1) Прочитать JSON из скрытых полей
+        report_data     = json.loads(request.POST.get("report_data_text") or "{}")
+        vehicle_data    = json.loads(request.POST.get("vehicle_data_text") or "{}")
+        inspection_text = json.loads(request.POST.get("inspection_text") or "{}")
 
+        services  = request.POST.get("services_table")
+        materials = request.POST.get("materials_table")
+        parts     = request.POST.get("parts_table")
+        uts       = request.POST.get("uts_table")
+        ost       = request.POST.get("ost_table")
+
+        ui_state_raw = request.POST.get("ui_state")
+        ui_state = json.loads(ui_state_raw) if ui_state_raw else {}
+
+        # 2) Сопоставление ключей ИЗ script.js -> поля модели
+        defaults = dict(
+            # --- данные отчёта (ключи: см. script.js -> reportData)
+            doc_type               = report_data.get("doctype"),
+            inspection_date        = report_data.get("idate") or None,
+            calculation_date       = report_data.get("cdate") or None,
+            report_number          = report_data.get("contractnum"),
+            ass_reason             = report_data.get("assreason"),
+            client_name            = report_data.get("customer"),
+            ownership_identification = report_data.get("property"),
+            inspection_place       = report_data.get("position"),
+            evaluation_purpose     = report_data.get("purpose"),
+            results_purpose        = report_data.get("appointment"),
+            cost_type              = report_data.get("costtype"),
+            contract_price         = report_data.get("contractcost"),
+            contract_price_in_words= report_data.get("costinwords"),
+            exchange_rate          = report_data.get("exchangerate"),
+
+            # --- данные объекта (ключи: см. script.js -> vehicleData)
+            ass_object      = vehicle_data.get("assobject"),
+            vehicle_model   = vehicle_data.get("model"),
+            vehicle_year    = vehicle_data.get("year"),
+            vehicle_regnum  = vehicle_data.get("regnum"),
+            vehicle_vin     = vehicle_data.get("vin"),
+            vehicle_frame   = vehicle_data.get("frame"),
+            vehicle_passport= vehicle_data.get("passport"),
+            vehicle_volume  = vehicle_data.get("volume"),
+            vehicle_mileage = vehicle_data.get("mileage"),
+            vehicle_color   = vehicle_data.get("color"),
+            vehicle_type    = vehicle_data.get("type"),
+            vehicle_body    = vehicle_data.get("body"),
+            vehicle_gearbox = vehicle_data.get("gearbox"),
+            vehicle_steering= vehicle_data.get("steering"),
+            hourcost        = vehicle_data.get("hourcost"),
+            vehicle_owner   = vehicle_data.get("owner"),
+            vehicle_adress  = vehicle_data.get("adress"),
+
+            # --- «таблицы» и доп. JSON
+            services_table  = services,
+            materials_table = materials,
+            parts_table     = parts,
+            uts_table       = uts,
+            ost_table       = ost,
+
+            # Если у вас есть JSONField — можно класть как есть; иначе сериализуйте в строку
+            inspection_text_json = inspection_text,
+            report_data_json     = report_data,
+            vehicle_data_json    = vehicle_data,
+
+            # --- снимок UI с фронта
+            ui_state = ui_state,
+        )
+
+        # 3) Привести даты, если в модели DateField
+        for key in ('inspection_date', 'calculation_date'):
+            if defaults[key]:
+                try:
+                    defaults[key] = datetime.strptime(defaults[key], "%Y-%m-%d").date()
+                except Exception:
+                    defaults[key] = None
+
+        # 4) UPDATE если pk пришёл, иначе CREATE
+        if pk:
+            obj = get_object_or_404(Report, pk=pk)
+
+            # не перезатираем поля пустыми значениями
+            for k, v in defaults.items():
+                if v in (None, ""):
+                    continue
+                setattr(obj, k, v)
+
+            # report_number обязателен — подстрахуемся
+            if not obj.report_number:
+                obj.report_number = obj.report_number or datetime.now().strftime("%Y%m%d/%H%M%S")
+
+            obj.save()
+        else:
+            # при создании номер обязателен
+            if not defaults.get("report_number"):
+                defaults["report_number"] = datetime.now().strftime("%Y%m%d/%H%M%S")
+            obj = Report.objects.create(**defaults)
+
+    # ваш рендер списка
     reports = Report.objects.order_by('inspection_date')
-    num_reports=Report.objects.all().count()
-    return render(request, 'list.html', context={'num_reports':num_reports, 'reports':reports})
-
+    num_reports = Report.objects.count()
+    return render(request, 'list.html', {'num_reports': num_reports, 'reports': reports})
 
 def is_json(myjson):
     try:
@@ -192,3 +289,70 @@ def cash_document(request, pk):
     wb.save(byte_io)
     byte_io.seek(0)
     return FileResponse(byte_io, as_attachment=True, filename=all_report.report_number.split('/')[0] + ".xlsx")
+
+
+
+
+def report_json(request, pk: int):
+    """Отдаёт JSON для префилла UI по отчёту pk."""
+    report = get_object_or_404(Report, pk=pk)
+
+    def d(val):
+        return "" if val is None else str(val)
+
+    data = {
+        "fields": {
+            # раздел «Данные отчёта»
+            "doc_type": d(report.doc_type),
+            "inspection_date": report.inspection_date.strftime("%Y-%m-%d") if report.inspection_date else "",
+            "calc_date": report.calculation_date.strftime("%Y-%m-%d") if report.calculation_date else "",
+            "contract_number": d(report.report_number),
+            "ass_reason": d(report.ass_reason),
+            "customer_name": d(report.client_name),
+            "property_owner": d(report.ownership_identification),  # value у <select>
+            "vehicle_location": d(report.inspection_place),
+            "evaluation_purpose": d(report.evaluation_purpose),
+            "evaluation_appointment": d(report.results_purpose),
+            "cost_type": d(report.cost_type),
+            "contract_cost": d(report.contract_price),
+            "contract_cost_in_words": d(report.contract_price_in_words),
+            "exchange_rate": d(report.exchange_rate),
+
+            # раздел «Данные объекта оценки»
+            "ass_object": d(report.ass_object),
+            "vehicle_model": d(report.vehicle_model),
+            "vehicle_year": d(report.vehicle_year),
+            "vehicle_number": d(report.vehicle_regnum),
+            "vehicle_vin": d(report.vehicle_vin),
+            "vehicle_frame": d(report.vehicle_frame),
+            "vehicle_passport": d(report.vehicle_passport),
+            "vehicle_engine_volume": d(report.vehicle_volume),
+            "vehicle_mileage": d(report.vehicle_mileage),
+            "vehicle_color": d(report.vehicle_color),
+            "vehicle_type": d(report.vehicle_type),          # текстовое поле рядом с селектом типов
+            "vehicle_body_type": d(report.vehicle_body),     # текстовое поле рядом с селектом кузова
+            "vehicle_gearbox": d(report.vehicle_gearbox),
+            "vehicle_steering": d(report.vehicle_steering),
+            "cost_per_hour": d(report.hourcost),
+            "class": d(report.hourcost),  # чтобы синхронизировать селект «Класс ТС»
+            "vehicle_owner": d(report.vehicle_owner),
+            "vehicle_adress": d(report.vehicle_adress),
+        },
+
+        # Блоки работ/материалов (чекбоксы и т.д.) восстанавливаем, если вы начнёте хранить «снимок UI».
+        # На первом этапе оставьте пустым — см. Шаг 5 (опционально) ниже.
+        "blocks": report.ui_state.get("blocks", []) if report.ui_state else []
+    }
+    return JsonResponse(data)
+
+
+
+
+
+
+
+
+def edit(request, pk: int):
+    # Рендерим ту же index.html, но прокидываем pk
+    return render(request, 'index.html', {"prefill_id": pk})
+

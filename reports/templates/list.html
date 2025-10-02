@@ -5,54 +5,56 @@
 <head>
     <title>Список отчетов</title>
     <link href="{% static 'css/list.css' %}" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+    <link rel="shortcut icon" type="image/png" href="{% static ' favicon.ico ' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
-    {% block content %}
+{% block content %}
 
-    <div id="header">
-    <div id="reportscount">Версия: 0.94 13.07.25<br>Отчётов в базе данных: {{ num_reports }}</div>
+<div id="header">
+    <div id="reportscount">Автоотчет в. 0.95 01.10.25<br>Отчётов в базе данных: {{ num_reports }}</div>
     <div class="contractbill">
 
-    <a id="newreport" href="{% url 'index' %}"></a>
-    <div id="logadmin">
-    <a id="logout" href="{% url 'login' %}"></a>
-    <a id="adminpanel" href="{% url 'admin:index' %}"></a>
-  </div>
-
-  </div>
-  </div>
-    <br>
-    <div id="listall">
-        {% for report in reports reversed %}
-
-        <div class="reportblock" >
-
-            <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
-                <div class="date">{{ report.inspection_date }}</div>
-                <div class="reportnum">{{ report.report_number }}</div>
-                <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}</div>
-            </a>
-            <div class="contractbill">
-                <a class="contract" href="{% url 'contract_create' pk=report.pk %}">
-                </a>
-                <a class="bill" href="{% url 'cash_document' pk=report.pk %}">
-                </a>
-            </div>
+        <a id="newreport" href="{% url 'index' %}"></a>
+        <div id="logadmin">
+            <a id="logout" href="{% url 'login' %}"></a>
+            <a id="adminpanel" href="{% url 'admin:index' %}"></a>
         </div>
 
-        {% endfor %}
     </div>
-    <br>
+</div>
 
-    {% endblock %}
+<br>
+<div id="listall">
+    {% for report in reports reversed %}
 
-    <script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
-    <script>
-        $('.reportblock:odd').css('background-color', '#3880B4'); //Все нечетные блоки окрашиваем
-    </script>
+    <div class="reportblock">
+
+        <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
+            <div class="date">{{ report.inspection_date }}</div>
+            <div class="reportnum">{{ report.report_number }}</div>
+            <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}
+            </div>
+        </a>
+        <div class="contractbill">
+            <a class="contract" href="{% url 'contract_create' pk=report.pk %}">
+            </a>
+            <a class="bill" href="{% url 'cash_document' pk=report.pk %}">
+            </a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+<br>
+
+{% endblock %}
+
+<script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
+<script>
+    $('.reportblock:odd').css('background-color', '#3880B4'); //Все нечетные блоки окрашиваем
+</script>
 
 </body>
 

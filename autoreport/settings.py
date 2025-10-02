@@ -151,3 +151,9 @@ django_heroku.settings(locals())
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# settings.py
+LOGIN_REDIRECT_URL = 'list'   # после успешного логина — на list
+LOGIN_URL = 'login'           # куда слать неавторизованных
+LOGOUT_REDIRECT_URL = 'login' # после выхода — на форму логина
+

@@ -1005,4 +1005,170 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   }); //Конец расчета
 
 
+async function prefillFromServer(pk) {
+  if (!pk) return;
+  const resp = await fetch(`/api/reports/${pk}/`, { headers: { 'Accept': 'application/json' }});
+  if (!resp.ok) return;
+  const data = await resp.json();
+
+  // 0) База для расчётов: сначала стоимость часа / класс — здесь можно дернуть change
+  if (data.fields) {
+    if (data.fields.cost_per_hour != null && data.fields.cost_per_hour !== '') {
+      $('#cost_per_hour').val(data.fields.cost_per_hour).trigger('change');
+    } else if (data.fields.class != null && data.fields.class !== '') {
+      $('#class').val(String(data.fields.class)).trigger('change');
+    }
+  }
+
+  // 1) Простые поля (id) — проставляем БЕЗ change
+  if (data.fields) {
+    Object.entries(data.fields).forEach(([id, val]) => {
+      const $el = $('#' + id);
+      if (!$el.length) return;
+      if ($el.is('select'))       $el.val(String(val ?? ''));
+      else if ($el.is(':checkbox')) $el.prop('checked', !!val);
+      else                        $el.val(val ?? '');
+    });
+  }
+
+  // helper: найти блок по коду чекбокса и (опционально) позиции
+  const findBlock = (code, position) => {
+    const $cbs = $(`input.checkbox_style[value="${code}"]`);
+    if (!$cbs.length) return null;
+    if (!position) return $cbs.first().closest('.block');
+    let $found = null;
+    $cbs.each(function(){
+      const $b = $(this).closest('.block');
+      const pos = $b.find('input.position').val();
+      if ((pos ?? '').trim() === String(position).trim()) { $found = $b; return false; }
+    });
+    return $found || $cbs.first().closest('.block');
+  };
+
+  // 2) Блоки — ставим значения ТИХО (без change), чтобы не ловить NaN
+  const toTriggerLater = []; // селекты, которым нужно вызвать change, чтобы они сами проставили norm
+  if (Array.isArray(data.blocks)) {
+    data.blocks.forEach(item => {
+      const $block = findBlock(item.code, item.position);
+      if (!$block) return;
+
+      // сначала data-* на .norm
+      if (item.data && typeof item.data === 'object') {
+        const $norm = $block.find('input.norm');
+        Object.entries(item.data).forEach(([k, v]) => {
+          if (v == null) $norm.removeAttr(`data-${k}`); else $norm.attr(`data-${k}`, String(v));
+        });
+      }
+
+      // текст и позиция
+      if (item.text !== undefined) {
+        $block.find('input.text_style, input.text_style_hide, input.text_style_half').val(item.text);
+      }
+      if (item.position !== undefined) {
+        $block.find('input.position').val(item.position);
+      }
+
+      // тип работ (select). Если norm не передали — запомним, что потом надо дернуть change
+      if (item.action_value !== undefined) {
+        const $sel = $block.find('.action_type select, select.action_type_half');
+        if ($sel.length) {
+          $sel.val(String(item.action_value));
+          if (item.norm === undefined) toTriggerLater.push($sel);
+        }
+      }
+
+      // числа
+      if (item.quant !== undefined) $block.find('input.quant').val(item.quant);
+      if (item.norm  !== undefined) $block.find('input.norm').val(item.norm === '' ? '0' : item.norm);
+      if (item.paint !== undefined) $block.find('input.paint').val(item.paint);
+
+      // чекбокс блока
+      if (item.checked !== undefined) $block.find('input.checkbox_style').prop('checked', !!item.checked);
+    });
+  }
+
+  // если norm не был сохранён, дёрнем change на селекте, чтобы он его выставил сам
+  toTriggerLater.forEach($sel => $sel.trigger('change'));
+
+  // 3) Один общий пересчёт всей страницы
+  if (typeof setCosts === 'function') setCosts();
+  if (typeof calcTempPaint === 'function') calcTempPaint();
+}
+
+
+// Автозапуск, если передан id
+if (window.PREFILL_ID) prefillFromServer(window.PREFILL_ID);
+
+// Сделаем функцию доступной из консоли/других скриптов
+window.prefillFromServer = prefillFromServer;
+
+const qs = new URLSearchParams(location.search);
+const prefillId = qs.get('prefill') || (window.PREFILL_ID ?? null);
+
+if (prefillId) {
+  $('#report_id').val(prefillId);       // <<< добавить ЭТУ строку
+  prefillFromServer(prefillId);
+}
+
+
+function collectUiState() {
+  // 1) простые поля по id
+  const fieldIds = [
+    'doc_type','inspection_date','calc_date','contract_number','ass_reason','customer_name',
+    'property_owner','vehicle_location','evaluation_purpose','evaluation_appointment',
+    'cost_type','contract_cost','contract_cost_in_words','exchange_rate',
+    'ass_object','vehicle_model','vehicle_year','vehicle_number','vehicle_vin','vehicle_frame',
+    'vehicle_passport','vehicle_engine_volume','vehicle_mileage','vehicle_color',
+    'vehicle_type','vehicle_body_type','vehicle_gearbox','vehicle_steering',
+    'cost_per_hour','class','vehicle_owner','vehicle_adress'
+  ];
+  const fields = {};
+  fieldIds.forEach(id => { const $el = $('#'+id); if ($el.length) fields[id] = $el.val(); });
+
+  // 2) блоки: пройдём по каждому .block, у которых есть чекбокс с кодом
+  const blocks = [];
+  $('input.checkbox_style').each(function(){
+    const $cb = $(this);
+    const $block = $cb.closest('.block');
+    const obj = {
+      code: $cb.val(),                            // ваш устоявшийся идентификатор блока
+      checked: $cb.prop('checked'),
+      text: ($block.find('input.text_style').val()
+           || $block.find('input.text_style_hide').val()
+           || $block.find('input.text_style_half').val() || ''),
+      position: $block.find('input.position').val() || '',
+      action_value: ($block.find('select.action_type').val()
+                  || $block.find('select.action_type_half').val() || ''),
+      quant: $block.find('input.quant').val() || '',
+      norm:  $block.find('input.norm').val()  || '',
+      paint: $block.find('input.paint').val() || ''
+    };
+    // data-атрибуты на .norm (например, data-uts / data-ost)
+    const $norm = $block.find('input.norm');
+    if ($norm.length) {
+      const data = {};
+      Array.from($norm[0].attributes).forEach(a => {
+        if (a.name.startsWith('data-')) data[a.name.slice(5)] = a.value;
+      });
+      obj.data = data;
+    }
+    blocks.push(obj);
+  });
+
+  return { fields, blocks };
+}
+window.collectUiState = collectUiState;
+
+
+
+$('#saveForm').on('submit', function () {
+  $('#ui_state').val(JSON.stringify(collectUiState()));
+});
+
+// 2) На всякий случай — если где-то запускаете сабмит "кликом" по кнопке:
+$('#hidden_button').on('click', function () {
+  $('#ui_state').val(JSON.stringify(collectUiState()));
+});
+
+
 }); //Конец события полной загрузки HTML и CSS

@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
-
+<html lang="ru">
 <head>
-  <title>Авторизация</title>
-  <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
-  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Вход</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
 <body>
+
   <div id="login">
-    <form action="/list/">
+    <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
-      {% if error %}
-      {{ error }}
+
+      {% if form.errors %}
+        <script>
+  window.addEventListener('DOMContentLoaded', function () {
+    alert('Неверный логин или пароль');
+  });
+</script>
       {% endif %}
-      {{ form.as_p }}
-      <input class="textfield" type="text"></input>
-      <input class="textfield" type="password"></input>
-      <input id="button" type="submit" name="submit" value="вход"></input>
+
+      <input class="textfield" type="text" name="username" placeholder="Логин" autocomplete="username" autofocus required>
+      <input class="textfield" type="password" name="password" placeholder="Пароль" autocomplete="current-password" required>
+
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+      {% endif %}
+
+      <input id="button" type="submit" value="Войти">
     </form>
   </div>
 
 </body>
-
 </html>

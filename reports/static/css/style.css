@@ -116,9 +116,7 @@ overscroll-behavior: none;
     margin-left: 0.2em;
 }
 
-#inv {
-    display: none;
-}
+
 
 .action_type_half {
     float: left;
@@ -161,6 +159,9 @@ overscroll-behavior: none;
     text-align: center;
     font-weight: bold;
 }
+
+.headline { margin-top: 1em; margin-bottom: 0.5em; text-align: center; }
+#inv, .inv, .vremenno { display: none; }
 
 .paint {
     width: 2em;

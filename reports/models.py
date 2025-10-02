@@ -4,6 +4,10 @@ from datetime import date
 
 # Create your models here.
 class Report(models.Model):
+
+
+
+
     doc_type = models.CharField("Тип документа", max_length=32, help_text="Отчет или Заключение", default="Отчет")
     ass_reason = models.CharField("Основание оценки", max_length=256, help_text="Договор, запрос, определение, постановление", default="Договор")
 
@@ -32,12 +36,12 @@ class Report(models.Model):
         (OTHER, 'Определение стоимости причиненного ущерба'),
     ]
     evaluation_purpose = models.CharField("Цель оценки", max_length=1, choices=EVALUATION_CHOICES, default=ACCIDENT)
-    REPARATION = "0"
-    INSURANCE = "1"
+    INSURANCE = "0"
+    REPARATION = "1"
     MANAGEMENT = "2"
     RESULTS_CHOICES = [
-        (REPARATION, 'Для возмещения убытков (ст. 14 ГК КР)'),
         (INSURANCE, 'Для страховой выплаты'),
+        (REPARATION, 'Для возмещения убытков (ст. 14 ГК КР)'),
         (MANAGEMENT, 'Для принятия управленческих решений'),
     ]
     results_purpose = models.CharField("Назначение результатов оценки", max_length=1, choices=RESULTS_CHOICES, default=REPARATION)
@@ -112,6 +116,16 @@ class Report(models.Model):
     total_result = models.CharField("Всего материалов и услуг, сом", max_length=32, default=0)
     uts_percent = models.CharField("Всего УТС, %", max_length=32, default=0)
     ost_percent = models.CharField("Всего остатков, %", max_length=32, default=0)
+
+
+    # Сырые JSON-слепки, которые ты уже отправляешь из формы:
+    inspection_text_json = models.JSONField(null=True, blank=True, default=dict)
+    report_data_json     = models.JSONField(null=True, blank=True, default=dict)
+    vehicle_data_json    = models.JSONField(null=True, blank=True, default=dict)
+
+
+    ui_state = models.JSONField(null=True, blank=True, default=dict)
+
 
     def publish(self):
         self.save()
