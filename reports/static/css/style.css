@@ -286,6 +286,14 @@ h4 {
     background-image: url(img/calc.png);
 }
 
+
+#parts_box.inv { display: none; }
+#parts_table th, #parts_table td { border:1px solid #ddd; padding:.3em; }
+#parts_table td.qty   { text-align:center; }
+#parts_table td.sum   { text-align:right; font-weight:600; }
+#parts_table input.price { width:100%; text-align:right; border:0; height:1.6em; }
+
+
 /*
 @media screen and (max-width:1281px) {body {font-size: 140%;}}
 @media screen and (max-width:800px) {body {font-size: 120%;}}

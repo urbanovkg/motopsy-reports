@@ -1015,11 +1015,10 @@
 				<option value="2.2" data-uts="0.1">ремонт №1</option>
 				<option value="3.6" data-uts="0.2">ремонт №2</option>
 				<option value="5.6" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.1" data-uts="0">замена</option>
-				<option value="2.7" data-uts="0">замена с переброской арматуры</option>
+				<option selected value="3.7" data-uts="0">замена</option>
 				<option value="0.9" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.7" data-uts="0" data-ost="1.4">
+			<input class="norm" type="text" value="3.7" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 
@@ -1031,11 +1030,10 @@
 				<option value="2.2" data-uts="0.1">ремонт №1</option>
 				<option value="3.6" data-uts="0.2">ремонт №2</option>
 				<option value="5.6" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.1" data-uts="0">замена</option>
-				<option value="2.7" data-uts="0">замена с переброской арматуры</option>
+				<option selected value="3.7" data-uts="0">замена</option>
 				<option value="0.9" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.7" data-uts="0" data-ost="1.4">
+			<input class="norm" type="text" value="3.7" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 		<div class="block">
@@ -1046,11 +1044,10 @@
 				<option value="2.2" data-uts="0.1">ремонт №1</option>
 				<option value="3.6" data-uts="0.2">ремонт №2</option>
 				<option value="5.6" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.1" data-uts="0">замена</option>
-				<option value="2.7" data-uts="0">замена с переброской арматуры</option>
+				<option selected value="3.7" data-uts="0">замена</option>
 				<option value="0.9" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.7" data-uts="0" data-ost="1.4">
+			<input class="norm" type="text" value="3.7" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 
@@ -1062,11 +1059,10 @@
 				<option value="2.2" data-uts="0.1">ремонт №1</option>
 				<option value="3.6" data-uts="0.2">ремонт №2</option>
 				<option value="5.6" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.1" data-uts="0">замена</option>
-				<option value="2.7" data-uts="0">замена с переброской арматуры</option>
+				<option selected value="3.7" data-uts="0">замена</option>
 				<option value="0.9" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.7" data-uts="0" data-ost="1.4">
+			<input class="norm" type="text" value="3.7" data-uts="0" data-ost="1.4">
 			<div class="cost"></div>
 		</div>
 
@@ -1117,10 +1113,10 @@
 				<option value="1.8" data-uts="0.1">ремонт №1</option>
 				<option value="2.9" data-uts="0.2">ремонт №2</option>
 				<option value="4.5" data-uts="0.4">ремонт №3</option>
-				<option selected value="2.1" data-uts="0">замена</option>
+				<option selected value="3.1" data-uts="0">замена</option>
 				<option value="0.9" data-uts="0">снять/установить по проему</option>
 			</select>
-			<input class="norm" type="text" value="2.1" data-uts="0" data-ost="1.6">
+			<input class="norm" type="text" value="3.1" data-uts="0" data-ost="1.6">
 			<div class="cost"></div>
 		</div>
 
@@ -5482,9 +5478,32 @@
 			<input class="hidden_field" id="inspection_text" type="text" name="inspection_text" value="">
 			<input class="hidden_field" id="services_table" type="text" name="services_table" value="">
 			<input class="hidden_field" id="materials_table" type="text" name="materials_table" value="">
-			<input class="hidden_field" id="parts_table" type="text" name="parts_table" value="">
+			<input class="hidden_field" id="parts_table_json" type="text" name="parts_table" value="">
 			<input class="hidden_field" id="uts_table" type="text" name="uts_table" value="">
 			<input class="hidden_field" id="ost_table" type="text" name="ost_table" value="">
+
+			<!-- ▼ Панель запчастей (появляется по клику на calc_icon) -->
+<div id="parts_box" class="inv">
+  <h3 style="margin:0 0 .4em 0;">Запчасти (замена)</h3>
+  <table id="parts_table" style="width:100%; border-collapse:collapse;" cellspacing="0">
+    <thead>
+      <tr>
+        <th style="text-align:left; border:1px solid #ddd; padding:.3em;">Наименование</th>
+        <th style="text-align:center; border:1px solid #ddd; padding:.3em; width:8em;">Кол-во</th>
+        <th style="text-align:right; border:1px solid #ddd; padding:.3em; width:12em;">Цена за шт.</th>
+        <th style="text-align:right; border:1px solid #ddd; padding:.3em; width:12em;">Сумма</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div style="text-align:right; margin-top:.5em; font-weight:bold;">
+    Итого по запчастям: <span id="parts_total">0,00</span>
+  </div>
+  <hr style="margin:1em 0;">
+</div>
+<!-- ▲ Панель запчастей -->
+
+
 			<input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
 		</form>
 	</div>

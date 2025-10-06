@@ -376,7 +376,15 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     }
   });
 
+
+
+
+
   $('#calc_icon').on('click', function() { //Событие при щелчке на элементе с id=calc_icon
+
+
+
+
 
     console.time('Весь расчет'); //Измеряем скорость. Можно посмотреть в консоли
 
@@ -435,6 +443,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       if (!ostArr[i].checked) {
         totalOst += ostArr[i].ost;
       }
+
 
 
       /*
@@ -996,7 +1005,8 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#inspection_text').val(JSON.stringify(inspectionText));
     $('#services_table').val(JSON.stringify(servicesArr));
     $('#materials_table').val(JSON.stringify(materialsArr));
-    $('#parts_table').val(JSON.stringify(partsArr));
+    $('#parts_table_json').val(JSON.stringify(partsArr));
+    renderPartsBoxFromPartsArr(partsArr);
     $('#uts_table').val(JSON.stringify(utsArr));
     $('#ost_table').val(JSON.stringify(gluedOstArr));
     $('#hidden_button, #hidden_field, #hidden_br').show();
@@ -1168,6 +1178,158 @@ $('#saveForm').on('submit', function () {
 // 2) На всякий случай — если где-то запускаете сабмит "кликом" по кнопке:
 $('#hidden_button').on('click', function () {
   $('#ui_state').val(JSON.stringify(collectUiState()));
+});
+
+
+
+
+// ======== Запчасти (просто и понятно) ========
+
+// Помощники форматирования
+function toNumber(s) {
+  if (typeof s === 'number') return s;
+  if (!s) return 0;
+  return parseFloat(String(s).replace(/\s/g, '').replace(',', '.')) || 0;
+}
+function fmt2(n) {
+  // 12345.6 -> "12 345,60"
+  let x = (isNaN(n) ? 0 : Number(n)).toFixed(2);
+  let [i, f] = x.split('.');
+  i = i.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return i + ',' + f;
+}
+
+// Собираем все отмеченные ПОД ЗАМЕНУ, объединяем одинаковые
+function collectReplacementParts() {
+  const map = {}; // key -> {name, qty}
+  const order = [];
+
+  // предполагаем структуру блоков: в каждом .block есть:
+  //  - чекбокс .checkbox_style
+  //  - селект действия select.action_type (или select.action_type_half)
+  //  - наименование: одно из input.text_style / .text_style_hide / .text_style_half
+  //  - позиция (необяз.): input.position
+  //  - количество: input.quant (по умолчанию 1)
+  $('.block').each(function () {
+    const $b = $(this);
+    const $cb = $b.find('input.checkbox_style');
+    if (!$cb.prop('checked')) return;
+
+    const action = ($b.find('select.action_type').val()
+                 || $b.find('select.action_type_half').val()
+                 || '').toLowerCase();
+
+    if (action !== 'замена') return;
+
+    const name = (
+      $b.find('input.text_style').val()
+      || $b.find('input.text_style_hide').val()
+      || $b.find('input.text_style_half').val()
+      || ''
+    ).trim();
+
+    if (!name) return;
+
+    const pos  = ($b.find('input.position').val() || '').trim();
+    const keyName = (pos ? (name + ' ' + pos) : name).trim();
+    const key = keyName.toLowerCase();
+
+    const qty = toNumber($b.find('input.quant').val()) || 1;
+
+    if (!map[key]) {
+      map[key] = { name: keyName, qty: 0 };
+      order.push(key);
+    }
+    map[key].qty += qty;
+  });
+
+  return { map, order };
+}
+
+// Рендер таблички
+function renderPartsBox(parts) {
+  const $box = $('#parts_box');
+  const $tb  = $('#parts_table tbody').empty();
+
+  if (!parts.order.length) {
+    // если замен нет — скрываем и выходим
+    $box.addClass('inv');
+    $('#parts_total').text('0,00');
+    return;
+  }
+
+  for (const key of parts.order) {
+    const it = parts.map[key];
+    const $tr = $(`
+      <tr data-key="${key}">
+        <td class="name"></td>
+        <td class="qty"></td>
+        <td><input class="price" type="text" inputmode="decimal" placeholder="0,00"></td>
+        <td class="sum">0,00</td>
+      </tr>
+    `);
+    $tr.find('.name').text(it.name);
+    $tr.find('.qty').text(fmt2(it.qty).replace(',00','')); // для целых — без копеек
+    $tb.append($tr);
+  }
+
+  $box.removeClass('inv'); // показать
+  recalcPartsTotal();      // сбросить итог
+}
+
+// Пересчёт суммы строки и общего итога
+function recalcRowSum($tr) {
+  const qty   = toNumber($tr.find('.qty').text());
+  const price = toNumber($tr.find('.price').val());
+  const sum   = qty * price;
+  $tr.find('.sum').text(fmt2(sum));
+  return sum;
+}
+function recalcPartsTotal() {
+  let total = 0;
+  $('#parts_table tbody tr').each(function () {
+    total += recalcRowSum($(this));
+  });
+  $('#parts_total').text(fmt2(total));
+}
+
+function renderPartsBoxFromPartsArr(arr) {
+  const $box = $('#parts_box');
+  const $tb  = $('#parts_table tbody').empty();
+
+  // нет запчастей → прячем блок
+  if (!Array.isArray(arr) || !arr.length) {
+    $box.addClass('inv');
+    $('#parts_total').text('0,00');
+    return;
+  }
+
+  // Ожидаем элементы вида { text, quant } из вашего partsArr
+  arr.forEach(it => {
+    const $tr = $(`
+      <tr>
+        <td class="name"></td>
+        <td class="qty"></td>
+        <td><input class="price" type="text" inputmode="decimal" placeholder="0,00"></td>
+        <td class="sum">0,00</td>
+      </tr>
+    `);
+    $tr.find('.name').text(it.text);
+    $tr.find('.qty').text(String(it.quant)); // toNumber разберёт формат
+    $tb.append($tr);
+  });
+
+  $box.removeClass('inv');
+  recalcPartsTotal();
+}
+
+
+
+// Делегированный обработчик ввода цен
+$(document).on('input', '#parts_table .price', function () {
+  const $tr = $(this).closest('tr');
+  recalcRowSum($tr);
+  recalcPartsTotal();
 });
 
 

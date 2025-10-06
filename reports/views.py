@@ -93,6 +93,18 @@ def list(request):
             report_data_json     = report_data,
             vehicle_data_json    = vehicle_data,
 
+            # --- ВАЖНО: распаковываем текст Акта по полям модели (для DOCX)
+            definition_text=inspection_text.get("definition", ""),
+            disassembly_text=inspection_text.get("disassembly", ""),
+            repair_text=inspection_text.get("repair", ""),
+            painting_text=inspection_text.get("painting", ""),
+            additional_text=inspection_text.get("additional", ""),
+            hidden_text=inspection_text.get("hidden", ""),
+            parts_text=inspection_text.get("parts", ""),
+            damaged_body_parts_text=inspection_text.get("damagedBodyParts", ""),
+            damaged_other_parts_text=inspection_text.get("damagedOtherParts", ""),
+            unbroken_parts_text=inspection_text.get("unbrokenParts", ""),
+
             # --- снимок UI с фронта
             ui_state = ui_state,
         )
