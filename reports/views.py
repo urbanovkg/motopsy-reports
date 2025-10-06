@@ -105,6 +105,18 @@ def list(request):
             damaged_other_parts_text=inspection_text.get("damagedOtherParts", ""),
             unbroken_parts_text=inspection_text.get("unbrokenParts", ""),
 
+            # --- Итоги/проценты/коэффы для шаблонов
+            services_result=report_data.get("servicesres", ""),
+            materials_result=report_data.get("materialsres", ""),
+            total_result=report_data.get("totalres", ""),
+            uts_percent=report_data.get("utspercent", ""),
+            ost_percent=report_data.get("ostpercent", ""),
+
+            # --- Коэффициенты из блока vehicleData
+            kv=vehicle_data.get("kv", ""),
+            kz=vehicle_data.get("kz", ""),
+            kop=vehicle_data.get("kop", ""),
+
             # --- снимок UI с фронта
             ui_state = ui_state,
         )
