@@ -31,7 +31,7 @@
 
     <div class="reportblock">
 
-        <a class="reportdata" href="{% url 'report_create' pk=report.pk %}">
+        <a class="reportdata" href="{% url 'edit' pk=report.pk %}">
             <div class="date">{{ report.inspection_date }}</div>
             <div class="reportnum">{{ report.report_number }}</div>
             <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}
@@ -41,6 +41,8 @@
             <a class="contract" href="{% url 'contract_create' pk=report.pk %}">
             </a>
             <a class="bill" href="{% url 'cash_document' pk=report.pk %}">
+            </a>
+            <a class="report" href="{% url 'report_create' pk=report.pk %}">
             </a>
         </div>
     </div>
