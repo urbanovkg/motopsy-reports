@@ -31,10 +31,16 @@
 
     <div class="reportblock">
 
-        <a class="reportdata" href="{% url 'edit' pk=report.pk %}">
-            <div class="date">{{ report.inspection_date }}</div>
-            <div class="reportnum">{{ report.report_number }}</div>
-            <div class="reportname">{{ report.vehicle_model }} {{ report.vehicle_regnum }} {{ report.client_name }}
+ <a class="reportdata" href="{% url 'edit' pk=report.pk %}">
+            <div class="line line-1">
+                <span class="date">{{ report.inspection_date|date:"d.m.y" }}</span>
+                <span class="reportnum">{{ report.report_number }}</span>
+            </div>
+            <div class="line line-2">
+                <span class="model">{{ report.vehicle_model }} | {{ report.vehicle_regnum }}</span>
+            </div>
+            <div class="line line-3">
+                <span class="customer">{{ report.client_name }}</span>
             </div>
         </a>
         <div class="contractbill">
