@@ -1,20 +1,24 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+import os, re
+from datetime import datetime
+
 
 # Create your models here.
+
+
 class Report(models.Model):
-
-
-
-
     doc_type = models.CharField("Тип документа", max_length=32, help_text="Отчет или Заключение", default="Отчет")
-    ass_reason = models.CharField("Основание оценки", max_length=256, help_text="Договор, запрос, определение, постановление", default="Договор")
+    ass_reason = models.CharField("Основание оценки", max_length=256,
+                                  help_text="Договор, запрос, определение, постановление", default="Договор")
 
-    report_number = models.CharField("Номер отчета", max_length=32, help_text="Введи в фомате ннн-мм/гг", default="000-00/20")
+    report_number = models.CharField("Номер отчета", max_length=32, help_text="Введи в фомате ннн-мм/гг",
+                                     default="000-00/20")
     inspection_date = models.DateField("Дата осмотра (договора)", default=date.today)
     calculation_date = models.DateField("Дата расчета", default=date.today)
-    client_name = models.CharField("Ф.И.О. заказчика", max_length=256, help_text="Введи Ф.И.О. полностью", default="Н/у")
+    client_name = models.CharField("Ф.И.О. заказчика", max_length=256, help_text="Введи Ф.И.О. полностью",
+                                   default="Н/у")
     PRIVATE = "0"
     MUNICIPAL = "1"
     STATE = "2"
@@ -25,8 +29,10 @@ class Report(models.Model):
         (STATE, 'Государственная собственность'),
         (UNKNOWN, 'Н/у'),
     ]
-    ownership_identification = models.CharField("Право собственности", max_length=1, choices=OWNERSHIP_CHOICES, default=PRIVATE)
-    inspection_place = models.CharField("Место осмотра:", max_length=256, help_text="Введи хотя бы населенный пункт", default="Н/у")
+    ownership_identification = models.CharField("Право собственности", max_length=1, choices=OWNERSHIP_CHOICES,
+                                                default=PRIVATE)
+    inspection_place = models.CharField("Место осмотра:", max_length=256, help_text="Введи хотя бы населенный пункт",
+                                        default="Н/у")
     ACCIDENT = "0"
     IGNITION = "1"
     OTHER = "2"
@@ -44,7 +50,8 @@ class Report(models.Model):
         (REPARATION, 'Для возмещения убытков (ст. 14 ГК КР)'),
         (MANAGEMENT, 'Для принятия управленческих решений'),
     ]
-    results_purpose = models.CharField("Назначение результатов оценки", max_length=1, choices=RESULTS_CHOICES, default=REPARATION)
+    results_purpose = models.CharField("Назначение результатов оценки", max_length=1, choices=RESULTS_CHOICES,
+                                       default=REPARATION)
     ONLY_RECOVERY = "0"
     RECOVERY_WIDTH_APPEARANCE = "1"
     ONLY_SCRAP = "2"
@@ -55,20 +62,24 @@ class Report(models.Model):
         (ONLY_SCRAP, 'Рыночная стоимость годных остатков (утилизационная стоимость)'),
         (RECOVERY_WIDTH_SCRAP, 'Рыночная стоимость годных остатков (утилизационная стоимость)'),
     ]
-    cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES, default=ONLY_RECOVERY)
+    cost_type = models.CharField("Вид определяемой стоимости", max_length=1, choices=COST_CHOICES,
+                                 default=ONLY_RECOVERY)
 
     FOR_RECOVERY = "0"
     FOR_RECOVERY_UTS = "1"
     FOR_SCRAP = "2"
     FOR_RECOVERY_SCRAP = "3"
     METHOD_CHOICES = [
-        (FOR_RECOVERY, 'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
-        (FOR_RECOVERY_UTS, 'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
-        (FOR_SCRAP, 'Метод расчета годных остатков затратным подходом и метод рыночной информации сравнительного подхода'),
-        (FOR_RECOVERY_SCRAP, 'Методы поэлементного расчета восстановления и годных остатков затратными подходами, метод рыночной информации сравнительного подхода'),
+        (FOR_RECOVERY,
+         'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
+        (FOR_RECOVERY_UTS,
+         'Метод поэлементного расчета затратного подхода и метод рыночной информации сравнительного подхода'),
+        (FOR_SCRAP,
+         'Метод расчета годных остатков затратным подходом и метод рыночной информации сравнительного подхода'),
+        (FOR_RECOVERY_SCRAP,
+         'Методы поэлементного расчета восстановления и годных остатков затратными подходами, метод рыночной информации сравнительного подхода'),
     ]
     used_methods = models.CharField("Подходы и методы", max_length=1, choices=METHOD_CHOICES, default=FOR_RECOVERY)
-
 
     contract_price = models.CharField("Сумма оплаты (договора)", max_length=32, default="0")
     contract_price_in_words = models.CharField("Сумма оплаты (прописью)", max_length=256, default="Ноль")
@@ -105,11 +116,11 @@ class Report(models.Model):
     damaged_other_parts_text = models.TextField("Текст прочих повреждений", default="", blank=True)
     unbroken_parts_text = models.TextField("Текст уцелевших деталей", default="", blank=True)
 
-    services_table = models.TextField("Таблица услуг (JSON)", default = "", blank=True)
-    materials_table = models.TextField("Таблица материалов (JSON)", default = "", blank=True)
-    parts_table = models.TextField("Таблица запчастей (JSON)", default = "", blank=True)
-    uts_table = models.TextField("Таблица УТС (JSON)", default = "", blank=True)
-    ost_table = models.TextField("Таблица остатков (JSON)", default = "", blank=True)
+    services_table = models.TextField("Таблица услуг (JSON)", default="", blank=True)
+    materials_table = models.TextField("Таблица материалов (JSON)", default="", blank=True)
+    parts_table = models.TextField("Таблица запчастей (JSON)", default="", blank=True)
+    uts_table = models.TextField("Таблица УТС (JSON)", default="", blank=True)
+    ost_table = models.TextField("Таблица остатков (JSON)", default="", blank=True)
 
     services_result = models.CharField("Всего услуг, сом", max_length=32, default=0)
     materials_result = models.CharField("Всего материалов, сом", max_length=32, default=0)
@@ -117,15 +128,12 @@ class Report(models.Model):
     uts_percent = models.CharField("Всего УТС, %", max_length=32, default=0)
     ost_percent = models.CharField("Всего остатков, %", max_length=32, default=0)
 
-
     # Сырые JSON-слепки, которые ты уже отправляешь из формы:
     inspection_text_json = models.JSONField(null=True, blank=True, default=dict)
-    report_data_json     = models.JSONField(null=True, blank=True, default=dict)
-    vehicle_data_json    = models.JSONField(null=True, blank=True, default=dict)
-
+    report_data_json = models.JSONField(null=True, blank=True, default=dict)
+    vehicle_data_json = models.JSONField(null=True, blank=True, default=dict)
 
     ui_state = models.JSONField(null=True, blank=True, default=dict)
-
 
     def publish(self):
         self.save()
@@ -135,3 +143,18 @@ class Report(models.Model):
 
     def get_absolute_url(self):
         return reverse('model-detail-view', args=[str(self.id)])
+
+
+# helper
+def report_photo_upload_to(instance, filename):
+    # кладём в папку отчёта: report_photos/<report_id>/<filename>
+    import os
+    base = os.path.basename(filename)
+    return f"report_photos/{instance.report_id}/{base}"
+
+class ReportPhoto(models.Model):
+    report  = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='photos')
+    image   = models.ImageField(upload_to=report_photo_upload_to)  # ВАЖНО: используем функцию!
+    caption = models.CharField(max_length=255, blank=True, default='')
+    order   = models.PositiveIntegerField(default=0)
+

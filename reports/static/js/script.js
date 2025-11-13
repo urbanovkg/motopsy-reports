@@ -1,6 +1,7 @@
 $(function() { //Событие ready полной загрузки HTML и CSS
 
-  $('.block:odd').css('background-color', 'LightSkyBlue'); //Все нечетные блоки окрашиваем
+  $('.block:odd').css('background-color', '#3880B4'); // Все нечётные блоки синие
+
 
   let costValue = parseFloat($('#cost_per_hour').val()); //Записываем значение стоимости нормо-часа
 
@@ -208,6 +209,10 @@ $(function() { //Событие ready полной загрузки HTML и CSS
 
   $('#vehicle_body_types').on('change', function() { //Событие при выборе типа кузова
     $('#vehicle_body_type').val($('option:selected', this).text()); //Записываем выбранный текст в соседнее поле
+  });
+
+  $('#vehicle_colors').on('change', function() { //Событие при выборе цвета кузова
+    $('#vehicle_color').val($('option:selected', this).text()); //Записываем выбранный текст в соседнее поле
   });
 
   $('#customer_names').on('change', function() { //Событие при выборе заказчика
@@ -1005,6 +1010,21 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     $('#inspection_text').val(JSON.stringify(inspectionText));
     $('#services_table').val(JSON.stringify(servicesArr));
     $('#materials_table').val(JSON.stringify(materialsArr));
+
+    // Попробуем сохранить уже введённые ранее цены: сливаем по имени детали
+let prev = [];
+try { prev = JSON.parse($('#parts_table_json').val() || '[]'); } catch(e) { prev = []; }
+const priceMap = {};
+prev.forEach(p => { if (p && p.text) priceMap[p.text] = Number(p.price) || 0; });
+
+// перенесём цены в новый список (если имена совпали)
+partsArr = partsArr.map(it => ({
+  ...it,
+  price: priceMap[it.text] || 0
+}));
+
+
+
     $('#parts_table_json').val(JSON.stringify(partsArr));
     renderPartsBoxFromPartsArr(partsArr);
     $('#uts_table').val(JSON.stringify(utsArr));
@@ -1070,22 +1090,57 @@ async function prefillFromServer(pk) {
         });
       }
 
-      // текст и позиция
-      if (item.text !== undefined) {
-        $block.find('input.text_style, input.text_style_hide, input.text_style_half').val(item.text);
-      }
+// текст и позиция
+if (item.text !== undefined) {
+  const $selHalf = $block.find('.action_type_half'); // признак "половинчатого" блока
+  if ($selHalf.length) {
+    // Подбираем опцию, которая является префиксом сохранённого полного текста
+    const txt = String(item.text || '');
+    let prefix = '';
+    $selHalf.find('option').each(function () {
+      const t = $(this).val() || $(this).text() || '';
+      if (t && txt.startsWith(t) && t.length > prefix.length) prefix = t;
+    });
+    const rest = prefix ? txt.slice(prefix.length) : txt;
+
+    // Короткое поле — без префикса, скрытое — полный текст
+    $block.find('input.text_style_half').val(rest.trim());
+    $block.find('input.text_style_hide').val(txt);
+    // На всякий случай: если в этом блоке есть text_style — кладём туда КОРОТКОЕ
+    $block.find('input.text_style').val(rest.trim());
+  } else {
+    // Обычный блок — просто в text_style
+    $block.find('input.text_style').val(item.text);
+  }
+}
+
       if (item.position !== undefined) {
         $block.find('input.position').val(item.position);
       }
 
       // тип работ (select). Если norm не передали — запомним, что потом надо дернуть change
-      if (item.action_value !== undefined) {
-        const $sel = $block.find('.action_type select, select.action_type_half');
-        if ($sel.length) {
-          $sel.val(String(item.action_value));
-          if (item.norm === undefined) toTriggerLater.push($sel);
-        }
-      }
+ if (item.action_value !== undefined) {
+   const $sel = $block.find('.action_type select, select.action_type, select.action_type_half');
+   if ($sel.length) {
+     let applied = false;
+     if (item.action_index != null && !Number.isNaN(Number(item.action_index))) {
+       $sel.prop('selectedIndex', Number(item.action_index));
+       applied = true;
+     } else if (item.action_value != null) {
+       // 1) пробуем выбрать по value
+       $sel.val(String(item.action_value));
+       applied = ($sel.val() == String(item.action_value));
+       // 2) если не вышло — ищем по ТЕКСТУ опции (для «старых» записей)
+       if (!applied) {
+         const want = String(item.action_value).trim();
+         const $opt = $sel.find('option').filter(function(){ return $(this).text().trim() === want; }).first();
+         if ($opt.length) { $opt.prop('selected', true); applied = true; }
+       }
+     }
+     if (!applied) { /* оставим как есть */ }
+     if (item.norm === undefined) $sel.trigger('change');
+   }
+ }
 
       // числа
       if (item.quant !== undefined) $block.find('input.quant').val(item.quant);
@@ -1096,6 +1151,44 @@ async function prefillFromServer(pk) {
       if (item.checked !== undefined) $block.find('input.checkbox_style').prop('checked', !!item.checked);
     });
   }
+
+
+// 2.5) Если есть сохранённые запчасти — отрисуем их с ценами
+if (Array.isArray(data.parts_table) && data.parts_table.length) {
+  const $box = $('#parts_box');
+  const $tb  = $('#parts_table tbody').empty();
+
+  data.parts_table.forEach(it => {
+    const name  = (it.text  ?? '').toString();
+    const qty   = (it.quant ?? 0);
+    const price = (it.price ?? 0);
+
+    const $tr = $(`
+      <tr>
+        <td class="name"></td>
+        <td class="qty"></td>
+        <td><input class="price" type="text" inputmode="decimal" placeholder="0,00"></td>
+        <td class="sum">0,00</td>
+      </tr>
+    `);
+    $tr.find('.name').text(name);
+    $tr.find('.qty').text(String(qty));
+    $tr.find('.price').val(price);   // префилл цены
+    $tb.append($tr);
+  });
+
+  // Итоги/суммы
+  $box.removeClass('inv');
+  recalcPartsTotal(); // подтянет суммы по строкам и общий итог
+
+  // На случай мгновенного сохранения без пересчёта
+  $('#parts_table_json').val(JSON.stringify(data.parts_table));
+}
+
+
+
+
+
 
   // если norm не был сохранён, дёрнем change на селекте, чтобы он его выставил сам
   toTriggerLater.forEach($sel => $sel.trigger('change'));
@@ -1140,15 +1233,19 @@ function collectUiState() {
   $('input.checkbox_style').each(function(){
     const $cb = $(this);
     const $block = $cb.closest('.block');
+    const $selAct = $block.find('.action_type select, select.action_type, select.action_type_half');
+    const actIndex = $selAct.length ? $selAct.prop('selectedIndex') : null;
+    const actValue = $selAct.length ? $selAct.val() : '';
+
     const obj = {
       code: $cb.val(),                            // ваш устоявшийся идентификатор блока
       checked: $cb.prop('checked'),
       text: ($block.find('input.text_style').val()
            || $block.find('input.text_style_hide').val()
            || $block.find('input.text_style_half').val() || ''),
-      position: $block.find('input.position').val() || '',
-      action_value: ($block.find('select.action_type').val()
-                  || $block.find('select.action_type_half').val() || ''),
+    position: $block.find('input.position').val() || '',
+     action_value: actValue,                  // было: поиск по селекторам — теперь из переменной
+  action_index: (typeof actIndex === 'number' ? actIndex : null),
       quant: $block.find('input.quant').val() || '',
       norm:  $block.find('input.norm').val()  || '',
       paint: $block.find('input.paint').val() || ''
@@ -1171,14 +1268,79 @@ window.collectUiState = collectUiState;
 
 
 
-$('#saveForm').on('submit', function () {
-  $('#ui_state').val(JSON.stringify(collectUiState()));
-});
+// script.js — ЕДИНЫЙ обработчик "Записать в БД" именно на submit формы
+// === Обработчик сабмита "Записать в БД" ===
+// === ЕДИНЫЙ сабмит: "Записать в БД" ===
+(function(){
+  const submitBtn = document.getElementById('hidden_button');
+  if (!submitBtn) return;
 
-// 2) На всякий случай — если где-то запускаете сабмит "кликом" по кнопке:
-$('#hidden_button').on('click', function () {
-  $('#ui_state').val(JSON.stringify(collectUiState()));
-});
+  submitBtn.addEventListener('click', async (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    try {
+      // берём форму
+      const form = document.getElementById('saveForm') || document.querySelector('form[action="/list/"]');
+      if (!form) throw new Error('Не найдена форма сохранения отчёта');
+
+      // 0) перед отправкой собираем ui_state и актуальные запчасти
+
+      // 0.1. снимок всех полей и блоков
+      if (typeof collectUiState === 'function') {
+        const ui = collectUiState();
+        const uiInput = document.getElementById('ui_state');
+        if (uiInput) {
+          uiInput.value = JSON.stringify(ui);
+        }
+      }
+
+      // 0.2. текущая таблица запчастей (с учётом вручную поменянных цен)
+      if (typeof serializePartsTable === 'function') {
+        const partsArr = serializePartsTable();          // [{text, quant, price, sum}, ...]
+        const partsInput = document.getElementById('parts_table_json'); // <input hidden ... name="parts_table">
+        if (partsInput) {
+          partsInput.value = JSON.stringify(partsArr);
+        }
+      }
+
+      // Теперь формируем FormData уже с заполненными скрытыми полями
+      const fd = new FormData(form);
+
+      // 1) сначала сохраняем сам отчёт -> получаем pk
+      const resp = await fetch('/list/', {
+        method: 'POST',
+        headers: { 'X-CSRFToken': fd.get('csrfmiddlewaretoken') || '' },
+        body: fd
+      });
+      const data = await resp.json().catch(()=> ({}));
+      if (!resp.ok || !data.ok || !data.pk) {
+        throw new Error(data.error || `Ошибка сохранения отчёта (HTTP ${resp.status})`);
+      }
+
+      const pk = data.pk;
+
+      if (window.__photos && typeof window.__photos.setReportId === 'function') {
+        window.__photos.setReportId(pk);
+      }
+
+      // 2) затем синхроним фото
+      if (window.__photos?.ensureLoaded) {
+        await window.__photos.ensureLoaded(pk);
+      }
+      if (window.__photos?.syncWithServer) {
+        await window.__photos.syncWithServer(pk);
+      }
+
+      // 3) переходим на список
+      window.location.href = '/list/';
+
+    } catch (e) {
+      alert('Не удалось записать в БД: ' + (e?.message || e));
+    }
+  });
+})();
+
 
 
 
@@ -1293,6 +1455,21 @@ function recalcPartsTotal() {
   $('#parts_total').text(fmt2(total));
 }
 
+// Собрать текущее состояние таблицы запчастей (имя, qty, price, sum)
+function serializePartsTable() {
+  const arr = [];
+  $('#parts_table tbody tr').each(function () {
+    const $tr   = $(this);
+    const name  = ($tr.find('.name').text() || '').trim();
+    const qty   = toNumber($tr.find('.qty').text());
+    const price = toNumber($tr.find('.price').val());
+    const sum   = toNumber($tr.find('.sum').text()); // уже пересчитана, но не критично
+    if (name) arr.push({ text: name, quant: qty, price: price, sum: sum });
+  });
+  return arr;
+}
+
+
 function renderPartsBoxFromPartsArr(arr) {
   const $box = $('#parts_box');
   const $tb  = $('#parts_table tbody').empty();
@@ -1314,9 +1491,11 @@ function renderPartsBoxFromPartsArr(arr) {
         <td class="sum">0,00</td>
       </tr>
     `);
-    $tr.find('.name').text(it.text);
-    $tr.find('.qty').text(String(it.quant)); // toNumber разберёт формат
-    $tb.append($tr);
+$tr.find('.name').text(it.text);
+$tr.find('.qty').text(String(it.quant));
+if (it.price != null) { $tr.find('.price').val(String(it.price)); }
+$tb.append($tr);
+
   });
 
   $box.removeClass('inv');
@@ -1330,6 +1509,10 @@ $(document).on('input', '#parts_table .price', function () {
   const $tr = $(this).closest('tr');
   recalcRowSum($tr);
   recalcPartsTotal();
+});
+
+$(document).on('input', '.norm, #cost_per_hour', function () {
+  this.value = this.value.replace(/,/g, '.').replace(/[^\d.]/g, '').replace(/(\..*)\./, '$1');
 });
 
 

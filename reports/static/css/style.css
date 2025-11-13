@@ -16,7 +16,7 @@ overscroll-behavior: none;
 
 .empty_div {
     display: block;
-    content: "";
+    /* content: "";  <-- удалено: content не работает на обычных элементах */
     margin-top: 0;
 
 }
@@ -89,7 +89,7 @@ overscroll-behavior: none;
     border: 0;
 }
 
-.text_style, .quant, .cost, .norm, .position, .text_line, .paint, #vehicle_type, #vehicle_body_type, #cost_per_hour, #customer_name, #vehicle_location, .dates, .action_type_half, .text_style_half {
+.text_style, .quant, .cost, .norm, .position, .text_line, .paint, #vehicle_type, #vehicle_body_type, #vehicle_color, #cost_per_hour, #customer_name, #vehicle_location, .dates, .action_type_half, .text_style_half {
     float: left;
     border: none;
     padding: 0.0625em;
@@ -160,7 +160,7 @@ overscroll-behavior: none;
     font-weight: bold;
 }
 
-.headline { margin-top: 1em; margin-bottom: 0.5em; text-align: center; }
+.headline { margin: 1em 0 0 0.2em; text-align: center; }
 #inv, .inv, .vremenno { display: none; }
 
 .paint {
@@ -184,7 +184,7 @@ overscroll-behavior: none;
     float: right;
     border: 0;
     height: 1.125em;
-    margin: none;
+    margin: 0; /* <-- было margin: none; это невалидно */
     font-weight: bold;
     line-height: 1.125em
 }
@@ -214,12 +214,15 @@ overscroll-behavior: none;
     border: none;
 }
 
-#vehicle_type, #vehicle_body_type, #cost_per_hour, #customer_name, #vehicle_location {
+#vehicle_type, #vehicle_body_type,#vehicle_color, #cost_per_hour, #customer_name, #vehicle_location {
     width: calc(70% - 0.15em);
 }
 
 h4 {
-    margin: 0 0 0 0.3em;
+    margin: 0 0 0 0.2em;
+}
+h5 {
+    margin: 0.8em 0 0.2em 0.2em;
 }
 
 #vehicle_info_icon {
@@ -282,6 +285,10 @@ h4 {
     background-image: url(img/13.png);
 }
 
+#photo_icon {
+    background-image: url(img/photo.png);
+}
+
 #calc_icon {
     background-image: url(img/calc.png);
 }
@@ -300,3 +307,143 @@ h4 {
 @media screen and (min-width:341px) and (max-width:500px) {body {font-size: 120%;}}
 @media screen and (max-width:340px) {body {font-size: 100%;}}
 */
+/* --- Цветовая схема и чередующиеся блоки как в list.css --- */
+body {
+  background-color: #060606 !important; /* общий тёмный фон */
+  color: #727272 !important;            /* текст */
+}
+
+.navigation_l {
+  background-color: #060606 !important; /* навигация как header в списке */
+  border-color: #060606 !important;
+}
+
+.block {
+  background-color: #212e3a; /* базовый тёмный фон блоков */
+}
+
+
+/* Светлый текст на всём контенте */
+body, .block, .reportblock, .reportdata, .line, .line span {
+  color: #e0e0e0 !important;
+}
+
+/* Тёмные поля (только фон и текст, рамки не трогаем) */
+input, select, textarea {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+/* Плейсхолдер тоже притемним, чтобы не «светил» */
+input::placeholder, textarea::placeholder {
+  color: #9a9a9a !important;
+}
+
+/* Чекбоксы: тёмные по умолчанию, светлый фон и тёмная галочка при отметке */
+input[type="checkbox"] {
+  color-scheme: dark;                     /* корректная отрисовка на тёмной теме */
+  background-color: #000000 !important;   /* тёмный по умолчанию */
+  accent-color: #000000 !important;       /* цвет галочки при отметке */
+
+}
+
+
+/* Когда отмечен — светлый фон с тёмной галочкой */
+input[type="checkbox"]:checked {
+  accent-color: white !important;
+}
+
+/* Возвращаем подсветку от скрипта */
+input[type="checkbox"][style*="green"] {
+  box-shadow: inset 0 0 0.3em 0.3em green !important;
+}
+
+input[type="checkbox"][style*="#FF4500"] {
+  box-shadow: inset 0 0 0.3em 0.3em #FF4500 !important;
+}
+
+/* --- Фото-секция: дропзона и карточки --- */
+/* ==== PHOTO SECTION — финальная шлифовка ==== */
+
+/* сама секция — такие же внешние отступы, как у других блоков */
+
+
+/* toolbar с небольшими внутренними отступами */
+#photo_section .toolbar {
+  display: block;
+
+}
+
+/* dropzone — как "block": есть правый/левый поля */
+#photos_dropzone {
+  border: 2px dashed #7aa5c7;
+  border-radius: 0.1em;
+  padding: 1rem;
+  text-align: center;
+  color: #a0c4e4;
+  background-color: #101820;
+  margin: 0.2em;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s ease-in-out;
+
+}
+#photos_dropzone:hover {
+  border-color: #9fc9ff;
+  background-color: #16212e;
+  color: #cfe3ff;
+}
+#photos_dropzone.over {
+  border-color: #2196f3;
+  background-color: #1a2a3a;
+  color: #fff;
+}
+
+/* сетка карточек: две колонки, аккуратные боковые поля */
+#photos_existing{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(auto, 360px)); /* фикс ширина карточки */
+  justify-content: center; /* центрируем обе колонки */
+  gap: .4em;
+  margin: 0 auto; /* выравнивание по центру страницы */
+}
+/* карточка фото */
+#photo_section .photo-card{
+  position:relative; display:flex; flex-direction:column;
+  background:#1a1a1a; border:1px solid #3b3b3b; border-radius:.1em;
+  padding:.4em; width:100%; box-sizing:border-box; max-width:630px;
+}
+#photo_section .photo-card.dragging{ opacity:.6; }
+#photo_section .photo-card.drag-over{ outline:2px dashed #7aa5c7; }
+
+/* обёртка под картинку (чтобы крестик был внутри) */
+#photo_section .photo-imgwrap{ position:relative; }
+#photo_section .photo-imgwrap img{
+  display:block; width:100%; height:auto; max-width:630px; border-radius:.1em;
+}
+
+/* крестик удаления в правом верхнем углу фото */
+#photo_section .photo-close{
+  position:absolute; top:.5rem; right:.5rem;
+  width:2rem; height:2rem; line-height:1.1rem; text-align:center;
+  border:1px solid #34536a; background:#0f1419; color:#cfe3ff;
+  border-radius:.25rem; cursor:pointer;
+}
+#photo_section .photo-close:hover{ background:#274559; color:#fff; }
+
+/* подпись — textarea на 2 строки */
+#photo_section .photo-capbox{ margin-top:.35rem; }
+#photo_section .photo-caption{
+  width:100%; min-height:2.6em; resize:vertical;
+  background:#121212; color:#f0f0f0; border:1px solid #333; border-radius:.1em;
+  padding:.25rem .35rem; box-sizing:border-box;
+}
+
+/* служебные */
+#photo_section .photo-sep{ grid-column:1/-1; margin:.6rem .2rem .2rem; opacity:.75; }
+#photo_section .ghost{ opacity:.55; border-style:dotted; }
+
+/* адаптив: на узких экранах одна колонка
+@media (max-width: 900px){
+  #photos_existing{ grid-template-columns:1fr; }
+} */
