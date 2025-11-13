@@ -54,7 +54,7 @@ def reports_list(request):
             parts = request.POST.get("parts_table")
             uts = request.POST.get("uts_table")
             ost = request.POST.get("ost_table")
-
+            phone_contacts = request.POST.get("phone_contacts", "")
             ui_state_raw = request.POST.get("ui_state")
             ui_state = json.loads(ui_state_raw) if ui_state_raw else {}
 
@@ -122,6 +122,8 @@ def reports_list(request):
                 kv=vehicle_data.get("kv", ""),
                 kz=vehicle_data.get("kz", ""),
                 kop=vehicle_data.get("kop", ""),
+
+                phone_contacts=phone_contacts,
 
                 ui_state=ui_state,
             )
@@ -308,6 +310,7 @@ def report_create(request, pk):
                'repair': all_report.repair_text, 'painting': all_report.painting_text,
                'additional': all_report.additional_text, 'hidden': all_report.hidden_text,
                'parts': all_report.parts_text, 'services_table': services_table_list,
+               'phone_contacts': all_report.phone_contacts,
                'materials_table': materials_table_list, 'parts_table': parts_table_list, 'uts_table': uts_table_list,
                'ost_table': ost_table_list, 's_result': all_report.services_result,
                'm_result': all_report.materials_result, 't_result': all_report.total_result,
@@ -566,12 +569,14 @@ def report_json(request, pk: int):
             "class": d(report.hourcost),  # чтобы синхронизировать селект «Класс ТС»
             "vehicle_owner": d(report.vehicle_owner),
             "vehicle_adress": d(report.vehicle_adress),
+            "phone_contacts": d(report.phone_contacts),
         },
 
         # Блоки работ/материалов (чекбоксы и т.д.) восстанавливаем, если вы начнёте хранить «снимок UI».
         # На первом этапе оставьте пустым — см. Шаг 5 (опционально) ниже.
         "blocks": report.ui_state.get("blocks", []) if report.ui_state else [],
         "parts_table": json.loads(report.parts_table) if report.parts_table else [],
+
     }
     return JsonResponse(data)
 
@@ -654,7 +659,7 @@ def photos_upload(request, report_id: int):
 
     captions_by_id = parse_json_dict(request.POST.get('captions_by_id'), {})
     captions_new = parse_json_list(request.POST.get('captions_new'), [])
-    order_map      = parse_json_dict(request.POST.get('order_map'), {})  # <-- карта порядка
+    order_map = parse_json_dict(request.POST.get('order_map'), {})  # <-- карта порядка
 
     files = request.FILES.getlist('images[]')
 

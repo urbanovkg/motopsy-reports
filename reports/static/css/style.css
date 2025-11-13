@@ -447,3 +447,60 @@ input[type="checkbox"][style*="#FF4500"] {
 @media (max-width: 900px){
   #photos_existing{ grid-template-columns:1fr; }
 } */
+
+
+
+#parts_box {
+  margin: 1em auto;              /* по центру страницы */
+  padding: 0.5em 0.2em;            /* внутри: сверху/снизу 1em, слева/справа 0.2em */
+  background: #1a1a1a;           /* цвет панели */
+  box-sizing: border-box;
+  border-radius: 0.4em;          /* по желанию */
+  color: #f5f5f5;                /* чтобы текст читался на тёмном фоне */
+}
+
+#parts_box h4 {
+  margin: 0 0 0.4em 0;
+  text-align: center;            /* заголовок по центру */
+}
+
+#parts_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;                /* таблица по центру блока */
+}
+
+#parts_table th,
+#parts_table td {
+  border: 1px solid #ddd;
+  padding: 0.3em;
+  font-size: 0.9rem;
+}
+
+#parts_table th {
+  background: #212e3a;
+}
+
+#parts_table th:nth-child(1),
+#parts_table td:nth-child(1) {
+  text-align: left;
+}
+
+#parts_table th:nth-child(2),
+#parts_table td:nth-child(2) {
+  text-align: center;
+  width: 8em;
+}
+
+#parts_table th:nth-child(3),
+#parts_table td:nth-child(3),
+#parts_table th:nth-child(4),
+#parts_table td:nth-child(4) {
+  text-align: right;
+  width: 12em;
+}
+
+#parts_box .parts-total {
+  text-align: right;
+  margin-top: 0.5em;
+}

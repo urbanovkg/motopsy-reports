@@ -5792,31 +5792,42 @@
         <input type="hidden" id="parts_table_json" name="parts_table" value="">
         <input type="hidden" id="uts_table" name="uts_table" value="">
         <input type="hidden" id="ost_table" name="ost_table" value="">
+        <input type="hidden" id="phone_contacts_hidden" name="phone_contacts" value="">
 
 
         <!-- ▼ Панель запчастей (появляется по клику на calc_icon) -->
         <div id="parts_box" class="inv">
-            <h3 style="margin:0 0 .4em 0;">Запчасти (замена)</h3>
-            <table id="parts_table" style="width:100%; border-collapse:collapse;" cellspacing="0">
+            <h4>Запчасти:</h4>
+            <table id="parts_table" cellspacing="0">
                 <thead>
                 <tr>
-                    <th style="text-align:left; border:1px solid #ddd; padding:.3em;">Наименование</th>
-                    <th style="text-align:center; border:1px solid #ddd; padding:.3em; width:8em;">Кол-во</th>
-                    <th style="text-align:right; border:1px solid #ddd; padding:.3em; width:12em;">Цена за шт.</th>
-                    <th style="text-align:right; border:1px solid #ddd; padding:.3em; width:12em;">Сумма</th>
+                    <th>Наименование</th>
+                    <th>Кол-во</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
             </table>
-            <div style="text-align:right; margin-top:.5em; font-weight:bold;">
-                Итого по запчастям: <span id="parts_total">0,00</span>
+
+            <!-- НОВОЕ ПОЛЕ: контакты/телефоны по запчастям -->
+            <div class="parts-contacts" style="margin-top:.6em;">
+                <textarea id="phone_contacts"
+                          rows="2"
+                          style="width:100%; box-sizing:border-box; resize:vertical;"
+                          placeholder="Телефоны продавцов / контакты по запчастям"></textarea>
             </div>
-            <hr style="margin:1em 0;">
+
+            <div class="parts-total">
+                Всего: <span id="parts_total">0,00</span>
+            </div>
         </div>
         <!-- ▲ Панель запчастей -->
 
-
+        <div style="margin:0 0 0 .2em; font-weight: bold;">Итого ущерб: <span id="total_total">0,00</span></div>
+        <br>
         <input class="hidden_field" id="hidden_button" type="submit" value="Записать в БД">
+        <br>
     </form>
 </div>
 

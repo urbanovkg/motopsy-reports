@@ -944,7 +944,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     damagedBodyPartsText = ucFirst(endDot(damagedBodyPartsText));
     damagedOtherPartsText = ucFirst(endDot(damagedOtherPartsText));
     unbrokenPartsText = ucFirst(endDot(unbrokenPartsText));
-    $('#total_calc').html('Услуг: ' + totalServicesCost + ' сом<br>Материалов: ' + totalMaterialsCost + ' сом<br>Всего: ' + totalCost + ' сом<br>УТС: ' + totalUTS.toFixed(2) + ' %<br>Кузовных повреждений: ' + damageType[0] + ' шт.<br>Остатки: ' + totalOst.toFixed(2) + ' %<br>Кз = 0.7<br>Kв = ' + calcKv($('#vehicle_year').val()) + '<br>Kоп = ' + calcKop(totalOst) + '<br>Остатки для расчета: ' + ostForCalc + ' %<hr>');
+    $('#total_calc').html('Услуг: ' + totalServicesCost + ' сом<br>Материалов: ' + totalMaterialsCost + ' сом<br>Всего: ' + totalCost + ' сом<br>УТС: ' + totalUTS.toFixed(2) + ' %<br>Кузовных повреждений: ' + damageType[0] + ' шт.<br>Остатки: ' + totalOst.toFixed(2) + ' %<br>Кз = 0.7<br>Kв = ' + calcKv($('#vehicle_year').val()) + '<br>Kоп = ' + calcKop(totalOst) + '<br>Остатки для расчета: ' + ostForCalc + ' %<br>');
 
     let reportData = {
       doctype: $('#doc_type').val(),
@@ -1223,7 +1223,7 @@ function collectUiState() {
     'ass_object','vehicle_model','vehicle_year','vehicle_number','vehicle_vin','vehicle_frame',
     'vehicle_passport','vehicle_engine_volume','vehicle_mileage','vehicle_color',
     'vehicle_type','vehicle_body_type','vehicle_gearbox','vehicle_steering',
-    'cost_per_hour','class','vehicle_owner','vehicle_adress'
+    'cost_per_hour','class','vehicle_owner','vehicle_adress','phone_contacts'
   ];
   const fields = {};
   fieldIds.forEach(id => { const $el = $('#'+id); if ($el.length) fields[id] = $el.val(); });
@@ -1302,6 +1302,13 @@ window.collectUiState = collectUiState;
         if (partsInput) {
           partsInput.value = JSON.stringify(partsArr);
         }
+      }
+
+      // 0.3. контакты по запчастям — textarea -> hidden, чтобы ушло в POST
+      const phoneEl = document.getElementById('phone_contacts');
+      const phoneHidden = document.getElementById('phone_contacts_hidden');
+      if (phoneEl && phoneHidden) {
+        phoneHidden.value = phoneEl.value || '';
       }
 
       // Теперь формируем FormData уже с заполненными скрытыми полями

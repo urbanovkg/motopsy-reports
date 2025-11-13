@@ -112,6 +112,7 @@ class Report(models.Model):
     additional_text = models.TextField("Текст доп. работ", default="", blank=True)
     hidden_text = models.TextField("Текст скрытых повреждений", default="", blank=True)
     parts_text = models.TextField("Текст запчастей", default="", blank=True)
+    phone_contacts = models.TextField("Контакты по запчастям (телефоны)", default="", blank=True)
     damaged_body_parts_text = models.TextField("Текст повреждений кузова", default="", blank=True)
     damaged_other_parts_text = models.TextField("Текст прочих повреждений", default="", blank=True)
     unbroken_parts_text = models.TextField("Текст уцелевших деталей", default="", blank=True)
