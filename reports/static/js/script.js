@@ -153,6 +153,22 @@ $(function() { //Событие ready полной загрузки HTML и CSS
   let intPaint = 0;
   let intCalc = 0;
 
+function updateIntermediateCalc() {
+    // Берём сумму по запчастям из таблицы
+    const partsTotal = (typeof toNumber === 'function')
+      ? toNumber($('#parts_total').text())
+      : parseFloat(String($('#parts_total').text()).replace(/\s/g, '').replace(',', '.')) || 0;
+
+    // Услуги/материалы (intCalc) + запчасти
+    const total = intCalc + partsTotal;
+
+    // Пишем в блок "Промежуточный расчёт"
+    $('#intermediate_calc').html(total + ' с<br>' + intPaint.toFixed(1) + ' л');
+  }
+
+  // Делаем функцию видимой снаружи (для recalcPartsTotal внизу файла)
+  window.updateIntermediateCalc = updateIntermediateCalc;
+
   $('.paint').on('change', function() { //Событие при изменении полей количества краски
     if (!isNumeric($(this).val())) { //Если не число
       $(this).val(0);
@@ -173,7 +189,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
         intPaint += parseFloat($(this).val()) * parseFloat(intQuant);
       } //Если меняется количество краски отмеченного блока пересчитываем предварительный результат
     });
-    $('#intermediate_calc').html(intCalc + ' с<br>' + intPaint.toFixed(1) + ' л');
+    updateIntermediateCalc();
     console.timeEnd('Расчет количества краски');
   }
 
@@ -189,7 +205,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
     } //Если нет предыдущего то 0
     intCalc += costElVal - costElement.data('tempCost');
     costElement.data('tempCost', costElVal); //при установке флажка записываем в элемент ДОМ значение стоимости блока
-    $('#intermediate_calc').html(intCalc + ' с<br>' + intPaint.toFixed(1) + ' л');
+    updateIntermediateCalc();
   }
 
   $("input:checkbox").on("change", function() { //Событие при выделении пунктов
@@ -199,7 +215,7 @@ $(function() { //Событие ready полной загрузки HTML и CSS
       let costElement2 = $(this).nextAll('.cost');
       intCalc -= parseFloat(costElement2.data('tempCost')); //при снятии флажка отнимаем из общей суммы старое значение "стоимости блока"
       costElement2.removeData('tempCost'); //Удаляем из элемена ДОМ значение при снятии флажка
-      $('#intermediate_calc').html(intCalc + ' с<br>' + intPaint.toFixed(1) + ' л');
+      updateIntermediateCalc();
     }
   });
 
@@ -1214,6 +1230,7 @@ if (prefillId) {
 }
 
 
+
 function collectUiState() {
   // 1) простые поля по id
   const fieldIds = [
@@ -1460,6 +1477,10 @@ function recalcPartsTotal() {
     total += recalcRowSum($(this));
   });
   $('#parts_total').text(fmt2(total));
+    // ← добавляем это:
+  if (window.updateIntermediateCalc) {
+    window.updateIntermediateCalc();
+  }
 }
 
 // Собрать текущее состояние таблицы запчастей (имя, qty, price, sum)
