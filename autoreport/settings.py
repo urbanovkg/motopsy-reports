@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -157,3 +158,4 @@ LOGIN_REDIRECT_URL = 'reports_list'   # после успешного логин
 LOGIN_URL = 'login'           # куда слать неавторизованных
 LOGOUT_REDIRECT_URL = 'login' # после выхода — на форму логина
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

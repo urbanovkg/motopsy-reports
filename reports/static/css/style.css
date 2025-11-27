@@ -13,6 +13,9 @@ body {
 overscroll-behavior: none;
 }
 
+html, body {
+    overscroll-behavior-y: contain; /* не отдаём жест вниз браузеру */
+}
 
 .empty_div {
     display: block;

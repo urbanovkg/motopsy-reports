@@ -50,7 +50,7 @@
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(img, 0, 0, w, h);
-    const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.8));
+    const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.77));
     return { blob, w, h };
   }
 
