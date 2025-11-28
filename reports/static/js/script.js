@@ -1314,13 +1314,47 @@ window.collectUiState = collectUiState;
       // 1) сначала сохраняем сам отчёт -> получаем pk
       const resp = await fetch('/list/', {
         method: 'POST',
-        headers: { 'X-CSRFToken': fd.get('csrfmiddlewaretoken') || '' },
+        headers: {
+          'X-CSRFToken': fd.get('csrfmiddlewaretoken') || '',
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'application/json'
+        },
         body: fd
       });
-      const data = await resp.json().catch(()=> ({}));
+
+      // ---- проверка на редирект на /login/ ----
+      const finalUrl = resp.url || '';
+      const contentType = resp.headers.get('content-type') || '';
+
+      // Вариант 1: нас реально перекинуло на страницу логина
+      if (resp.redirected && finalUrl.indexOf('/login') !== -1) {
+        const nextUrl = window.location.pathname || '/index/';
+        // Откроем логин в новой вкладке, чтобы не терять текущую страницу
+        window.open('/login/?next=' + encodeURIComponent(nextUrl), '_blank');
+
+        alert(
+          'Сессия истекла или вы не авторизованы в этом браузере.\n\n' +
+          'Откроется страница входа. Авторизуйтесь и затем ещё раз нажмите "Записать в БД".\n' +
+          'Все данные на этой странице останутся — страница не перезагружается.'
+        );
+        return; // ничего дальше не делаем, ждём, пока пользователь залогинится и нажмёт ещё раз
+      }
+
+      // Вариант 2: сервер ответил не JSON (например, какая-то ошибка/HTML)
+      if (contentType.indexOf('application/json') === -1) {
+        throw new Error(
+          'Сервер вернул неожиданный ответ (не JSON). ' +
+          'Возможно, истекла сессия или произошёл редирект.'
+        );
+      }
+
+      // Если мы здесь — значит это нормальный JSON-ответ от reports_list
+      const data = await resp.json();
+
       if (!resp.ok || !data.ok || !data.pk) {
         throw new Error(data.error || `Ошибка сохранения отчёта (HTTP ${resp.status})`);
       }
+
 
       const pk = data.pk;
 
