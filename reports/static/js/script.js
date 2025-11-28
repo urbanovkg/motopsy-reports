@@ -1041,8 +1041,10 @@ partsArr = partsArr.map(it => ({
 
 
 
-    $('#parts_table_json').val(JSON.stringify(partsArr));
-    renderPartsBoxFromPartsArr(partsArr);
+// Таблицу запчастей теперь рисуем через syncPartsFromBlocks,
+// здесь её больше не трогаем
+// $('#parts_table_json').val(JSON.stringify(partsArr));
+// renderPartsBoxFromPartsArr(partsArr);
     $('#uts_table').val(JSON.stringify(utsArr));
     $('#ost_table').val(JSON.stringify(gluedOstArr));
     $('#hidden_button, #hidden_field, #hidden_br').show();
@@ -1169,37 +1171,15 @@ if (item.text !== undefined) {
   }
 
 
-// 2.5) Если есть сохранённые запчасти — отрисуем их с ценами
-if (Array.isArray(data.parts_table) && data.parts_table.length) {
-  const $box = $('#parts_box');
-  const $tb  = $('#parts_table tbody').empty();
+  // 2.5) Если есть сохранённые запчасти — отрисуем их с нумерацией
+  if (Array.isArray(data.parts_table) && data.parts_table.length) {
+    // используем общий рендерер, который уже рисует столбец "№"
+    renderPartsBoxFromPartsArr(data.parts_table);
 
-  data.parts_table.forEach(it => {
-    const name  = (it.text  ?? '').toString();
-    const qty   = (it.quant ?? 0);
-    const price = (it.price ?? 0);
+    // На случай мгновенного сохранения без пересчёта
+    $('#parts_table_json').val(JSON.stringify(data.parts_table));
+  }
 
-    const $tr = $(`
-      <tr>
-        <td class="name"></td>
-        <td class="qty"></td>
-        <td><input class="price" type="text" inputmode="decimal" placeholder="0,00"></td>
-        <td class="sum">0,00</td>
-      </tr>
-    `);
-    $tr.find('.name').text(name);
-    $tr.find('.qty').text(String(qty));
-    $tr.find('.price').val(price);   // префилл цены
-    $tb.append($tr);
-  });
-
-  // Итоги/суммы
-  $box.removeClass('inv');
-  recalcPartsTotal(); // подтянет суммы по строкам и общий итог
-
-  // На случай мгновенного сохранения без пересчёта
-  $('#parts_table_json').val(JSON.stringify(data.parts_table));
-}
 
 
 
@@ -1386,51 +1366,77 @@ function fmt2(n) {
 }
 
 // Собираем все отмеченные ПОД ЗАМЕНУ, объединяем одинаковые
+// ЛОГИКА ИМЕНИ:
+//   - если после объединения qty === 1 → показываем С СОСТОРОНОЙ
+//   - если qty > 1 → показываем БЕЗ стороны (только базовое название)
 function collectReplacementParts() {
-  const map = {}; // key -> {name, qty}
+  // key -> { baseName, qty, norm, positions: [] }
+  const map = {};
   const order = [];
 
-  // предполагаем структуру блоков: в каждом .block есть:
-  //  - чекбокс .checkbox_style
-  //  - селект действия select.action_type (или select.action_type_half)
-  //  - наименование: одно из input.text_style / .text_style_hide / .text_style_half
-  //  - позиция (необяз.): input.position
-  //  - количество: input.quant (по умолчанию 1)
   $('.block').each(function () {
     const $b = $(this);
+
+    // 1) Флажок "участвует"
     const $cb = $b.find('input.checkbox_style');
     if (!$cb.prop('checked')) return;
 
-    const action = ($b.find('select.action_type').val()
-                 || $b.find('select.action_type_half').val()
-                 || '').toLowerCase();
+    // 2) Действие = "замена"
+    // Читаем ИМЕННО ТЕКСТ выбранной опции, как в основном расчёте (там gluedArr[i].action == 'замена')
+    const action = (
+      $b.find('.action_type option:selected').text() ||          // div.action_type > select > option
+      $b.find('select.action_type_half option:selected').text()  // select.action_type_half > option
+      || ''
+    ).toLowerCase();
+
 
     if (action !== 'замена') return;
 
-    const name = (
+    // 3) Базовое название детали (БЕЗ стороны)
+    const baseName = (
       $b.find('input.text_style').val()
       || $b.find('input.text_style_hide').val()
       || $b.find('input.text_style_half').val()
       || ''
     ).trim();
 
-    if (!name) return;
+    if (!baseName) return;
 
-    const pos  = ($b.find('input.position').val() || '').trim();
-    const keyName = (pos ? (name + ' ' + pos) : name).trim();
-    const key = keyName.toLowerCase();
+    // 4) Сторона / позиция (левая/правая/передняя и т.п.)
+    const pos = ($b.find('input.position').val() || '').trim();
 
+    // 5) Нормо-час
+    const normVal = toNumber($b.find('input.norm').val()) || 0;
+
+    // 6) Кол-во (по умолчанию 1)
     const qty = toNumber($b.find('input.quant').val()) || 1;
 
+    // 7) КЛЮЧ:
+    //    объединяем по (БАЗОВОЕ НАЗВАНИЕ + НОРМО-ЧАС), БЕЗ стороны
+    const key = (baseName + '||' + normVal).toLowerCase();
+
     if (!map[key]) {
-      map[key] = { name: keyName, qty: 0 };
+      map[key] = {
+        baseName: baseName,
+        qty: 0,
+        norm: normVal,
+        positions: []  // список разных сторон, которые встретились
+      };
       order.push(key);
     }
+
+    // суммируем количество
     map[key].qty += qty;
+
+    // запоминаем сторону (если указана)
+    if (pos && !map[key].positions.includes(pos)) {
+      map[key].positions.push(pos);
+    }
   });
 
   return { map, order };
 }
+
 
 // Рендер таблички
 function renderPartsBox(parts) {
@@ -1509,27 +1515,88 @@ function renderPartsBoxFromPartsArr(arr) {
     return;
   }
 
-  // Ожидаем элементы вида { text, quant } из вашего partsArr
-  arr.forEach(it => {
+    // Ожидаем элементы вида { text, quant } из вашего partsArr
+  arr.forEach((it, idx) => {
     const $tr = $(`
       <tr>
+        <td class="row-num"></td>
         <td class="name"></td>
         <td class="qty"></td>
-        <td><input class="price" type="text" inputmode="decimal" placeholder="0,00"></td>
+        <td><input class="price" type="text"
+          inputmode="decimal" placeholder="0,00"></td>
         <td class="sum">0,00</td>
       </tr>
     `);
-$tr.find('.name').text(it.text);
-$tr.find('.qty').text(String(it.quant));
-if (it.price != null) { $tr.find('.price').val(String(it.price)); }
-$tb.append($tr);
 
+    // Номер строки: 1, 2, 3, ...
+    $tr.find('.row-num').text(idx + 1);
+
+    // Остальное как было
+    $tr.find('.name').text(it.text);
+    $tr.find('.qty').text(String(it.quant));
+    if (it.price != null) { $tr.find('.price').val(String(it.price)); }
+
+    $tb.append($tr);
   });
+
 
   $box.removeClass('inv');
   recalcPartsTotal();
 }
 
+// Собрать таблицу запчастей из отмеченных блоков и перерисовать #parts_table
+function syncPartsFromBlocks() {
+  // 1) Забираем текущее состояние таблицы запчастей (чтобы сохранить цены)
+  let prevArr = [];
+  if (typeof serializePartsTable === 'function') {
+    prevArr = serializePartsTable();  // [{text, quant, price, sum}, ...]
+  }
+
+  const priceMap = {};
+  prevArr.forEach(it => {
+    if (it && it.text) {
+      // priceMap["Название детали"] = введённая цена
+      priceMap[it.text] = it.price || 0;
+    }
+  });
+
+  // 2) Собираем свежий список запчастей из отмеченных блоков
+  if (typeof collectReplacementParts !== 'function') return;
+  const partsStruct = collectReplacementParts(); // { map, order }
+
+  // 3) Делаем массив для renderPartsBoxFromPartsArr
+  const arr = [];
+
+  partsStruct.order.forEach(key => {
+    const it  = partsStruct.map[key];
+    const qty = it.qty;
+
+    // ЛОГИКА ИМЕНИ:
+    //  - если qty === 1 → показываем С СОСТОРОНОЙ
+    //  - если qty > 1 → показываем БЕЗ стороны
+    let displayName;
+
+    if (qty > 1) {
+      // Пара (или больше) → без стороны
+      displayName = it.baseName;
+    } else {
+      // Одна штука → берём первую сторону из списка (если есть)
+      const side = (it.positions[0] || '').trim();
+      displayName = side ? (it.baseName + ' ' + side) : it.baseName;
+    }
+
+    arr.push({
+      text: displayName,
+      quant: qty,
+      // Если раньше по этому названию уже вводили цену — вернём её
+      price: priceMap[displayName] ?? 0
+    });
+  });
+
+  // 4) Рисуем таблицу и сохраняем JSON в скрытое поле
+  renderPartsBoxFromPartsArr(arr);
+  $('#parts_table_json').val(JSON.stringify(arr));
+}
 
 
 // Делегированный обработчик ввода цен
@@ -1543,5 +1610,29 @@ $(document).on('input', '.norm, #cost_per_hour', function () {
   this.value = this.value.replace(/,/g, '.').replace(/[^\d.]/g, '').replace(/(\..*)\./, '$1');
 });
 
+  // Любое изменение чекбоксов / действия / количества / стороны / нормо-часов
+  // → пересобираем таблицу запчастей
+  $(document).on('change',
+    'input.checkbox_style,' +   // отметили / сняли блок
+    '.action_type select,' +    // селект внутри div.action_type
+    'select.action_type,' +     // на всякий случай, если где-то селект с таким классом
+    'select.action_type_half,' +
+    'input.quant,' +            // количество
+    'input.text_style,' +
+    'input.text_style_hide,' +
+    'input.text_style_half,' +
+    'input.position,' +         // сторона
+    'input.norm',               // нормо-час
+    function () {
+      if (typeof syncPartsFromBlocks === 'function') {
+        syncPartsFromBlocks();
+      }
+    }
+  );
+
+  // При загрузке страницы сразу соберём таблицу запчастей из уже отмеченных блоков
+  if (typeof syncPartsFromBlocks === 'function') {
+    syncPartsFromBlocks();
+  }
 
 }); //Конец события полной загрузки HTML и CSS

@@ -386,6 +386,7 @@ input[type="checkbox"][style*="#FF4500"] {
   color: #a0c4e4;
   background-color: #101820;
   margin: 0.2em;
+  margin-top: 1em;
   cursor: pointer;
   user-select: none;
   transition: 0.2s ease-in-out;
@@ -484,24 +485,44 @@ input[type="checkbox"][style*="#FF4500"] {
   background: #212e3a;
 }
 
+/* 1-й столбец: № — узкий, по центру */
 #parts_table th:nth-child(1),
 #parts_table td:nth-child(1) {
+  text-align: center;
+  width: 2em;
+  white-space: nowrap;
+}
+
+/* 2-й столбец: Наименование — тянется, ширину не задаём */
+#parts_table th:nth-child(2),
+#parts_table td:nth-child(2) {
   text-align: left;
 }
 
-#parts_table th:nth-child(2),
-#parts_table td:nth-child(2) {
+/* 3-й столбец: Кол-во (#) — узкий */
+#parts_table th:nth-child(3),
+#parts_table td:nth-child(3) {
   text-align: center;
-  width: 8em;
+  width: 2em;
+  white-space: nowrap;
 }
 
-#parts_table th:nth-child(3),
-#parts_table td:nth-child(3),
+/* 4-й столбец: Цена — фиксированная ширина, по правому краю */
 #parts_table th:nth-child(4),
 #parts_table td:nth-child(4) {
   text-align: right;
-  width: 12em;
+  width: 5em;
+  white-space: nowrap;
 }
+
+/* 5-й столбец: Сумма — тоже фикс */
+#parts_table th:nth-child(5),
+#parts_table td:nth-child(5) {
+  text-align: right;
+  width: 6em;
+  white-space: nowrap;
+}
+
 
 #parts_box .parts-total {
   text-align: right;
