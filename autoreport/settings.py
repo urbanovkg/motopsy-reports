@@ -151,7 +151,12 @@ STATIC_URL = "/static/"
 django_heroku.settings(locals())
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Локально: BASE_DIR/media
+# На сервере: значение берём из переменной окружения MEDIA_ROOT (например /var/data)
+MEDIA_ROOT = os.environ.get(
+    'MEDIA_ROOT',
+    os.path.join(BASE_DIR, 'media')
+)
 
 # settings.py
 LOGIN_REDIRECT_URL = 'reports_list'   # после успешного логина — на list
