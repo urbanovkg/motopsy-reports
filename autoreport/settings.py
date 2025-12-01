@@ -151,12 +151,21 @@ STATIC_URL = "/static/"
 django_heroku.settings(locals())
 
 MEDIA_URL = '/media/'
-# Локально: BASE_DIR/media
-# На сервере: значение берём из переменной окружения MEDIA_ROOT (например /var/data)
-MEDIA_ROOT = os.environ.get(
-    'MEDIA_ROOT',
-    os.path.join(BASE_DIR, 'media')
-)
+
+# Куда сохраняются ЗАГРУЖАЕМЫЕ файлы (фото и т.п.)
+# Локально: <проект>/media
+# На Render: значение берём из переменной окружения MEDIA_ROOT (например "/var/data")
+DEFAULT_MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', DEFAULT_MEDIA_ROOT)
+
+# Папка с шаблонами DOCX и EXCEL, которые лежат в репозитории
+DOC_TEMPLATES_DIR = DEFAULT_MEDIA_ROOT  # тут у тебя уже лежат report.docx, contract.docx, excel.xlsx
+
+REPORT_TEMPLATE_PATH   = os.path.join(DOC_TEMPLATES_DIR, 'report.docx')
+CONTRACT_TEMPLATE_PATH = os.path.join(DOC_TEMPLATES_DIR, 'contract.docx')
+EXCEL_TEMPLATE_PATH    = os.path.join(DOC_TEMPLATES_DIR, 'excel.xlsx')
+
+
 
 # settings.py
 LOGIN_REDIRECT_URL = 'reports_list'   # после успешного логина — на list

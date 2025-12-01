@@ -283,7 +283,7 @@ def report_create(request, pk):
     ost_table_list = is_json(all_report.ost_table)
 
     obj_lowercase = all_report.ass_object.lower()
-    doc = DocxTemplate(settings.MEDIA_ROOT + "/report.docx")
+    doc = DocxTemplate(settings.REPORT_TEMPLATE_PATH)
     context = {'document_type': all_report.doc_type, 'assessment_reason': all_report.ass_reason,
                'used_methods': Report.METHOD_CHOICES[int(all_report.used_methods)][1],
                'assessment_object': all_report.ass_object, 'vehicle_gearbox': all_report.vehicle_gearbox,
@@ -372,7 +372,7 @@ def report_create(request, pk):
 
 def contract_create(request, pk):
     all_report = get_object_or_404(Report, pk=pk)
-    doc = DocxTemplate(settings.MEDIA_ROOT + "/contract.docx")
+    doc = DocxTemplate(settings.CONTRACT_TEMPLATE_PATH)
     context = {'document_type': all_report.doc_type, 'assessment_object': all_report.ass_object,
                'contract_number': all_report.report_number,
                'inspection_date': dateformat.format(all_report.inspection_date, settings.DATE_FORMAT) + ' г.',
@@ -395,7 +395,7 @@ def cash_document(request, pk):
     parts_table_list = is_json(all_report.parts_table)
     uts_table_list = is_json(all_report.uts_table)
     ost_table_list = is_json(all_report.ost_table)
-    wb = load_workbook(settings.MEDIA_ROOT + "/excel.xlsx")
+    wb = load_workbook(settings.EXCEL_TEMPLATE_PATH)
     activeSheet = wb.active
     activeSheet["B1"] = all_report.doc_type
     activeSheet["B2"] = all_report.report_number
