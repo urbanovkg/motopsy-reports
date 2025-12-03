@@ -1311,67 +1311,110 @@ window.collectUiState = collectUiState;
       // Теперь формируем FormData уже с заполненными скрытыми полями
       const fd = new FormData(form);
 
-      // 1) сначала сохраняем сам отчёт -> получаем pk
+      console.time('Весь расчёт сохранения');
+
       const resp = await fetch('/list/', {
         method: 'POST',
+        body: fd,
+        credentials: 'same-origin',
         headers: {
           'X-CSRFToken': fd.get('csrfmiddlewaretoken') || '',
           'X-Requested-With': 'XMLHttpRequest',
           'Accept': 'application/json'
-        },
-        body: fd
+        }
       });
 
-      // ---- проверка на редирект на /login/ ----
-      const finalUrl = resp.url || '';
-      const contentType = resp.headers.get('content-type') || '';
+      console.timeEnd('Весь расчёт сохранения');
 
-      // Вариант 1: нас реально перекинуло на страницу логина
-      if (resp.redirected && finalUrl.indexOf('/login') !== -1) {
-        const nextUrl = window.location.pathname || '/index/';
-        // Откроем логин в новой вкладке, чтобы не терять текущую страницу
-        window.open('/login/?next=' + encodeURIComponent(nextUrl), '_blank');
+      const finalUrl   = resp.url || '';
+      const contentType = (resp.headers.get('content-type') || '').toLowerCase();
+
+      // --- 1) Явный случай CSRF / истёкшей сессии ---
+      if (resp.status === 403) {
+        let text = '';
+        try {
+          text = await resp.text();
+        } catch (e) { /* ignore */ }
+
+        console.error('CSRF / 403 при сохранении отчёта', text.slice(0, 1000));
 
         alert(
-          'Сессия истекла или вы не авторизованы в этом браузере.\n\n' +
-          'Откроется страница входа. Авторизуйтесь и затем ещё раз нажмите "Записать в БД".\n' +
-          'Все данные на этой странице останутся — страница не перезагружается.'
+          'Не удалось сохранить отчёт (ошибка 403 — защита CSRF).\\n\\n' +
+          'Скорее всего, страница с отчётом была открыта слишком давно или истекла сессия. ' +
+          'Из-за механизма безопасности Django эту форму уже нельзя сохранить без перезагрузки.\\n\\n' +
+          'Что делать:\\n' +
+          '1) Откройте страницу входа /login/ (или /index/) в новой вкладке и войдите заново.\\n' +
+          '2) Вернитесь на эту вкладку и обновите страницу (Ctrl+F5).\\n' +
+          '3) Заполните отчёт ещё раз и после заполнения сразу нажмите "Записать в БД".'
         );
-        return; // ничего дальше не делаем, ждём, пока пользователь залогинится и нажмёт ещё раз
+        return;
       }
 
-      // Вариант 2: сервер ответил не JSON (например, какая-то ошибка/HTML)
-      if (contentType.indexOf('application/json') === -1) {
+      // --- 2) Если сервер редиректит на логин ---
+      if (resp.redirected && finalUrl.indexOf('/login') !== -1) {
+        console.warn('Сервер редиректит на логин:', finalUrl);
+        window.open(finalUrl, '_blank');
+        alert(
+          'Сервер перенаправил запрос на страницу входа.\\n\\n' +
+          'Откройте вкладку с логином, авторизуйтесь, затем обновите страницу с отчётом.'
+        );
+        return;
+      }
+
+      // --- 3) Прочие HTTP-ошибки ---
+      if (!resp.ok) {
+        let text = '';
+        try {
+          text = await resp.text();
+        } catch (e) { /* ignore */ }
+
+        console.error('Ошибка HTTP при сохранении отчёта', resp.status, text.slice(0, 1000));
+        throw new Error('Не удалось сохранить отчёт. HTTP ' + resp.status);
+      }
+
+      // --- 4) Разбор ответа: JSON или текст ---
+      let data;
+      if (contentType.indexOf('application/json') !== -1) {
+        data = await resp.json();
+      } else {
+        const text = await resp.text();
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error('Ожидался JSON, но пришло:', contentType, text.slice(0, 1000));
+          throw new Error(
+            'Отчёт, возможно, сохранён, но сервер вернул не-JSON ответ. ' +
+            'Проверьте, появился ли он в списке отчётов.'
+          );
+        }
+      }
+
+      if (!data || !data.ok || !data.pk) {
         throw new Error(
-          'Сервер вернул неожиданный ответ (не JSON). ' +
-          'Возможно, истекла сессия или произошёл редирект.'
+          (data && data.error) ||
+          'Сервер вернул некорректный ответ при сохранении отчёта.'
         );
       }
-
-      // Если мы здесь — значит это нормальный JSON-ответ от reports_list
-      const data = await resp.json();
-
-      if (!resp.ok || !data.ok || !data.pk) {
-        throw new Error(data.error || `Ошибка сохранения отчёта (HTTP ${resp.status})`);
-      }
-
 
       const pk = data.pk;
 
+      // привязываем фото к только что созданному отчёту
       if (window.__photos && typeof window.__photos.setReportId === 'function') {
         window.__photos.setReportId(pk);
       }
 
-      // 2) затем синхроним фото
+      // сначала убеждаемся, что всё подгружено
       if (window.__photos?.ensureLoaded) {
         await window.__photos.ensureLoaded(pk);
       }
+      // потом синхронизируем очередь загрузки
       if (window.__photos?.syncWithServer) {
         await window.__photos.syncWithServer(pk);
       }
 
-      // 3) переходим на список
+      // и только затем возвращаемся к списку отчётов
       window.location.href = '/list/';
+
 
     } catch (e) {
       alert('Не удалось записать в БД: ' + (e?.message || e));
